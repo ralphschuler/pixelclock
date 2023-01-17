@@ -37,7 +37,7 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo
     echo -e ${FINISHED}Restarting pixelclock...
     echo -e =======================${NOCOLOR}
-    $@ # restarts the script
+    exec "$*"
 else
     echo
     echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
