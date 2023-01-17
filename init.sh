@@ -9,6 +9,15 @@ exec 3>&1 4>&2
 trap 'exec 2>&4 1>&3' 0 1 2 3
 exec 1>init.log 2>&1
 
+
+trap trapint SIGINT SIGTERM
+function trapint {
+    echo
+    echo -e ${ERROR}Caught SIGINT. Exiting...${NOCOLOR}
+    echo -e =======================${NOCOLOR}
+    exit 0
+}
+
 if (( $EUID != 0 )); then
     echo
     echo -e ${ERROR}Please run as root.${NOCOLOR}
