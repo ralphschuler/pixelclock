@@ -68,6 +68,8 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo
     echo -e ${ACTION}Finishing update...${NOCOLOR}
     echo -e =======================${NOCOLOR}
+    echo "\$* = $*"
+    echo "\$@ = $@"
     sudo exec $*
 else
     echo
