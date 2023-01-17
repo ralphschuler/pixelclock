@@ -5,10 +5,16 @@ READY='\033[1;92m'
 NOCOLOR='\033[0m' # No Color
 ERROR='\033[0;31m'
 
-echo 
-echo -e ${ACTION}Starting pixelclock...
-echo -e =======================${NOCOLOR}
-sudo npm run start
+if pm2 pid pixelclock; then
+    echo -e ${FINISHED}Pixelclock is running.${NOCOLOR}
+    echo -e =======================${NOCOLOR}
+else
+    echo -e ${ERROR}Pixelclock is not running.${NOCOLOR}
+    echo -e =======================${NOCOLOR}
+    echo -e ${ACTION}Starting pixelclock...
+    echo -e =======================${NOCOLOR}
+    sudo npm run start
+fi
 
 echo
 echo -e ${ACTION}Checking for updates...
@@ -27,10 +33,13 @@ UPSTREAMHASH=$(git rev-parse main@{upstream})
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e ${ERROR}Not up to date with origin. Updating.
     
-    echo
-    echo -e ${ACTION}Stopping pixelclock...
-    echo -e =======================${NOCOLOR}
-    sudo npm run stop
+    if pm2 pid pixelclock; then
+        echo
+        echo -e ${FINISHED}Pixelclock is running.${NOCOLOR}
+        echo -e ${ACTION}Stopping pixelclock...
+        echo -e =======================${NOCOLOR}
+        sudo npm run stop
+    fi
 
     echo
     echo -e ${ACTION}Resetting to origin/main...
@@ -50,7 +59,7 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo
     echo -e ${FINISHED}Finishing update...
     echo -e =======================${NOCOLOR}
-    exec "$*"
+    exec "$@"
 else
     echo
     echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
