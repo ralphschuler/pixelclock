@@ -59,7 +59,7 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo
     echo -e ${ACTION}Finishing update...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    exec "$@"
+    exec $*
 else
     echo
     echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
