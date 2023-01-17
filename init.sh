@@ -36,7 +36,7 @@ fi
 echo
 echo -e ${ACTION}Checking for updates...${NOCOLOR}
 echo -e =======================${NOCOLOR}
-git fetch
+sudo git fetch
 HEADHASH=$(git rev-parse HEAD)
 UPSTREAMHASH=$(git rev-parse main@{upstream})
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
@@ -53,22 +53,22 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo
     echo -e ${ACTION}Resetting to origin/main...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    git reset --hard origin/main
+    sudo git reset --hard origin/main
 
     echo
     echo -e ${ACTION}Installing dependencies...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    npm install
+    sudo npm install
 
     echo
     echo -e ${ACTION}Building...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    npm run build
+    sudo npm run build
 
     echo
     echo -e ${ACTION}Finishing update...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    exec $*
+    sudo exec $*
 else
     echo
     echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
