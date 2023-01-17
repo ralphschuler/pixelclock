@@ -6,7 +6,7 @@ NOCOLOR='\033[0m'
 ERROR='\033[0;31m'
 
 
-if sudo npm run isrunning; then
+if sudo npm run is-running; then
     echo
     echo -e ${FINISHED}Pixelclock is running.${NOCOLOR}
     echo -e =======================${NOCOLOR}
@@ -42,7 +42,7 @@ UPSTREAMHASH=$(git rev-parse main@{upstream})
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
     
-    if sudo npm run isrunning; then
+    if sudo npm run is-running; then
         echo
         echo -e ${ERROR}Pixelclock is running.${NOCOLOR}
         echo -e ${ACTION}Stopping pixelclock...${NOCOLOR}
