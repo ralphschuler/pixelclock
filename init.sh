@@ -42,14 +42,6 @@ while true; do
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
         echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
-        
-        if sudo npm run is-running; then
-            echo
-            echo -e ${ERROR}Pixelclock is running.${NOCOLOR}
-            echo -e ${ACTION}Stopping pixelclock...${NOCOLOR}
-            echo -e =======================${NOCOLOR}
-            sudo npm run stop
-        fi
 
         echo
         echo -e ${ACTION}Resetting to origin/main...${NOCOLOR}
@@ -62,16 +54,14 @@ while true; do
         sudo npm install
 
         echo
-        echo -e ${ACTION}Building...${NOCOLOR}
+        echo -e ${ACTION}Building pixelclock...${NOCOLOR}
         echo -e =======================${NOCOLOR}
         sudo npm run build
 
         echo
-        echo -e ${ACTION}Finishing update...${NOCOLOR}
+        echo -e ${ACTION}Restarting pixelclock... ${NOCOLOR}
         echo -e =======================${NOCOLOR}
-        echo "\$* = $*"
-        echo "\$@ = $@"
-        sudo npm run start $*
+        sudo npm run restart
     else
         echo
         echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
