@@ -23,20 +23,31 @@ function fillScreen(color: number) {
   }
 }
 
-function rgbToHex(r: number, g: number, b: number) {
+function colorwheel(pos: number) {
+  pos = 255 - pos;
+
+  if (pos < 85) {
+    return rgbToInt(255 - pos * 3, 0, pos * 3);
+  } else if (pos < 170) {
+    pos -= 85;
+    return rgbToInt(0, pos * 3, 255 - pos * 3);
+  } else {
+    pos -= 170;
+    return rgbToInt(pos * 3, 255 - pos * 3, 0);
+  }
+}
+
+function rgbToInt(r: number, g: number, b: number) {
   return (r << 16) | (g << 8) | b;
 }
 
 (async () => {
-    
+  let offset = 0;
   const loop = () => {
     console.log(new Date().toISOString(), "loop");
-    for (let r = 0; r < 256; r++) {
-      for (let g = 0; g < 256; g++) {
-        for (let b = 0; b < 256; b++) {
-          fillScreen(rgbToHex(r, g, b));
-          matrix.render();
-        }
+    for (let x = 0; x < rows; x++) {
+      for (let y = 0; y < columns; y++) {
+        matrix.setPixel(x, y, colorwheel((x * y + offset) % 256));
       }
     }
   }
