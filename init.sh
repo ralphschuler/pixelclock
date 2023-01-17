@@ -24,11 +24,16 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     git reset --hard origin/main
     git pull
 
+    echo -e ${ACTION}Installing dependencies...${NOCOLOR}
     npm install
+
+    echo -e ${ACTION}Building...${NOCOLOR}
     npm run build
 
+    echo -e ${FINISHED}Restarting pixelclock...${NOCOLOR}
     $*
 else
     echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
+    echo -e ${READY}Starting pixelclock...${NOCOLOR}
     sudo npm run dev
 fi
