@@ -19,6 +19,7 @@ function fillScreen(color: number) {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < columns; y++) {
       matrix.setPixel(x, y, color);
+      matrix.render();
     }
   }
 }
@@ -47,6 +48,7 @@ setInterval(() => {
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < columns; y++) {
       matrix.setPixel(x, y, colorwheel((x * y + offset) % 256));
+      matrix.render();
       offset++;
     }
   }
