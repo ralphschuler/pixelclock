@@ -44,5 +44,5 @@ else
     echo
     echo -e ${READY}Starting pixelclock...
     echo -e =======================${NOCOLOR}
-    sudo npm run dev
+    sudo npm run start
 fi

@@ -10,10 +10,15 @@
     "typescript": "^4.9.4"
   },
   "scripts": {
-    "dev": "ts-node src/index.ts",
-    "build": "tsc"
+    "start": "pm2 start dist/index.js --name pixelclock",
+    "stop": "pm2 stop pixelclock",
+    "restart": "pm2 restart pixelclock",
+    "delete": "pm2 delete pixelclock",
+    "build": "tsc",
+    "dev": "ts-node src/index.ts"
   },
   "dependencies": {
+    "pm2": "^5.2.2",
     "rpi-ws281x-native": "^1.0.4"
   }
 }
