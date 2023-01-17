@@ -1,8 +1,8 @@
 import ws281x from 'rpi-ws281x-native';
 
 export interface MatrixOptions {
-  rows: number;
-  columns: number;
+  width: number;
+  height: number;
   ledCount: number;
   getPixelId: (x: number, y: number) => number;
 }
@@ -11,14 +11,14 @@ export class Matrix {
 
   private readonly ledCount: number;
 
-  private readonly rows: number;
-  public get Rows() {
-    return this.rows;
+  private readonly height: number;
+  public get Height() {
+    return this.height;
   }
 
-  private readonly columns: number;
-  public get Columns() {
-    return this.columns;
+  private readonly width: number;
+  public get Width() {
+    return this.width;
   }
 
   private readonly getPixelId: (x: number, y: number) => number;
@@ -26,8 +26,8 @@ export class Matrix {
   private channel: any;
 
   constructor(options: MatrixOptions) {
-    this.rows = options.rows;
-    this.columns = options.columns;
+    this.height = options.height;
+    this.width = options.width;
     this.getPixelId = options.getPixelId;
     this.ledCount = options.ledCount;
     this.channel = ws281x(this.ledCount, {
