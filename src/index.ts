@@ -41,7 +41,7 @@ function rgbToInt(r: number, g: number, b: number) {
   return (r << 16) | (g << 8) | b;
 }
 
-(async () => {
+(() => {
   let offset = 0;
   const loop = () => {
     console.log(new Date().toISOString(), "loop");
