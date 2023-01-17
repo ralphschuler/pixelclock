@@ -5,6 +5,11 @@ READY='\033[1;92m'
 NOCOLOR='\033[0m' # No Color
 ERROR='\033[0;31m'
 
+echo 
+echo -e ${ACTION}Starting pixelclock...
+echo -e =======================${NOCOLOR}
+sudo npm run start
+
 echo
 echo -e ${ACTION}Checking for updates...
 echo -e =======================${NOCOLOR}
@@ -21,7 +26,14 @@ UPSTREAMHASH=$(git rev-parse main@{upstream})
 
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e ${ERROR}Not up to date with origin. Updating.
+    
     echo
+    echo -e ${ACTION}Stopping pixelclock...
+    echo -e =======================${NOCOLOR}
+    sudo npm run stop
+
+    echo
+    echo -e ${ACTION}Resetting to origin/main...
     echo -e =======================${NOCOLOR}
     git reset --hard origin/main
 
@@ -36,7 +48,7 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     npm run build
 
     echo
-    echo -e ${FINISHED}Restarting pixelclock...
+    echo -e ${FINISHED}Finishing update...
     echo -e =======================${NOCOLOR}
     exec "$*"
 else
