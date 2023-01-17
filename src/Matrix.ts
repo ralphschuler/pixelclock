@@ -1,4 +1,4 @@
-import * as ws281x from 'rpi-ws281x-native';
+import ws281x from 'rpi-ws281x-native';
 
 export interface MatrixOptions {
   rows: number;
@@ -8,6 +8,8 @@ export interface MatrixOptions {
 }
 
 export class Matrix {
+
+  private readonly ledCount: number;
 
   private readonly rows: number;
   public get Rows() {
@@ -27,20 +29,12 @@ export class Matrix {
     this.rows = options.rows;
     this.columns = options.columns;
     this.getPixelId = options.getPixelId;
-
-    const count = this.rows * this.columns;
-    this.channel = ws281x.init({
-      dma: 10,
-      freq: 800000,
-      channels: [
-        {
-          count,
-          gpio: 18,
-          invert: false,
-          brightness: 255,
-          stripType: ws281x.stripType.WS2812,
-        },
-      ],
+    this.ledCount = options.ledCount;
+    this.channel = ws281x(this.ledCount, {
+      gpio: 18,
+      invert: false,
+      brightness: 255,
+      stripType: ws281x.stripType.WS2812,
     });
   }
 
