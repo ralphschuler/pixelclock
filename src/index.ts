@@ -48,6 +48,7 @@ function rgbToInt(r: number, g: number, b: number) {
     for (let x = 0; x < rows; x++) {
       for (let y = 0; y < columns; y++) {
         matrix.setPixel(x, y, colorwheel((x * y + offset) % 256));
+        offset++;
       }
     }
   }
