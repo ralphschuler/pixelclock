@@ -1,4 +1,4 @@
-const ws281x = require('ws281x-native');
+const ws281x = require('rpi-ws281x-native');
 
 const NUM_LEDS = parseInt(process.argv[2], 10) || 10;
 const STRIP_TYPE = process.argv[3] || 'ws2812';
