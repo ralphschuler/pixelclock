@@ -5,8 +5,14 @@ READY='\033[1;92m'
 NOCOLOR='\033[0m'
 ERROR='\033[0;31m'
 
+if (( $EUID != 0 )); then
+    echo
+    echo -e ${ERROR}Please run as root.${NOCOLOR}
+    echo -e =======================${NOCOLOR}
+    exit 1
+fi
 
-if sudo npm run is-running; then
+if npm run is-running; then
     echo
     echo -e ${FINISHED}Pixelclock is running.${NOCOLOR}
     echo -e =======================${NOCOLOR}
@@ -18,7 +24,7 @@ else
     echo
     echo -e ${ACTION}Starting pixelclock...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    sudo npm run start $*
+    npm run start $*
 fi
 
 
@@ -37,7 +43,7 @@ while true; do
     echo
     echo -e ${ACTION}Checking for updates...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    sudo git fetch
+    git fetch
     HEADHASH=$(git rev-parse HEAD)
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
@@ -46,22 +52,22 @@ while true; do
         echo
         echo -e ${ACTION}Resetting to origin/main...${NOCOLOR}
         echo -e =======================${NOCOLOR}
-        sudo git reset --hard origin/main
+        git reset --hard origin/main
 
         echo
         echo -e ${ACTION}Installing dependencies...${NOCOLOR}
         echo -e =======================${NOCOLOR}
-        sudo npm install
+        npm install
 
         echo
         echo -e ${ACTION}Building pixelclock...${NOCOLOR}
         echo -e =======================${NOCOLOR}
-        sudo npm run build
+        npm run build
 
         echo
         echo -e ${ACTION}Restarting pixelclock... ${NOCOLOR}
         echo -e =======================${NOCOLOR}
-        sudo npm run restart
+        npm run restart
     else
         echo
         echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
