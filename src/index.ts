@@ -69,3 +69,5 @@ process.on('SIGINT', function() {
   ws281x.finalize();
   process.nextTick(function() { process.exit(0); });
 })
+
+process?.send &&  process.send('ready')
