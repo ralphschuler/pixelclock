@@ -1,8 +1,6 @@
 #!/bin/bash
 
 set -e
-set -o pipefail
-set -u
 
 ACTION='\033[1;90m'
 FINISHED='\033[1;96m'
