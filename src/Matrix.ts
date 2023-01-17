@@ -49,10 +49,10 @@ export class Matrix {
   }
 
   public render() {
-    this.channel.render();
+    ws281x.render();
   }
 
   public clear() {
-    this.channel.reset();
+    ws281x.reset();
   }
 }
