@@ -20,21 +20,26 @@ HEADHASH=$(git rev-parse HEAD)
 UPSTREAMHASH=$(git rev-parse main@{upstream})
 
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
+    echo
     echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
     git reset --hard origin/main
 
+    echo
     echo -e ${ACTION}Installing dependencies...
     echo -e =======================${NOCOLOR}
     npm install
 
+    echo
     echo -e ${ACTION}Building...
     echo -e =======================${NOCOLOR}
     npm run build
 
+    echo
     echo -e ${FINISHED}Restarting pixelclock...
     echo -e =======================${NOCOLOR}
     $@ # restarts the script
 else
+    echo
     echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
     echo -e ${READY}Starting pixelclock...
     echo -e =======================${NOCOLOR}
