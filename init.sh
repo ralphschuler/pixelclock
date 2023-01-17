@@ -33,46 +33,53 @@ if [ "$BRANCH" != "main" ]; then
 fi
 
 
-echo
-echo -e ${ACTION}Checking for updates...${NOCOLOR}
-echo -e =======================${NOCOLOR}
-sudo git fetch
-HEADHASH=$(git rev-parse HEAD)
-UPSTREAMHASH=$(git rev-parse main@{upstream})
-if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
-    echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
-    
-    if sudo npm run is-running; then
+while true; do
+    echo
+    echo -e ${ACTION}Checking for updates...${NOCOLOR}
+    echo -e =======================${NOCOLOR}
+    sudo git fetch
+    HEADHASH=$(git rev-parse HEAD)
+    UPSTREAMHASH=$(git rev-parse main@{upstream})
+    if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
+        echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
+        
+        if sudo npm run is-running; then
+            echo
+            echo -e ${ERROR}Pixelclock is running.${NOCOLOR}
+            echo -e ${ACTION}Stopping pixelclock...${NOCOLOR}
+            echo -e =======================${NOCOLOR}
+            sudo npm run stop
+        fi
+
         echo
-        echo -e ${ERROR}Pixelclock is running.${NOCOLOR}
-        echo -e ${ACTION}Stopping pixelclock...${NOCOLOR}
+        echo -e ${ACTION}Resetting to origin/main...${NOCOLOR}
         echo -e =======================${NOCOLOR}
-        sudo npm run stop
+        sudo git reset --hard origin/main
+
+        echo
+        echo -e ${ACTION}Installing dependencies...${NOCOLOR}
+        echo -e =======================${NOCOLOR}
+        sudo npm install
+
+        echo
+        echo -e ${ACTION}Building...${NOCOLOR}
+        echo -e =======================${NOCOLOR}
+        sudo npm run build
+
+        echo
+        echo -e ${ACTION}Finishing update...${NOCOLOR}
+        echo -e =======================${NOCOLOR}
+        echo "\$* = $*"
+        echo "\$@ = $@"
+        sudo npm run start $*
+    else
+        echo
+        echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
+        echo -e =======================${NOCOLOR}
     fi
 
     echo
-    echo -e ${ACTION}Resetting to origin/main...${NOCOLOR}
+    echo -e ${ACTION}Next update check in 5 minutes.${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    sudo git reset --hard origin/main
-
-    echo
-    echo -e ${ACTION}Installing dependencies...${NOCOLOR}
-    echo -e =======================${NOCOLOR}
-    sudo npm install
-
-    echo
-    echo -e ${ACTION}Building...${NOCOLOR}
-    echo -e =======================${NOCOLOR}
-    sudo npm run build
-
-    echo
-    echo -e ${ACTION}Finishing update...${NOCOLOR}
-    echo -e =======================${NOCOLOR}
-    echo "\$* = $*"
-    echo "\$@ = $@"
-    sudo npm run start $*
-else
-    echo
-    echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
-    echo -e =======================${NOCOLOR}
-fi
+    sleep 300
+done
