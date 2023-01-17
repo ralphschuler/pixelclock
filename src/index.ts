@@ -53,6 +53,6 @@ function rgbToInt(r: number, g: number, b: number) {
     }
   }
 
-  setInterval(loop, 1000 / 30);
+  setInterval(() => loop(), 1000 / 30);
 
 })();
