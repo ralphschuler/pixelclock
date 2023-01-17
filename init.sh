@@ -18,7 +18,7 @@ else
     echo
     echo -e ${ACTION}Starting pixelclock...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    sudo npm run start
+    sudo npm run start $*
 fi
 
 
@@ -70,7 +70,7 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e =======================${NOCOLOR}
     echo "\$* = $*"
     echo "\$@ = $@"
-    sudo exec $*
+    sudo npm run start $*
 else
     echo
     echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
