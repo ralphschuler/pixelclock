@@ -26,9 +26,9 @@ function fillScreen(color: number) {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
       matrix.setPixel(x, y, color);
+      matrix.render();
     }
   }
-  matrix.render();
 }
 
 function colorwheel(pos: number) {
@@ -57,8 +57,8 @@ setInterval(() => {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
       matrix.setPixel(x, y, colorwheel((x + y + offset) % 256));
+      matrix.render();
       offset++;
     }
   }
-  matrix.render();
 }, 1000 / FRAMES_PER_SECOND);
