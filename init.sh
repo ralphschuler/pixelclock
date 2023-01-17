@@ -5,7 +5,7 @@ READY='\033[1;92m'
 NOCOLOR='\033[0m' # No Color
 ERROR='\033[0;31m'
 
-if pm2 pid pixelclock; then
+if ps -ef | grep "pm2: pixelclock" | grep -v grep; then
     echo -e ${FINISHED}Pixelclock is running.${NOCOLOR}
     echo -e =======================${NOCOLOR}
 else
@@ -33,7 +33,7 @@ UPSTREAMHASH=$(git rev-parse main@{upstream})
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e ${ERROR}Not up to date with origin. Updating.
     
-    if pm2 pid pixelclock; then
+    if ps -ef | grep "pm2: pixelclock" | grep -v grep; then
         echo
         echo -e ${ERROR}Pixelclock is running.${NOCOLOR}
         echo -e ${ACTION}Stopping pixelclock...
