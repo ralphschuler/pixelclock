@@ -52,9 +52,7 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e =======================${NOCOLOR}
     exec "$*"
 else
-    echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
     echo
-    echo -e ${READY}Starting pixelclock...
+    echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    sudo npm run start
 fi
