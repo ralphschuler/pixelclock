@@ -1,11 +1,15 @@
 import { Matrix } from "./Matrix";
 
 function getPixelId(x: number, y: number) {
+  let id = 0
   if (x % 2 === 0) {
-    return x / 2 + y * (columns + 1);
+    id = x / 2 + y * (columns + 1);
   } else {
-    return columns + 1 - x + x / 2 + y * (columns + 1);
+    id = columns + 1 - x + x / 2 + y * (columns + 1);
   }
+
+  console.log("getPixelId", x, y, Math.floor(id));
+  return Math.floor(id);
 }
 
 const rows = 5;
@@ -46,7 +50,7 @@ function rgbToInt(r: number, g: number, b: number) {
 
 let offset = 0;
 setInterval(() => {
-  console.log(new Date().toISOString(), "loop", getPixelId(5,1));
+  console.log(new Date().toISOString(), "loop");
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < columns; y++) {
       matrix.setPixel(x, y, colorwheel((x + y + offset) % 256));
