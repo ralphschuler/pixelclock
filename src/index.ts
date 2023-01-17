@@ -54,7 +54,7 @@ let offset = 0;
 setInterval(() => {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
-      matrix.setPixel(x, y, colorwheel((x + y) % 256));
+      matrix.setPixel(x, y, colorwheel((x + y + offset) % 256));
       matrix.render();
       offset++;
     }
