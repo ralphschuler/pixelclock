@@ -81,6 +81,12 @@ while true; do
         echo -e ${ACTION}Restarting pixelclock... ${NOCOLOR}
         echo -e =======================${NOCOLOR}
         npm run restart
+
+        echo
+        echo -e ${ACTION}Restarting parent process...${NOCOLOR}
+        echo -e =======================${NOCOLOR}
+        exec ./init.sh
+        exit 0
     else
         echo
         echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
