@@ -35,29 +35,29 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     
     if pm2 pid pixelclock; then
         echo
-        echo -e ${FINISHED}Pixelclock is running.${NOCOLOR}
+        echo -e ${ERROR}Pixelclock is running.${NOCOLOR}
         echo -e ${ACTION}Stopping pixelclock...
         echo -e =======================${NOCOLOR}
         sudo npm run stop
     fi
 
     echo
-    echo -e ${ACTION}Resetting to origin/main...
+    echo -e ${ACTION}Resetting to origin/main...${NOCOLOR}
     echo -e =======================${NOCOLOR}
     git reset --hard origin/main
 
     echo
-    echo -e ${ACTION}Installing dependencies...
+    echo -e ${ACTION}Installing dependencies...${NOCOLOR}
     echo -e =======================${NOCOLOR}
     npm install
 
     echo
-    echo -e ${ACTION}Building...
+    echo -e ${ACTION}Building...${NOCOLOR}
     echo -e =======================${NOCOLOR}
     npm run build
 
     echo
-    echo -e ${FINISHED}Finishing update...
+    echo -e ${ACTION}Finishing update...${NOCOLOR}
     echo -e =======================${NOCOLOR}
     exec "$@"
 else
