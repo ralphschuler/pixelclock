@@ -2,10 +2,11 @@
 ACTION='\033[1;90m'
 FINISHED='\033[1;96m'
 READY='\033[1;92m'
-NOCOLOR='\033[0m' # No Color
+NOCOLOR='\033[0m'
 ERROR='\033[0;31m'
 
-if ps -ef | grep "pm2: pixelclock" | grep -v grep; then
+
+if sudo npx pm2 pid pixelclock; then
     echo
     echo -e ${FINISHED}Pixelclock is running.${NOCOLOR}
     echo -e =======================${NOCOLOR}
@@ -19,6 +20,7 @@ else
     echo -e =======================${NOCOLOR}
     sudo npm run start
 fi
+
 
 echo
 echo -e ${ACTION}Checking for main branch...${NOCOLOR}
@@ -40,7 +42,7 @@ UPSTREAMHASH=$(git rev-parse main@{upstream})
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
     
-    if ps -ef | grep "pm2: pixelclock" | grep -v grep; then
+    if sudo npx pm2 pid pixelclock; then
         echo
         echo -e ${ERROR}Pixelclock is running.${NOCOLOR}
         echo -e ${ACTION}Stopping pixelclock...${NOCOLOR}
