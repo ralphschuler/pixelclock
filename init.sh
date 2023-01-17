@@ -7,5 +7,5 @@ if [ $git_had_update -ne 0 ]; then
     $*
 else
     echo "Starting pixelclock"
-    node dist/index.js
+    sudo node dist/index.js
 fi
