@@ -6,7 +6,7 @@ NOCOLOR='\033[0m' # No Color
 ERROR='\033[0;31m'
 
 echo
-echo -e ${ACTION}Checking Git repo
+echo -e ${ACTION}Checking for updates...
 echo -e =======================${NOCOLOR}
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" != "main" ]; then
@@ -23,16 +23,20 @@ if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
     git reset --hard origin/main
 
-    echo -e ${ACTION}Installing dependencies...${NOCOLOR}
+    echo -e ${ACTION}Installing dependencies...
+    echo -e =======================${NOCOLOR}
     npm install
 
-    echo -e ${ACTION}Building...${NOCOLOR}
+    echo -e ${ACTION}Building...
+    echo -e =======================${NOCOLOR}
     npm run build
 
-    echo -e ${FINISHED}Restarting pixelclock...${NOCOLOR}
+    echo -e ${FINISHED}Restarting pixelclock...
+    echo -e =======================${NOCOLOR}
     $*
 else
     echo -e ${FINISHED}Current branch is up to date with origin/main.${NOCOLOR}
-    echo -e ${READY}Starting pixelclock...${NOCOLOR}
+    echo -e ${READY}Starting pixelclock...
+    echo -e =======================${NOCOLOR}
     sudo npm run dev
 fi
