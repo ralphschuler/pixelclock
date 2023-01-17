@@ -3,7 +3,7 @@ import { Matrix } from "./Matrix";
 
 const FRAMES_PER_SECOND = 1;
 
-function getPixelId(x: number, y: number) {
+function getPixelIdByXY(x: number, y: number) {
   let id = 0
   if (x % 2 === 0) {
     id = x / 2 + y * (width + 1);
@@ -14,25 +14,32 @@ function getPixelId(x: number, y: number) {
   return Math.floor(id);
 }
 
+function getPixelXYById(id: number) {
+  const x = Math.floor(id / (height + 1)) * 2;
+  const y = id % (height + 1);
+
+  return { x, y };
+}
+
 const height = 5;
 const width = 17;
 const matrix = new Matrix({
   height: height,
   width: width,
   ledCount: 90,
-  getPixelId: getPixelId,
+  getPixelId: getPixelIdByXY,
 });
 
 function fillScreen(color: number) {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
       matrix.setPixel(x, y, color);
-      matrix.render();
     }
   }
+  matrix.render();
 }
 
-function colorwheel(pos: number) {
+function colorWheel(pos: number) {
   pos = 255 - pos;
 
   if (pos < 85) {
@@ -55,12 +62,13 @@ console.log("Press Ctrl+C to exit.");
 
 let offset = 0;
 setInterval(() => {
-  for (let x = 0; x < width; x++) {
-    for (let y = 0; y < height; y++) {
-      matrix.setPixel(x, y, colorwheel((x + y + offset) % 256));
-      matrix.render();
-      offset++;
-    }
+  fillScreen(rgbToInt(0, 0, 0))
+  for (let i = 0; i < 8; i++) {
+    const x = Math.floor(Math.random() * width);
+    const y = Math.floor(Math.random() * height);
+    matrix.setPixel(x, y, colorWheel((x + y + offset) % 256));
+    matrix.render();
+    offset++;
   }
 }, 1000 / FRAMES_PER_SECOND);
 
