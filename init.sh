@@ -22,7 +22,6 @@ UPSTREAMHASH=$(git rev-parse main@{upstream})
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
     echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
     git reset --hard origin/main
-    git pull
 
     echo -e ${ACTION}Installing dependencies...${NOCOLOR}
     npm install
