@@ -30,6 +30,7 @@ function rgbToHex(r: number, g: number, b: number) {
 (async () => {
     
   const loop = () => {
+    console.log(new Date().toISOString(), "loop");
     for (let r = 0; r < 256; r++) {
       for (let g = 0; g < 256; g++) {
         for (let b = 0; b < 256; b++) {
