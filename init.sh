@@ -1,5 +1,5 @@
 #!/bin/bash
-if git pull; then
+if git pull --dry-run | grep -q -v 'Already up-to-date.'; then
     echo "Updated pixelclock"
     echo "Installing dependencies"
     npm install
