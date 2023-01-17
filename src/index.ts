@@ -41,18 +41,13 @@ function rgbToInt(r: number, g: number, b: number) {
   return (r << 16) | (g << 8) | b;
 }
 
-(() => {
-  let offset = 0;
-  const loop = () => {
-    console.log(new Date().toISOString(), "loop");
-    for (let x = 0; x < rows; x++) {
-      for (let y = 0; y < columns; y++) {
-        matrix.setPixel(x, y, colorwheel((x * y + offset) % 256));
-        offset++;
-      }
+let offset = 0;
+setInterval(() => {
+  console.log(new Date().toISOString(), "loop");
+  for (let x = 0; x < rows; x++) {
+    for (let y = 0; y < columns; y++) {
+      matrix.setPixel(x, y, colorwheel((x * y + offset) % 256));
+      offset++;
     }
   }
-
-  setInterval(() => loop(), 1000 / 30);
-
-})();
+}, 1000 / 30);
