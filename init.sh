@@ -5,6 +5,10 @@ READY='\033[1;92m'
 NOCOLOR='\033[0m'
 ERROR='\033[0;31m'
 
+exec 3>&1 4>&2
+trap 'exec 2>&4 1>&3' 0 1 2 3
+exec 1>init.log 2>&1
+
 if (( $EUID != 0 )); then
     echo
     echo -e ${ERROR}Please run as root.${NOCOLOR}

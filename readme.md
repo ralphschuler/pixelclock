@@ -1,28 +1,33 @@
 
 
-## Structure
-- Core
-  - Pixel
-    x: number
-    y: number
-    color: number
-    onUpdate: (deltaTime: number) => void
-    onRender: (deltaTime: number) => void
-  - Sprite
-    x: number
-    y: number
-    pixels: Pixel[]
-    onUpdate: (deltaTime: number) => void
-    onRender: (deltaTime: number) => void
-  - Layer
-    sprites: Sprite[]
-    onUpdate: (deltaTime: number) => void
-    onRender: (deltaTime: number) => void
+## Features
+- [ ] RGB Led matrix with higher resolution
+- [ ] Buttons on top for custom actions
+- [ ] usb type-c for power
+- [ ] Custom case
+- [ ] speaker for audio feedback
+- [ ] vibration motor for haptic feedback
+- [ ] dedicated power button with backlight for visual feedback
+- [ ] Web app with PWA capabilities for mobile support
+- [ ] Microphone for audio/music visualization and maybe a custom AI assistant
+- [ ] Sync multiple pixelclocks
+- [ ] Custom stand (https://www.thingiverse.com/thing:1756573/files)
 
-  - Renderer
-    matrix: Matrix
-    layers: Layer[]
-    start: () => void
-    stop: () => void
+## Effects
+- [ ] Matrix
+- [ ] Decay
+- [ ] Fire
+- [ ] Fireworks
+- [ ] Rain
+- [ ] Snow
+- [ ] Thunderstorm
+- [ ] Lightning
 
-  - Matrix
+## Scenes
+- [ ] Clock
+- [ ] Weather
+- [ ] Audio visualizer
+- [ ] Alarm clock
+- [ ] AI assistant (maybe some animated eyes)
+- [ ] Github activity
+- [ ] Spotify now playing
