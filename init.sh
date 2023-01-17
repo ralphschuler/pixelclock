@@ -1,5 +1,6 @@
 #!/bin/bash
 
+git reset --hard
 git pull --dry-run | grep -q -v 'Already up-to-date.' && updated=1 || updated=0
 
 if [ $updated -eq 1 ]; then
