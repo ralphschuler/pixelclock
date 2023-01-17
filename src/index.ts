@@ -8,7 +8,6 @@ function getPixelId(x: number, y: number) {
     id = columns + 1 - x + x / 2 + y * (columns + 1);
   }
 
-  console.log("getPixelId", x, y, Math.floor(id));
   return Math.floor(id);
 }
 
@@ -53,7 +52,7 @@ setInterval(() => {
   console.log(new Date().toISOString(), "loop");
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < columns; y++) {
-      matrix.setPixel(x, y, colorwheel((x + y + offset) % 256));
+      matrix.setPixel(x, y, colorwheel((x + y) % 256));
       matrix.render();
       offset++;
     }
