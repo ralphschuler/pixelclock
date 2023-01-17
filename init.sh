@@ -9,5 +9,5 @@ if git pull --dry-run | grep -q -v 'Already up-to-date.'; then
     $*
 else
     echo "Starting pixelclock"
-    sudo node dist/index.js
+    sudo npm run dev
 fi
