@@ -1,0 +1,51 @@
+import path from "path";
+import { Sprite } from "../src/engine/Sprite";
+
+const cwd = process.cwd();
+
+export const Sprites = {
+  "0": new Sprite(path.join(cwd, "assets", "numbers", "0.json")),
+  "1": new Sprite(path.join(cwd, "assets", "numbers", "1.json")),
+  "2": new Sprite(path.join(cwd, "assets", "numbers", "2.json")),
+  "3": new Sprite(path.join(cwd, "assets", "numbers", "3.json")),
+  "4": new Sprite(path.join(cwd, "assets", "numbers", "4.json")),
+  "5": new Sprite(path.join(cwd, "assets", "numbers", "5.json")),
+  "6": new Sprite(path.join(cwd, "assets", "numbers", "6.json")),
+  "7": new Sprite(path.join(cwd, "assets", "numbers", "7.json")),
+  "8": new Sprite(path.join(cwd, "assets", "numbers", "8.json")),
+  "9": new Sprite(path.join(cwd, "assets", "numbers", "9.json")),
+
+  "A": new Sprite(path.join(cwd, "assets", "letters", "A.json")),
+  "B": new Sprite(path.join(cwd, "assets", "letters", "B.json")),
+  "C": new Sprite(path.join(cwd, "assets", "letters", "C.json")),
+  "D": new Sprite(path.join(cwd, "assets", "letters", "D.json")),
+  "E": new Sprite(path.join(cwd, "assets", "letters", "E.json")),
+  "F": new Sprite(path.join(cwd, "assets", "letters", "F.json")),
+  "G": new Sprite(path.join(cwd, "assets", "letters", "G.json")),
+  "H": new Sprite(path.join(cwd, "assets", "letters", "H.json")),
+  "I": new Sprite(path.join(cwd, "assets", "letters", "I.json")),
+  "J": new Sprite(path.join(cwd, "assets", "letters", "J.json")),
+  "K": new Sprite(path.join(cwd, "assets", "letters", "K.json")),
+  "L": new Sprite(path.join(cwd, "assets", "letters", "L.json")),
+  "M": new Sprite(path.join(cwd, "assets", "letters", "M.json")),
+  "N": new Sprite(path.join(cwd, "assets", "letters", "N.json")),
+  "O": new Sprite(path.join(cwd, "assets", "letters", "O.json")),
+  "P": new Sprite(path.join(cwd, "assets", "letters", "P.json")),
+  "Q": new Sprite(path.join(cwd, "assets", "letters", "Q.json")),
+  "R": new Sprite(path.join(cwd, "assets", "letters", "R.json")),
+  "S": new Sprite(path.join(cwd, "assets", "letters", "S.json")),
+  "T": new Sprite(path.join(cwd, "assets", "letters", "T.json")),
+  "U": new Sprite(path.join(cwd, "assets", "letters", "U.json")),
+  "V": new Sprite(path.join(cwd, "assets", "letters", "V.json")),
+  "W": new Sprite(path.join(cwd, "assets", "letters", "W.json")),
+  "X": new Sprite(path.join(cwd, "assets", "letters", "X.json")),
+  "Y": new Sprite(path.join(cwd, "assets", "letters", "Y.json")),
+  "Z": new Sprite(path.join(cwd, "assets", "letters", "Z.json")),
+
+  "-": new Sprite(path.join(cwd, "assets", "symbols", "-.json")),
+  ":": new Sprite(path.join(cwd, "assets", "symbols", ":.json")),
+  "!": new Sprite(path.join(cwd, "assets", "symbols", "!.json")),
+  "?": new Sprite(path.join(cwd, "assets", "symbols", "?.json")),
+  "(" : new Sprite(path.join(cwd, "assets", "symbols", "(.json")),
+  ")" : new Sprite(path.join(cwd, "assets", "symbols", ").json")),
+}
