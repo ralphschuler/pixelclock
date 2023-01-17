@@ -2,9 +2,9 @@ import { Matrix } from "./Matrix";
 
 function getPixelId(x: number, y: number) {
   if (x % 2 === 0) {
-    return x / 2 + y * (rows + 1);
+    return x / 2 + y * (columns + 1);
   } else {
-    return rows + 1 - x + x / 2 + y * (rows + 1);
+    return columns + 1 - x + x / 2 + y * (columns + 1);
   }
 }
 
