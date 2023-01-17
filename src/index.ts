@@ -1,5 +1,7 @@
 import { Matrix } from "./Matrix";
 
+const FRAMES_PER_SECOND = 6;
+
 function getPixelId(x: number, y: number) {
   let id = 0
   if (x % 2 === 0) {
@@ -59,4 +61,4 @@ setInterval(() => {
       offset++;
     }
   }
-}, 1000 / 30);
+}, 1000 / FRAMES_PER_SECOND);
