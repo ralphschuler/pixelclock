@@ -24,7 +24,7 @@ else
     echo
     echo -e ${ACTION}Starting pixelclock...${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    npm run start $*
+    npm run start
 fi
 
 
@@ -33,7 +33,7 @@ echo -e ${ACTION}Checking for main branch...${NOCOLOR}
 echo -e =======================${NOCOLOR}
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" != "main" ]; then
-    echo -e ${ERROR}Not on main. Aborting. ${NOCOLOR}
+    echo -e ${ERROR}Not on main. Aborting update check.${NOCOLOR}
     echo
     exit 0
 fi
