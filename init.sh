@@ -6,18 +6,22 @@ NOCOLOR='\033[0m' # No Color
 ERROR='\033[0;31m'
 
 if ps -ef | grep "pm2: pixelclock" | grep -v grep; then
+    echo
     echo -e ${FINISHED}Pixelclock is running.${NOCOLOR}
     echo -e =======================${NOCOLOR}
 else
+    echo
     echo -e ${ERROR}Pixelclock is not running.${NOCOLOR}
     echo -e =======================${NOCOLOR}
-    echo -e ${ACTION}Starting pixelclock...
+
+    echo
+    echo -e ${ACTION}Starting pixelclock...${NOCOLOR}
     echo -e =======================${NOCOLOR}
     sudo npm run start
 fi
 
 echo
-echo -e ${ACTION}Checking for updates...
+echo -e ${ACTION}Checking for main branch...${NOCOLOR}
 echo -e =======================${NOCOLOR}
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" != "main" ]; then
@@ -26,17 +30,20 @@ if [ "$BRANCH" != "main" ]; then
     exit 0
 fi
 
+
+echo
+echo -e ${ACTION}Checking for updates...${NOCOLOR}
+echo -e =======================${NOCOLOR}
 git fetch
 HEADHASH=$(git rev-parse HEAD)
 UPSTREAMHASH=$(git rev-parse main@{upstream})
-
 if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
-    echo -e ${ERROR}Not up to date with origin. Updating.
+    echo -e ${ERROR}Not up to date with origin. Updating.${NOCOLOR}
     
     if ps -ef | grep "pm2: pixelclock" | grep -v grep; then
         echo
         echo -e ${ERROR}Pixelclock is running.${NOCOLOR}
-        echo -e ${ACTION}Stopping pixelclock...
+        echo -e ${ACTION}Stopping pixelclock...${NOCOLOR}
         echo -e =======================${NOCOLOR}
         sudo npm run stop
     fi
