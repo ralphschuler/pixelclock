@@ -28,15 +28,18 @@ function rgbToHex(r: number, g: number, b: number) {
 }
 
 (async () => {
-  while (true) {
+    
+  const loop = () => {
     for (let r = 0; r < 256; r++) {
       for (let g = 0; g < 256; g++) {
         for (let b = 0; b < 256; b++) {
           fillScreen(rgbToHex(r, g, b));
           matrix.render();
-          await new Promise((resolve) => setTimeout(resolve, 10));
         }
       }
     }
   }
+
+  setInterval(loop, 1000 / 30);
+
 })();
