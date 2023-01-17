@@ -28,7 +28,11 @@ if (( $EUID != 0 )); then
     exit 1
 fi
 
-if npm run is-running ; then
+echo $(npm run is-running)
+echo $?
+
+log ${WHITE} "Checking if pixelclock is running..."
+if npm run is-running; then
     log ${GREEN} "Pixelclock is already running."
 else
     log ${YELLOW} "Pixelclock is not running. Starting..."
