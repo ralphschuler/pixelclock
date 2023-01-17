@@ -2,71 +2,73 @@
 
 set -e
 
-ACTION='\033[1;90m'
-FINISHED='\033[1;96m'
-READY='\033[1;92m'
-NOCOLOR='\033[0m'
-ERROR='\033[0;31m'
+# Formatting
+WHITE='\033[0;37m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+RESET='\033[0m'
+
 
 exec 3>&1 1>>./init.log 2>&1
 function log {
-    echo -e "$(date "+%Y-%m-%d %H:%M:%S")" | tee /dev/fd/3
-    echo -e "$(date "+%Y-%m-%d %H:%M:%S") $1$2${NOCOLOR}" | tee /dev/fd/3
-    echo -e "$(date "+%Y-%m-%d %H:%M:%S") =======================${NOCOLOR}" | tee /dev/fd/3
+    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
+    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET} $1$2${RESET}" | tee /dev/fd/3
+    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") =======================${RESET}" | tee /dev/fd/3
 }
 
 trap trapint SIGINT SIGTERM
 function trapint {
-    log ${ERROR} "Caught SIGINT. Exiting..."
+    log ${RED} "Caught SIGINT. Exiting..."
     exit 0
 }
 
 if (( $EUID != 0 )); then
-    log ${ERROR} "Please run as root."
+    log ${RED} "Please run as root."
     exit 1
 fi
 
 if npm run is-running ; then
-    log ${FINISHED} "Pixelclock is already running."
+    log ${GREEN} "Pixelclock is already running."
 else
-    log ${ERROR} "Pixelclock is not running. Starting..."
+    log ${YELLOW} "Pixelclock is not running. Starting..."
     npm run start
 fi
 
 
-log ${ACTION} "Checking if on main branch..."
+log ${WHITE} "Checking if on main branch..."
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" != "main" ]; then
-    log ${ERROR} "Only the main branch can be updated by this script. Exiting..."
+    log ${RED} "Only the main branch can be updated by this script. Exiting..."
     exit 0
 fi
 
 
 while true; do
-    log ${ACTION} "Checking if up to date with origin/main..."
+    log ${WHITE} "Checking if up to date with origin/main..."
     git fetch
     HEADHASH=$(git rev-parse HEAD)
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
-        log ${ERROR} "Current branch is not up to date with origin/main. Updating..."
+        log ${YELLOW} "Current branch is not up to date with origin/main. Updating..."
 
-        log ${ACTION} "Resetting to origin/main..."
+        log ${WHITE} "Resetting to origin/main..."
         git reset --hard origin/main
 
-        log ${ACTION} "Installing dependencies..."
+        log ${WHITE} "Installing dependencies..."
         npm install
 
-        log ${ACTION} "Building pixelclock..."
+        log ${WHITE} "Building pixelclock..."
         npm run build
 
-        log ${ACTION} "Restarting pixelclock..."
+        log ${WHITE} "Restarting pixelclock..."
         npm run restart
         exec ./init.sh
         exit 0
     else
-        log ${FINISHED} "Current branch is up to date with origin/main."
+        log ${GREEN} "Current branch is up to date with origin/main."
     fi
 
-    log ${ACTION} "Next update check in 5 minutes."
+    log ${WHITE} "Next update check in 5 minutes."
     sleep 300
 done
