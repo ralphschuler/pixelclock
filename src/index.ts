@@ -7,10 +7,10 @@ const matrix = new Matrix({
   columns: columns,
   ledCount: 90,
   getPixelId: (x, y) => {
-    if (x % 2 === 0) {
-      return x / 2 + y * (rows + 1);
+    if (y % 2 === 0) {
+      return y / 2 + x * (rows + 1);
     } else {
-      return rows + 1 - x + x / 2 + y * (rows + 1);
+      return rows + 1 - y + y / 2 + x * (rows + 1);
     }
   },
 });
@@ -47,7 +47,7 @@ setInterval(() => {
   console.log(new Date().toISOString(), "loop");
   for (let x = 0; x < rows; x++) {
     for (let y = 0; y < columns; y++) {
-      matrix.setPixel(x, y, colorwheel((x * y + offset) % 256));
+      matrix.setPixel(x, y, colorwheel((x + y + offset) % 256));
       matrix.render();
       offset++;
     }
