@@ -12,7 +12,7 @@
   "scripts": {
     "start": "pm2 start dist/index.js --name pixelclock",
     "stop": "pm2 stop pixelclock",
-    "restart": "pm2 restart pixelclock --update-env",
+    "restart": "pm2 restart pixelclock",
     "delete": "pm2 delete pixelclock",
     "is-running": "pm2 pid pixelclock",
     "build": "tsc",
