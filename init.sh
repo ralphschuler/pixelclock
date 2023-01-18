@@ -78,12 +78,12 @@ fi
 # Respond to --quiet and -q (if set, don't show the logo and continue)
 if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
     echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
-    echo -e "${GREY} _____ ${RED}_${RESET}         ${BLUE} _${RESET}    _____ ${GREY}_           ${RESET}${RED} _    ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|  __ ${RED}(_)${RESET}        ${BLUE}| |${RESET}  / ____|${GREY} |          ${RESET}${RED}| |   ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___${BLUE}| |${RESET} | |    ${GREY}| | ${RESET}${PURPLE}___${RESET}  ${CYAN} ___${RED}| | __${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \\\\${BLUE} |${RESET} | |    ${GREY}| |${RESET}${PURPLE}/ _ \\\\${RESET} ${CYAN}/ __|${RED} |/ /${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/${BLUE} | |${RESET} |____${GREY}| |${RESET}${PURPLE} (_) |${RESET} ${CYAN}(__|${RED}   < ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___${BLUE}|_|${RESET}  \_____|${GREY}_|${RESET}${PURPLE}\___/${RESET} ${CYAN}\___|${RED}_|\_\\\\${RESET}" | tee /dev/fd/3
+    echo -e "${GREY} _____ ${RED}_${RESET}         ${BLUE} _${RESET}${GREY}    _____${RESET} ${WHITE}_           ${RESET}${RED} _    ${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}|  __ ${RED}(_)${RESET}        ${BLUE}| |${RESET}${GREY}  / ____${RESET}${WHITE}| |          ${RESET}${RED}| |   ${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___${BLUE}| |${RESET}${GREY} | |    ${RESET}${WHITE}| | ${RESET}${PURPLE}___${RESET}  ${CYAN} ___${RED}| | __${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \\\\${BLUE} |${RESET}${GREY} | |    ${RESET}${WHITE}| |${RESET}${PURPLE}/ _ \\\\${RESET} ${CYAN}/ __${RED}| |/ /${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}| |   ${RED}| ${RESET}${CYAN}|>  < ${RESET} __/${BLUE} | ${RESET}${GREY}| |____${RESET}${WHITE}| |${RESET}${PURPLE} (_) ${RESET}${CYAN}| (__${RED}|   < ${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}|_|   ${RED}|_${RESET}${CYAN}/_/\_\\\\${RESET}___${BLUE}|_|${RESET}${GREY}  \_____${RESET}${WHITE}|_|${RESET}${PURPLE}\___/${RESET} ${CYAN}\___${RED}|_|\_\\\\${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
 fi
 log ${WHITE} "Initializing..."
