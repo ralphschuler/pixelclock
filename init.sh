@@ -35,7 +35,7 @@ exec 3>&1 1>>./init.log 2>&1
 function log {
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET} $1$2${RESET}" | tee /dev/fd/3
-    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") =======================${RESET}" | tee /dev/fd/3
+    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
 }
 
 trap trapint SIGINT SIGTERM
@@ -49,7 +49,7 @@ if (( $EUID != 0 )); then
     exit 1
 fi
 
-if [[ $- == *i* ]]
+if [[ shopt -q login_shell ]]
 then
     echo -e "${BLACK}${BG_PURPLE}  _ \\${RESET} ${BLACK}${BG_ORANGE}_)${RESET}${BLACK}${BG_GREEN}${RESET}      ${BLACK}${BG_BLUE}${RESET}     ${BLACK}${BG_YELLOW}${RESET}     ${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN}  ___|${RESET}${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE}${RESET}      ${BLACK}${BG_YELLOW}${RESET}     ${BLACK}${BG_BLUE} |${RESET}" 1>&3
     echo -e "${BLACK}${BG_PURPLE} |   |${RESET}${BLACK}${BG_ORANGE} |${RESET}${BLACK}${BG_GREEN}\\ \\  /${RESET}${BLACK}${BG_BLUE}  __|${RESET}${BLACK}${BG_YELLOW}  _ \\${RESET}${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN} |${RESET}    ${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE}  _ \\${RESET} ${BLACK}${BG_YELLOW}  __|${BLACK}${BG_BLUE} |  /${RESET}" 1>&3
