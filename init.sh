@@ -28,10 +28,9 @@ RESET='\033[0m'
 # Logging
 exec 3>&1 1>>./init.log 2>&1
 function log {
-    USE_SLIM_LOG="$3"
-    [ "${USE_SLIM_LOG}" != 1 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
+    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET} $1$2${RESET}" | tee /dev/fd/3
-    [ "${USE_SLIM_LOG}" != 1 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
+    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
 }
 
 # Traps
@@ -63,14 +62,14 @@ fi
 
 # Respond to --quiet and -q (if set, don't show the logo and continue)
 if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
-    log ${WHITE} "===================================================${RESET}" "1"
-    log ${GREY} " _____ _              _    _____ _            _    ${RESET}" "1"
-    log ${GREY} "|  __ (_)            | |  / ____| |          | |   ${RESET}" "1"
-    log ${GREY} "| |__) |__  _____ ___| | | |    | | ___   ___| | __${RESET}" "1"
-    log ${GREY} "|  ___/ \ \/ / __/ _ \ | | |    | |/ _ \ / __| |/ /${RESET}" "1"
-    log ${GREY} "| |   | |>  < (_|  __/ | | |____| | (_) | (__|   < ${RESET}" "1"
-    log ${GREY} "|_|   |_/_/\_\___\___|_|  \_____|_|\___/ \___|_|\_\\${RESET}" "1"
-    log ${WHITE} "===================================================${RESET}" "1"
+    echo -e "${WHITE}===================================================${RESET}"
+    echo -e "${GREY} _____ _              _    _____ _            _    ${RESET}"
+    echo -e "${GREY}|  __ (_)            | |  / ____| |          | |   ${RESET}"
+    echo -e "${GREY}| |__) |__  _____ ___| | | |    | | ___   ___| | __${RESET}"
+    echo -e "${GREY}|  ___/ \ \/ / __/ _ \ | | |    | |/ _ \ / __| |/ /${RESET}"
+    echo -e "${GREY}| |   | |>  < (_|  __/ | | |____| | (_) | (__|   < ${RESET}"
+    echo -e "${GREY}|_|   |_/_/\_\___\___|_|  \_____|_|\___/ \___|_|\_\\${RESET}"
+    echo -e "${WHITE}===================================================${RESET}"
     log ${GREY} "version: ${VERSION} | startup: $(date "+%Y-%m-%d %H:%M:%S") | pid: $$${RESET}"
 fi
 
