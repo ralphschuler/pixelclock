@@ -28,9 +28,10 @@ RESET='\033[0m'
 # Logging
 exec 3>&1 1>>./init.log 2>&1
 function log {
-    [ -z ${$3+x} ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
+    SLIM_LOG=${$3:-false}
+    [ "$SLIM_LOG" = false ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET} $1$2${RESET}" | tee /dev/fd/3
-    [ -z ${$3+x} ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
+    [ "$SLIM_LOG" = false ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
 }
 
 # Traps
@@ -62,15 +63,15 @@ fi
 
 # Respond to --quiet and -q (if set, don't show the logo and continue)
 if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
-    log ${WHITE} "===================================================${RESET}" 1
-    log ${GREY} " _____ _              _    _____ _            _    ${RESET}" 1
-    log ${GREY} "|  __ (_)            | |  / ____| |          | |   ${RESET}" 1
-    log ${GREY} "| |__) |__  _____ ___| | | |    | | ___   ___| | __${RESET}" 1
-    log ${GREY} "|  ___/ \ \/ / __/ _ \ | | |    | |/ _ \ / __| |/ /${RESET}" 1
-    log ${GREY} "| |   | |>  < (_|  __/ | | |____| | (_) | (__|   < ${RESET}" 1
-    log ${GREY} "|_|   |_/_/\_\___\___|_|  \_____|_|\___/ \___|_|\_\\${RESET}" 1
-    log ${WHITE} "===================================================${RESET}" 1
-    log ${WHITE} "version: ${VERSION} | startup: $(date \"+%Y-%m-%d %H:%M:%S\") | pid: $$"
+    log ${WHITE} "===================================================${RESET}" true
+    log ${GREY} " _____ _              _    _____ _            _    ${RESET}" true
+    log ${GREY} "|  __ (_)            | |  / ____| |          | |   ${RESET}" true
+    log ${GREY} "| |__) |__  _____ ___| | | |    | | ___   ___| | __${RESET}" true
+    log ${GREY} "|  ___/ \ \/ / __/ _ \ | | |    | |/ _ \ / __| |/ /${RESET}" true
+    log ${GREY} "| |   | |>  < (_|  __/ | | |____| | (_) | (__|   < ${RESET}" true
+    log ${GREY} "|_|   |_/_/\_\___\___|_|  \_____|_|\___/ \___|_|\_\\${RESET}" true
+    log ${WHITE} "===================================================${RESET}" true
+    log ${WHITE} "version: ${VERSION} | startup: $(date "+%Y-%m-%d %H:%M:%S") | pid: $$"
 fi
 
 log ${WHITE} "Checking if pixelclock is running..."
