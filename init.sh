@@ -132,7 +132,6 @@ while true; do
         log ${WHITE} "Restarting service..."
         yarn restart
         exec "$0" "$@"
-        exit 0
     else
         log ${GREEN} "No updates found."
     fi

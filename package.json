@@ -18,6 +18,7 @@
     "startup": "pm2 startup systemd -u $USER --hp $HOME",
     "save": "pm2 save",
     "build": "tsc",
+    "build:watch": "tsc -w",
     "dev": "ts-node src/index.ts"
   },
   "dependencies": {
