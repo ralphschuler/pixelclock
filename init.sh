@@ -61,13 +61,14 @@ fi
 # Respond to --quiet and -q (if set, don't show the logo and continue)
 if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
     echo -e "${WHITE}===================================================${RESET}"
-    echo -e "${GREY} _____ _              _    _____ _            _    ${RESET}"
-    echo -e "${GREY}|  __ (_)            | |  / ____| |          | |   ${RESET}"
-    echo -e "${GREY}| |__) |__  _____ ___| | | |    | | ___   ___| | __${RESET}"
-    echo -e "${GREY}|  ___/ \ \/ / __/ _ \ | | |    | |/ _ \ / __| |/ /${RESET}"
-    echo -e "${GREY}| |   | |>  < (_|  __/ | | |____| | (_) | (__|   < ${RESET}"
-    echo -e "${GREY}|_|   |_/_/\_\___\___|_|  \_____|_|\___/ \___|_|\_\\\\${RESET}"
+    echo -e "${GREY} _____ ${RED}_${RESET}          _    _____ _            _    ${RESET}"
+    echo -e "${GREY}|  __ ${RED}(_)${RESET}        | |  / ____| |          | |   ${RESET}"
+    echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___| | | |    | | ${PURPLE}___${RESET}   ___| | __${RESET}"
+    echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \ | | |    | |${PURPLE}/ _ \\\\${RESET} / __| |/ /${RESET}"
+    echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/ | | |____| |${PURPLE} (_) |${RESET} (__|   < ${RESET}"
+    echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___|_|  \_____|_|${PURPLE}\___/${RESET} \___|_|\_\\\\${RESET}"
     echo -e "${WHITE}===================================================${RESET}"
+
     log ${GREY} "version: ${VERSION} | startup: $(date "+%Y-%m-%d %H:%M:%S") | pid: $$${RESET}"
 fi
 
