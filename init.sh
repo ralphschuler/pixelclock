@@ -41,9 +41,10 @@ fi
 
 exec 3>&1 1>>./logs/latest.log 2>&1
 function log {
-    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
-    echo -e "$1$2${RESET}" | tee /dev/fd/3
     echo -e "${GREY} =======================${RESET}" | tee /dev/fd/3
+    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
+    echo -e "${BMAGENTA}>${RESET}$1$2${RESET}" | tee /dev/fd/3
+    echo -e "" | tee /dev/fd/3
 }
 
 # Traps
