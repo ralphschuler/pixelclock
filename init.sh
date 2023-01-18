@@ -29,9 +29,9 @@ RESET='\033[0m'
 exec 3>&1 1>>./init.log 2>&1
 function log {
     USE_SLIM_LOG=$3
-    [ "${USE_SLIM_LOG:=0}" = 0 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
+    [ "${USE_SLIM_LOG:-0}" = 0 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET} $1$2${RESET}" | tee /dev/fd/3
-    [ "${USE_SLIM_LOG:=0}" = 0 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
+    [ "${USE_SLIM_LOG:-0}" = 0 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
 }
 
 # Traps
@@ -71,7 +71,7 @@ if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
     log ${GREY} "| |   | |>  < (_|  __/ | | |____| | (_) | (__|   < ${RESET}" 1
     log ${GREY} "|_|   |_/_/\_\___\___|_|  \_____|_|\___/ \___|_|\_\\${RESET}" 1
     log ${WHITE} "===================================================${RESET}" 1
-    log ${WHITE} "version: ${VERSION} | startup: $(date "+%Y-%m-%d %H:%M:%S") | pid: $$${RESET}"
+    log ${GREY} "version: ${VERSION} | startup: $(date "+%Y-%m-%d %H:%M:%S") | pid: $$${RESET}"
 fi
 
 log ${WHITE} "Checking if pixelclock is running..."
