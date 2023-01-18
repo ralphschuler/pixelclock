@@ -63,10 +63,10 @@ console.log("Press Ctrl+C to exit.");
 let offset = 0;
 setInterval(() => {
   fillScreen(rgbToInt(0, 0, 0))
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < Math.floor(Math.random() * ( width * height ) ); i++) {
     const x = Math.floor(Math.random() * width);
     const y = Math.floor(Math.random() * height);
-    matrix.setPixel(x, y, colorWheel((x + y + offset) % 256));
+    matrix.setPixel(x, y, colorWheel(((x * y) * offset) % 256));
     matrix.render();
     offset++;
   }
