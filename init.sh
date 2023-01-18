@@ -24,7 +24,22 @@ BG_ORANGE='\033[43m'
 RESET='\033[0m'
 
 # Logging
-exec 3>&1 1>>./init.log 2>&1
+if [ ! -d "./logs" ]; then
+    mkdir ./logs
+fi
+
+# Rotate logs
+if [ -f "./logs/latest.log" ]; then
+    FILEDATE=$(date -r ./logs/latest.log "+%Y-%m-%d")
+    FILENUMBER=0
+    while [ -f "./logs/${FILEDATE}_${FILENUMBER}.log" ]; do
+        FILENUMBER=$((FILENUMBER+1))
+    done
+    mv ./logs/latest.log ./logs/${FILEDATE}_${FILENUMBER}.log
+fi
+
+
+exec 3>&1 1>>./logs/latest.log 2>&1
 function log {
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET} $1$2${RESET}" | tee /dev/fd/3
