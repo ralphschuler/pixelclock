@@ -80,9 +80,9 @@ if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
     echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
     echo -e "${GREY} _____ ${RED}_${RESET}         ${BLUE} _${RESET}    _____ ${GREY}_           ${RESET}${RED} _    ${RESET}" | tee /dev/fd/3
     echo -e "${GREY}|  __ ${RED}(_)${RESET}        ${BLUE}| |${RESET}  / ____|${GREY} |          ${RESET}${RED}| |   ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___${BLUE}| |${RESET} | |    |${GREY} | ${RESET}${PURPLE}___${RESET}  ${CYAN} ___${RED}| | __${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \\\\${BLUE} |${RESET} | |    |${GREY} |${RESET}${PURPLE}/ _ \\\\${RESET} ${CYAN}/ __|${RED} |/ /${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/${BLUE} | |${RESET} |____|${GREY} |${RESET}${PURPLE} (_) |${RESET} ${CYAN}(__|${RED}   < ${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___${BLUE}| |${RESET} | |    ${GREY}| | ${RESET}${PURPLE}___${RESET}  ${CYAN} ___${RED}| | __${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \\\\${BLUE} |${RESET} | |    ${GREY}| |${RESET}${PURPLE}/ _ \\\\${RESET} ${CYAN}/ __|${RED} |/ /${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/${BLUE} | |${RESET} |____${GREY}| |${RESET}${PURPLE} (_) |${RESET} ${CYAN}(__|${RED}   < ${RESET}" | tee /dev/fd/3
     echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___${BLUE}|_|${RESET}  \_____|${GREY}_|${RESET}${PURPLE}\___/${RESET} ${CYAN}\___|${RED}_|\_\\\\${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
 fi
