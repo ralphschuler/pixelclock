@@ -1,7 +1,7 @@
 import ws281x from "rpi-ws281x-native";
 import { Matrix } from "./Matrix";
 
-const FRAMES_PER_SECOND = 60;
+const FRAMES_PER_SECOND = 10;
 
 function getPixelIdByXY(x: number, y: number) {
   let id = 0
