@@ -120,6 +120,6 @@ while true; do
         log ${GREEN} "Current branch is up to date with origin/main."
     fi
 
-    log ${WHITE} "Next update check in 5 minutes."
-    sleep 300
+    log ${WHITE} "Next update check in 1 minute(s)."
+    sleep 60
 done
