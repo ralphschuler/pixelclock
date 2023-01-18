@@ -4,9 +4,27 @@ set -e
 
 # Formatting
 WHITE='\033[0;37m'
+GREY='\033[0;90m'
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
+CYAN='\033[0;36m'
+ORANGE='\033[0;33m'
+
+BG_WHITE='\033[47m'
+BG_GREY='\033[100m'
+
+BG_RED='\033[41m'
+BG_GREEN='\033[42m'
+BG_YELLOW='\033[43m'
+BG_BLUE='\033[44m'
+BG_PURPLE='\033[45m'
+BG_CYAN='\033[46m'
+BG_ORANGE='\033[43m'
+
 RESET='\033[0m'
 
 
@@ -28,8 +46,18 @@ if (( $EUID != 0 )); then
     exit 1
 fi
 
-echo $(npm run is-running)
-echo $?
+if [[ $- == *i* ]]
+then
+    echo -e "${BG_PURPLE}  _ \\${RESET} ${BG_ORANGE}_)${RESET}${BG_GREEN}${RESET}      ${BG_BLUE}${RESET}     ${BG_YELLOW}${RESET}     ${BG_RED} |${RESET}${BG_CYAN}  ___|${RESET}${BG_GREEN} |${RESET}${BG_PURPLE}${RESET}      ${BG_YELLOW}${RESET}     ${BG_BLUE} |${RESET}" 1>&3
+    echo -e "${BG_PURPLE} |   |${RESET}${BG_ORANGE} |${RESET}${BG_GREEN}\\ \\  /${RESET}${BG_BLUE}  __|${RESET}${BG_YELLOW}  _ \\${RESET}${BG_RED} |${RESET}${BG_CYAN} |${RESET}    ${BG_GREEN} |${RESET}${BG_PURPLE}  _ \\${RESET} ${BG_YELLOW}  __|${BG_BLUE} |  /${RESET}" 1>&3
+    echo -e "${BG_PURPLE} ___/${RESET} ${BG_ORANGE} |${RESET} ${BG_GREEN}\`  <${RESET} ${BG_BLUE} (${RESET}   ${BG_YELLOW}  __/${RESET}${BG_RED} |${RESET}${BG_CYAN} |${RESET}    ${BG_GREEN} |${RESET}${BG_PURPLE} (   |${BG_YELLOW} (${RESET}   ${BG_BLUE}   <${RESET}" 1>&3
+    echo -e "${BG_PURPLE}_|${RESET}    ${BG_ORANGE}_|${RESET} ${BG_GREEN}_/\\_\\${RESET}${BG_BLUE}\\___|${RESET}${BG_YELLOW}\\___|${RESET}${BG_RED}_|${RESET}${BG_CYAN}\\____|${RESET}${BG_GREEN}_|${RESET}${BG_PURPLE}\\___/${RESET} ${BG_YELLOW}\\___|${RESET}${BG_BLUE}_|\\_\\\\${RESET}" 1>&3
+
+    log ${WHITE} "Pixelclock init script."
+fi
+
+VERSION=$(git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git rev-parse --short HEAD) # tag > branch > commit
+log ${WHITE} "Pixelclock version ${VERSION}."
 
 log ${WHITE} "Checking if pixelclock is running..."
 if npm run is-running; then
