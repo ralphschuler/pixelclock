@@ -21,6 +21,25 @@ function getPixelXYById(id: number) {
   return { x, y };
 }
 
+function intToRgb(color: number) {
+  const r = (color >> 16) & 0xff;
+  const g = (color >> 8) & 0xff;
+  const b = color & 0xff;
+
+  return { r, g, b };
+}
+
+function blendColors(from: number, to: number): number {
+  const fromColor = intToRgb(from);
+  const toColor = intToRgb(to);
+
+  const r = Math.floor((fromColor.r + toColor.r) / 2);
+  const g = Math.floor((fromColor.g + toColor.g) / 2);
+  const b = Math.floor((fromColor.b + toColor.b) / 2);
+
+  return rgbToInt(r, g, b);
+}
+
 const height = 5;
 const width = 17;
 const matrix = new Matrix({
@@ -33,7 +52,8 @@ const matrix = new Matrix({
 function fillScreen(color: number) {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
-      matrix.setPixel(x, y, color);
+      const currentColor = matrix.getPixel(x, y);
+      matrix.setPixel(x, y, blendColors(currentColor, color));
     }
   }
   matrix.render();
