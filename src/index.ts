@@ -1,7 +1,7 @@
 import ws281x from "rpi-ws281x-native";
 import { Matrix } from "./Matrix";
 
-const FRAMES_PER_SECOND = 10;
+const FRAMES_PER_SECOND = 5;
 
 function getPixelIdByXY(x: number, y: number) {
   let id = 0
@@ -83,7 +83,7 @@ console.log("Press Ctrl+C to exit.");
 let offset = 0;
 setInterval(() => {
   fillScreen(rgbToInt(0, 0, 0))
-  for (let i = 0; i < Math.floor(Math.random() * ( width * height ) ); i++) {
+  for (let i = 0; i < 25; i++) {
     const x = Math.floor(Math.random() * width);
     const y = Math.floor(Math.random() * height);
     matrix.setPixel(x, y, colorWheel(((x * y) * offset) % 256));
