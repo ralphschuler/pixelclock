@@ -57,7 +57,7 @@ fi
 REPOSITORY=$(git config --get remote.origin.url)
 VERSION=$(git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git rev-parse --short HEAD) # tag > branch > commit
 if [[ "$@" == *"--version"* ]] && [[ "$@" == *"-v"* ]]; then
-    log ${WHITE} "Version: ${VERSION}\nRepository: ${REPOSITORY}"
+    log ${WHITE} "version: ${VERSION}\nrepository: ${REPOSITORY}"
     exit 0
 fi
 
@@ -73,7 +73,6 @@ log ${WHITE} "version: ${VERSION} | startup: $(date \"+%Y-%m-%d %H:%M:%S\") | pi
 log ${WHITE} "Initializing pixelclock..."
 
 log ${WHITE} "Checking if pixelclock is running..."
-log ${BMAGENTA} "npm run is-running == '$(npm run is-running)'" # DEBUG
 if npm run is-running; then
     log ${GREEN} "Pixelclock is already running."
 else
