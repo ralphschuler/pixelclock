@@ -83,7 +83,7 @@ console.log("Press Ctrl+C to exit.");
 let offset = 0;
 setInterval(() => {
   fillScreen(rgbToInt(0, 0, 0), 1)
-  if (offset % 2 === 0) {
+  if (offset % 10 === 0) {
     for (let i = 3; i < 1; i++) {
       const x = Math.floor(Math.random() * width);
       const y = Math.floor(Math.random() * height);

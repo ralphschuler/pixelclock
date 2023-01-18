@@ -15,7 +15,10 @@
 
 ## Effects
 - [ ] Matrix
-- [ ] Decay
+- [ ] Falling Decay
+- [ ] Faiding Decay
+- [ ] Rainbow
+- [ ] Fairy Lights
 - [ ] Fire
 - [ ] Fireworks
 - [ ] Rain
@@ -24,6 +27,7 @@
 - [ ] Lightning
 
 ## Scenes
+- [ ] Start up
 - [ ] Clock
 - [ ] Weather
 - [ ] Audio visualizer
