@@ -29,13 +29,28 @@ function intToRgb(color: number) {
   return { r, g, b };
 }
 
-function blendColors(from: number, to: number, amount: number): number {
+function floodFill(colors: number[], floodSpeed: number = 1) {
+  const colorCount = colors.length;
+
+  let y = 0;
+  const interval = setInterval(() => {
+    for (let x = 0; x < width; x++) {
+      matrix.setPixel(x, y, colors[Math.floor(Math.random() * colorCount)]);
+    }
+    y++;
+    if (y >= height) {
+      clearInterval(interval);
+    }
+  }, 1000 / floodSpeed);
+}
+
+function blendColors(from: number, to: number, blendAmount: number): number {
   const fromColor = intToRgb(from);
   const toColor = intToRgb(to);
   
-  const r = Math.floor(fromColor.r + (toColor.r - fromColor.r) * (amount / 100));
-  const g = Math.floor(fromColor.g + (toColor.g - fromColor.g) * (amount / 100));
-  const b = Math.floor(fromColor.b + (toColor.b - fromColor.b) * (amount / 100));
+  const r = Math.floor(fromColor.r + (toColor.r - fromColor.r) * (blendAmount / 100));
+  const g = Math.floor(fromColor.g + (toColor.g - fromColor.g) * (blendAmount / 100));
+  const b = Math.floor(fromColor.b + (toColor.b - fromColor.b) * (blendAmount / 100));
   
   return rgbToInt(r, g, b);
 }
@@ -76,6 +91,108 @@ function colorWheel(pos: number) {
 function rgbToInt(r: number, g: number, b: number) {
   return (r << 16) | (g << 8) | b;
 }
+
+function hexToInt(hex: string) {
+  return parseInt(hex.replace("#", ""), 16);
+}
+
+function intToHex(color: number) {
+  return "#" + color.toString(16);
+}
+
+function hexToHsl(hex: string) {
+  const rgb = hexToRgb(hex);
+  return rgbToHsl(rgb.r, rgb.g, rgb.b);
+}
+
+function hexToRgb(hex: string) {
+  const bigint = parseInt(hex.replace("#", ""), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+
+  return { r, g, b };
+}
+
+function rgbToHsl(r: number, g: number, b: number) {
+  (r /= 255), (g /= 255), (b /= 255);
+
+  const max = Math.max(r, g, b),
+    min = Math.min(r, g, b);
+  let hue: number = 0, saturation: number = 0, lightness = (max + min) / 2;
+
+  if (max == min) {
+    hue = saturation = 0; // achromatic
+  } else {
+    const d = max - min;
+    saturation = lightness > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r:
+        hue = (g - b) / d + (g < b ? 6 : 0);
+        break;
+      case g:
+        hue = (b - r) / d + 2;
+        break;
+      case b:
+        hue = (r - g) / d + 4;
+        break;
+    }
+    hue /= 6;
+  }
+
+  return { h: hue, s: saturation, l: lightness };
+}
+
+function hslToInt(h: number, s: number, l: number) {
+  let r: number, g: number, b: number;
+
+  if (s == 0) {
+    r = g = b = l; // achromatic
+  } else {
+    const hue2rgb = (p: number, q: number, t: number) => {
+      if (t < 0) t += 1;
+      if (t > 1) t -= 1;
+      if (t < 1 / 6) return p + (q - p) * 6 * t;
+      if (t < 1 / 2) return q;
+      if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+      return p;
+    };
+
+    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    const p = 2 * l - q;
+    r = hue2rgb(p, q, h + 1 / 3);
+    g = hue2rgb(p, q, h);
+    b = hue2rgb(p, q, h - 1 / 3);
+  }
+
+  return rgbToInt(r * 255, g * 255, b * 255);
+}
+
+function getDarkerVariant(color: number, amount: number) {
+  const rgb = intToRgb(color);
+  const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+  hsl.l -= amount / 100;
+  return hslToInt(hsl.h, hsl.s, hsl.l);
+}
+
+function getLighterVariant(color: number, amount: number) {
+  const rgb = intToRgb(color);
+  const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
+  hsl.l += amount / 100;
+  return hslToInt(hsl.h, hsl.s, hsl.l);
+}
+
+
+const color = hexToInt("#3274cf");
+const colors = [
+  ...Array(10)
+    .fill(null)
+    .map((_, i) => getLighterVariant(color, i * 10)),
+  ...Array(10)
+    .fill(null)
+    .map((_, i) => getDarkerVariant(color, i * 10))
+];
+floodFill(colors, 1);
 
 console.log("Starting...");
 console.log("Press Ctrl+C to exit.");

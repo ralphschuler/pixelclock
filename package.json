@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "pm2": "^5.2.2",
-    "rpi-ws281x-native": "^1.0.4"
+    "rpi-ws281x-native": "^1.0.4",
+    "zod": "^3.20.2"
   }
 }
