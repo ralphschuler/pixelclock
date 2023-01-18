@@ -191,50 +191,61 @@ function exitSafely() {
   process.nextTick(function () { process.exit(0); });
 }
 
-process.on('SIGINT', exitSafely)
-process.on('SIGTERM', exitSafely)
-process.on('SIGQUIT', exitSafely)
-process.on('SIGHUP', exitSafely)
-process.on('SIGBREAK', exitSafely)
-process.on('uncaughtException', exitSafely)
+function main() {
 
-console.log("Starting...");
-console.log("Press Ctrl+C to exit.");
+  process.on('SIGINT', exitSafely)
+  process.on('SIGTERM', exitSafely)
+  process.on('SIGQUIT', exitSafely)
+  process.on('SIGHUP', exitSafely)
+  process.on('SIGBREAK', exitSafely)
+  process.on('uncaughtException', exitSafely)
 
-function randomFloodFill() {
-  const color = colorWheel(Math.floor(Math.random() * 256));
-  const colors = [
-    ...Array(10)
-      .fill(null)
-      .map((_, i) => getLighterVariant(color, i * 5)),
-    ...Array(10)
-      .fill(null)
-      .map((_, i) => getDarkerVariant(color, i * 5))
-  ];
-  floodFill(colors, 1);
+  console.log("Starting...");
+  console.log("Press Ctrl+C to exit.");
+
+  function randomFloodFill() {
+    const color = colorWheel(Math.floor(Math.random() * 256));
+    const colors = [
+      ...Array(10)
+        .fill(null)
+        .map((_, i) => getLighterVariant(color, i * 5)),
+      ...Array(10)
+        .fill(null)
+        .map((_, i) => getDarkerVariant(color, i * 5))
+    ];
+    floodFill(colors, 1);
+  }
+
+  let offset = 0;
+  setInterval(() => {
+    if (offset % 7 === 0) {
+      console.log("Flood fill");
+      randomFloodFill();
+      offset++;
+    } else if (offset % 5 === 0) {
+      console.log("Clear screen");
+      fillScreen(rgbToInt(0, 0, 0), 1)
+      offset++;
+    }
+
+    const actionsCount = Math.floor(Math.random() * 10);
+    console.log(`Randomized ${actionsCount} pixels`)
+    for (let i = actionsCount; i < 1; i++) {
+      const x = Math.floor(Math.random() * width);
+      const y = Math.floor(Math.random() * height);
+      const currentColor = matrix.getPixel(x, y);
+      const wheelColor = colorWheel(Math.floor(Math.random() * 256))
+      const newColor = blendColors(currentColor, wheelColor, 5);
+      matrix.setPixel(x, y, newColor);
+      offset++;
+    }
+
+    matrix.render();
+  }, 1000 / FRAMES_PER_SECOND);
+
+  process?.send && process.send('ready')
 }
 
-let offset = 0;
-setInterval(() => {
-  if (offset % 7 === 0) {
-    randomFloodFill();
-    offset++;
-  } else if (offset % 5 === 0) {
-    fillScreen(rgbToInt(0, 0, 0), 1)
-    offset++;
-  }
-  for (let i = 3; i < 1; i++) {
-    const x = Math.floor(Math.random() * width);
-    const y = Math.floor(Math.random() * height);
-    const currentColor = matrix.getPixel(x, y);
-    const wheelColor = colorWheel(Math.floor(Math.random() * 256))
-    const newColor = blendColors(currentColor, wheelColor, 5);
-    matrix.setPixel(x, y, newColor);
-    offset++;
-  }
-
-  matrix.render();
-}, 1000 / FRAMES_PER_SECOND);
-
-process?.send && process.send('ready')
-
+console.time("main")
+main();
+console.timeEnd("main");
