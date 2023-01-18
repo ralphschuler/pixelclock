@@ -76,12 +76,12 @@ fi
 # Respond to --quiet and -q (if set, don't show the logo and continue)
 if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
     echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
-    echo -e "${GREY} _____ ${RED}_${RESET}          _    _____ _            _    ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|  __ ${RED}(_)${RESET}        | |  / ____| |          | |   ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___| | | |    | | ${PURPLE}___${RESET}   ___| | __${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \ | | |    | |${PURPLE}/ _ \\\\${RESET} / __| |/ /${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/ | | |____| |${PURPLE} (_) |${RESET} (__|   < ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___|_|  \_____|_|${PURPLE}\___/${RESET} \___|_|\_\\\\${RESET}" | tee /dev/fd/3
+    echo -e "${GREY} _____ ${RED}_${RESET}         ${BLUE} _${RESET}    _____ _           ${ORANGE} _    ${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}|  __ ${RED}(_)${RESET}        ${BLUE}| |${RESET}  / ____| |          ${ORANGE}| |   ${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___${BLUE}| |${RESET} | |    | | ${PURPLE}___${RESET}  ${CYAN} ___${ORANGE}| | __${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \\\\${BLUE} |${RESET} | |    | |${PURPLE}/ _ \\\\${RESET} ${CYAN}/ __|${ORANGE} |/ /${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/${BLUE} | |${RESET} |____| |${PURPLE} (_) |${RESET} ${CYAN}(__|${ORANGE}   < ${RESET}" | tee /dev/fd/3
+    echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___${BLUE}|_|${RESET}  \_____|_|${PURPLE}\___/${RESET} ${CYAN}\___|${ORANGE}_|\_\\\\${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
 fi
 log ${WHITE} "Initializing Pixelclock..."
