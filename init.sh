@@ -28,10 +28,10 @@ RESET='\033[0m'
 # Logging
 exec 3>&1 1>>./init.log 2>&1
 function log {
-    USE_SLIM_LOG=${3:=0}
-    [ "${USE_SLIM_LOG}" = 1 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
+    USE_SLIM_LOG=$3
+    [ "${USE_SLIM_LOG:=1}" = 0 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET} $1$2${RESET}" | tee /dev/fd/3
-    [ "${USE_SLIM_LOG}" = 1 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
+    [ "${USE_SLIM_LOG:=1}" = 0 ] && echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
 }
 
 # Traps
