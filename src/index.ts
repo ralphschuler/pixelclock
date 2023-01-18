@@ -29,14 +29,14 @@ function intToRgb(color: number) {
   return { r, g, b };
 }
 
-function blendColors(from: number, to: number): number {
+function blendColors(from: number, to: number, amount: number): number {
   const fromColor = intToRgb(from);
   const toColor = intToRgb(to);
-
-  const r = Math.floor((fromColor.r + toColor.r) / 2);
-  const g = Math.floor((fromColor.g + toColor.g) / 2);
-  const b = Math.floor((fromColor.b + toColor.b) / 2);
-
+  
+  const r = Math.floor(fromColor.r + (toColor.r - fromColor.r) * (amount / 100));
+  const g = Math.floor(fromColor.g + (toColor.g - fromColor.g) * (amount / 100));
+  const b = Math.floor(fromColor.b + (toColor.b - fromColor.b) * (amount / 100));
+  
   return rgbToInt(r, g, b);
 }
 
@@ -49,11 +49,11 @@ const matrix = new Matrix({
   getPixelId: getPixelIdByXY,
 });
 
-function fillScreen(color: number) {
+function fillScreen(color: number, blendAmount: number = 100) {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
       const currentColor = matrix.getPixel(x, y);
-      matrix.setPixel(x, y, blendColors(currentColor, color));
+      matrix.setPixel(x, y, blendColors(currentColor, color, blendAmount));
     }
   }
   matrix.render();
@@ -82,7 +82,7 @@ console.log("Press Ctrl+C to exit.");
 
 let offset = 0;
 setInterval(() => {
-  fillScreen(rgbToInt(0, 0, 0))
+  fillScreen(rgbToInt(0, 0, 0), 10)
   for (let i = 0; i < 3; i++) {
     const x = Math.floor(Math.random() * width);
     const y = Math.floor(Math.random() * height);
@@ -92,10 +92,19 @@ setInterval(() => {
   }
 }, 1000 / FRAMES_PER_SECOND);
 
-process.on('SIGINT', function() {
+process.on('SIGINT', exitSafely)
+process.on('SIGTERM', exitSafely)
+process.on('SIGQUIT', exitSafely)
+process.on('SIGHUP', exitSafely)
+process.on('SIGBREAK', exitSafely)
+process.on('uncaughtException', exitSafely)
+
+process?.send &&  process.send('ready')
+
+function exitSafely() {
+  fillScreen(rgbToInt(0, 0, 0));
+
   ws281x.reset();
   ws281x.finalize();
   process.nextTick(function() { process.exit(0); });
-})
-
-process?.send &&  process.send('ready')
+}
