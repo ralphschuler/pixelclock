@@ -37,6 +37,7 @@ function floodFill(colors: number[], floodSpeed: number = 1) {
     for (let x = 0; x < width; x++) {
       matrix.setPixel(x, y, colors[Math.floor(Math.random() * colorCount)]);
     }
+    matrix.render();
     y++;
     if (y >= height) {
       clearInterval(interval);
@@ -182,6 +183,18 @@ function getLighterVariant(color: number, amount: number) {
   return hslToInt(hsl.h, hsl.s, hsl.l);
 }
 
+function randomFloodFill() {
+  const color = colorWheel(Math.floor(Math.random() * 256));
+  const colors = [
+    ...Array(10)
+      .fill(null)
+      .map((_, i) => getLighterVariant(color, i * 2)),
+    ...Array(10)
+      .fill(null)
+      .map((_, i) => getDarkerVariant(color, i * 2))
+  ];
+  floodFill(colors, 3);
+}
 
 function exitSafely() {
   fillScreen(rgbToInt(0, 0, 0));
@@ -200,32 +213,20 @@ function main() {
   process.on('SIGBREAK', exitSafely)
   process.on('uncaughtException', exitSafely)
 
+  randomFloodFill();
   console.log("Starting...");
   console.log("Press Ctrl+C to exit.");
 
-  function randomFloodFill() {
-    const color = colorWheel(Math.floor(Math.random() * 256));
-    const colors = [
-      ...Array(10)
-        .fill(null)
-        .map((_, i) => getLighterVariant(color, i * 5)),
-      ...Array(10)
-        .fill(null)
-        .map((_, i) => getDarkerVariant(color, i * 5))
-    ];
-    floodFill(colors, 1);
-  }
-
   let offset = 0;
   setInterval(() => {
-    if (offset % 7 === 0) {
+    if (offset % 3 === 0) {
       console.log("Flood fill");
       randomFloodFill();
       offset++;
-    } else if (offset % 5 === 0) {
+    } else if (offset >= 10000) {
       console.log("Clear screen");
       fillScreen(rgbToInt(0, 0, 0), 1)
-      offset++;
+      offset = 0;
     }
 
     const actionsCount = Math.floor(Math.random() * 10);
@@ -237,6 +238,7 @@ function main() {
       const wheelColor = colorWheel(Math.floor(Math.random() * 256))
       const newColor = blendColors(currentColor, wheelColor, 5);
       matrix.setPixel(x, y, newColor);
+      matrix.render();
       offset++;
     }
 
