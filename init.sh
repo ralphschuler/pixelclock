@@ -107,8 +107,11 @@ while true; do
         log ${WHITE} "Building pixelclock..."
         npm run build
 
-        log ${WHITE} "Generating startup script..."
+        log ${WHITE} "Creating service..."
         npm run startup
+
+        log ${WHITE} "Saving pm2 config..."
+        nom run save
 
         log ${WHITE} "Restarting pixelclock..."
         npm run restart
