@@ -49,18 +49,28 @@ if (( $EUID != 0 )); then
     exit 1
 fi
 
-if [[ shopt -q login_shell ]]
-then
+if [[ "$@" == *"--help"* ]] && [[ "$@" == *"-h"* ]]; then
+    log ${WHITE} "You can use the following arguments: --help, -h: Show this help message \n--quiet, -q: Don't show the logo \n--version, -v: Show the version"
+    exit 0
+fi
+
+REPOSITORY=$(git config --get remote.origin.url)
+VERSION=$(git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git rev-parse --short HEAD) # tag > branch > commit
+if [[ "$@" == *"--version"* ]] && [[ "$@" == *"-v"* ]]; then
+    log ${WHITE} "Version: ${VERSION}\nRepository: ${REPOSITORY}"
+    exit 0
+fi
+
+if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
     echo -e "${BLACK}${BG_PURPLE}  _ \\${RESET} ${BLACK}${BG_ORANGE}_)${RESET}${BLACK}${BG_GREEN}${RESET}      ${BLACK}${BG_BLUE}${RESET}     ${BLACK}${BG_YELLOW}${RESET}     ${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN}  ___|${RESET}${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE}${RESET}      ${BLACK}${BG_YELLOW}${RESET}     ${BLACK}${BG_BLUE} |${RESET}" 1>&3
     echo -e "${BLACK}${BG_PURPLE} |   |${RESET}${BLACK}${BG_ORANGE} |${RESET}${BLACK}${BG_GREEN}\\ \\  /${RESET}${BLACK}${BG_BLUE}  __|${RESET}${BLACK}${BG_YELLOW}  _ \\${RESET}${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN} |${RESET}    ${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE}  _ \\${RESET} ${BLACK}${BG_YELLOW}  __|${BLACK}${BG_BLUE} |  /${RESET}" 1>&3
     echo -e "${BLACK}${BG_PURPLE} ___/${RESET} ${BLACK}${BG_ORANGE} |${RESET} ${BLACK}${BG_GREEN}\`  <${RESET} ${BLACK}${BG_BLUE} (${RESET}   ${BLACK}${BG_YELLOW}  __/${RESET}${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN} |${RESET}    ${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE} (   |${BLACK}${BG_YELLOW} (${RESET}   ${BLACK}${BG_BLUE}   <${RESET}" 1>&3
     echo -e "${BLACK}${BG_PURPLE}_|${RESET}    ${BLACK}${BG_ORANGE}_|${RESET} ${BLACK}${BG_GREEN}_/\\_\\${RESET}${BLACK}${BG_BLUE}\\___|${RESET}${BLACK}${BG_YELLOW}\\___|${RESET}${BLACK}${BG_RED}_|${RESET}${BLACK}${BG_CYAN}\\____|${RESET}${BLACK}${BG_GREEN}_|${RESET}${BLACK}${BG_PURPLE}\\___/${RESET} ${BLACK}${BG_YELLOW}\\___|${RESET}${BLACK}${BG_BLUE}_|\\_\\\\${RESET}" 1>&3
-
-    log ${WHITE} "Pixelclock init script."
 fi
 
-VERSION=$(git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git rev-parse --short HEAD) # tag > branch > commit
-log ${WHITE} "Pixelclock version ${VERSION}."
+log ${WHITE} "version: ${VERSION} | startup: $(date \"+%Y-%m-%d %H:%M:%S\") | pid: $$"
+
+log ${WHITE} "Initializing pixelclock..."
 
 log ${WHITE} "Checking if pixelclock is running..."
 log ${BMAGENTA} "npm run is-running == '$(npm run is-running)'" # DEBUG
