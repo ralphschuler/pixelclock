@@ -183,33 +183,13 @@ function getLighterVariant(color: number, amount: number) {
 }
 
 
-const color = hexToInt("#3274cf");
-const colors = [
-  ...Array(10)
-    .fill(null)
-    .map((_, i) => getLighterVariant(color, i * 10)),
-  ...Array(10)
-    .fill(null)
-    .map((_, i) => getDarkerVariant(color, i * 10))
-];
-floodFill(colors, 1);
+function exitSafely() {
+  fillScreen(rgbToInt(0, 0, 0));
 
-console.log("Starting...");
-console.log("Press Ctrl+C to exit.");
-
-let offset = 0;
-setInterval(() => {
-  fillScreen(rgbToInt(0, 0, 0), 1)
-  if (offset % 15 === 0) {
-    for (let i = 3; i < 1; i++) {
-      const x = Math.floor(Math.random() * width);
-      const y = Math.floor(Math.random() * height);
-      matrix.setPixel(x, y, colorWheel(((x * y) * offset) % 256));
-      offset++;
-    }
-  }
-  matrix.render();
-}, 1000 / FRAMES_PER_SECOND);
+  ws281x.reset();
+  ws281x.finalize();
+  process.nextTick(function() { process.exit(0); });
+}
 
 process.on('SIGINT', exitSafely)
 process.on('SIGTERM', exitSafely)
@@ -218,12 +198,42 @@ process.on('SIGHUP', exitSafely)
 process.on('SIGBREAK', exitSafely)
 process.on('uncaughtException', exitSafely)
 
+console.log("Starting...");
+console.log("Press Ctrl+C to exit.");
+
+
+const randomFloodFill = () => {
+  const color = colorWheel(Math.floor(Math.random() * 256));
+  const colors = [
+    ...Array(10)
+      .fill(null)
+      .map((_, i) => getLighterVariant(color, i * 5)),
+    ...Array(10)
+      .fill(null)
+      .map((_, i) => getDarkerVariant(color, i * 5))
+  ];
+  floodFill(colors, 5);
+};
+
+let offset = 0;
+setInterval(() => {
+  fillScreen(rgbToInt(0, 0, 0), 1)
+  if (offset % 15 === 0) {
+    randomFloodFill();
+    offset++;
+  } else {
+    for (let i = 3; i < 1; i++) {
+      const x = Math.floor(Math.random() * width);
+      const y = Math.floor(Math.random() * height);
+      const currentColor = matrix.getPixel(x, y);
+      const wheelColor = colorWheel(((x * y) * offset) % 256)
+      const newColor = blendColors(currentColor, wheelColor, 0.5);
+      matrix.setPixel(x, y, newColor);
+      offset++;
+    }
+  }
+
+  matrix.render();
+}, 1000 / FRAMES_PER_SECOND);
+
 process?.send &&  process.send('ready')
-
-function exitSafely() {
-  fillScreen(rgbToInt(0, 0, 0));
-
-  ws281x.reset();
-  ws281x.finalize();
-  process.nextTick(function() { process.exit(0); });
-}
