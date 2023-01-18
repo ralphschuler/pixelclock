@@ -4,13 +4,13 @@
 - [ ] RGB Led matrix with higher resolution
 - [ ] Buttons on top for custom actions
 - [ ] usb type-c for power
-- [ ] Custom case
+- [ ] Clock Enclosure (https://www.instructables.com/Lazy-Mini-Grid/)
 - [ ] speaker for audio feedback
 - [ ] vibration motor for haptic feedback
 - [ ] dedicated power button with backlight for visual feedback
 - [ ] Web app with PWA capabilities for mobile support
 - [ ] Microphone for audio/music visualization and maybe a custom AI assistant
-- [ ] Sync multiple pixelclocks
+- [ ] Sync multiple clocks with each other
 - [ ] Custom stand (https://www.thingiverse.com/thing:1756573/files)
 
 ## Effects
