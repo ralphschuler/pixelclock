@@ -1,4 +1,11 @@
 
+## Requirements
+- 90X ws2812b leds (LED Strip)
+- Raspberry Pi Zero W
+
+
+## Installation
+1. 
 
 ## Features
 - [ ] RGB Led matrix with higher resolution

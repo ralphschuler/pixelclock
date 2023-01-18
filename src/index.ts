@@ -221,13 +221,13 @@ setInterval(() => {
   if (offset % 15 === 0) {
     randomFloodFill();
     offset++;
-  } else {
+  }
     for (let i = 3; i < 1; i++) {
       const x = Math.floor(Math.random() * width);
       const y = Math.floor(Math.random() * height);
       const currentColor = matrix.getPixel(x, y);
-      const wheelColor = colorWheel(((x * y) * offset) % 256)
-      const newColor = blendColors(currentColor, wheelColor, 0.5);
+      const wheelColor = colorWheel(Math.floor(Math.random() * 256))
+      const newColor = blendColors(currentColor, wheelColor, 5);
       matrix.setPixel(x, y, newColor);
       offset++;
     }
