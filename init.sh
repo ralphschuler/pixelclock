@@ -42,34 +42,36 @@ fi
 exec 3>&1 1>>./logs/latest.log 2>&1
 function log {
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
-    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET} $1$2${RESET}" | tee /dev/fd/3
-    echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S") ${GREY}=======================${RESET}" | tee /dev/fd/3
+    echo -e "$1$2${RESET}" | tee /dev/fd/3
+    echo -e "${GREY} =======================${RESET}" | tee /dev/fd/3
 }
 
 # Traps
 trap trapint SIGINT SIGTERM
 function trapint {
-    log ${RED} "Caught SIGINT. Exiting..."
+    log ${RED} "Caught SIGINT or SIGTERM.\nExiting..."
     exit 0
 }
 
 # Check if root
 if (( $EUID != 0 )); then
-    log ${RED} "Please run as root."
+    log ${RED} "This script must be run as root.\nExiting..."
     exit 1
 fi
 
 # Respond to --help and -h (if set, show the help message and exit)
 if [[ "$@" == *"--help"* ]] && [[ "$@" == *"-h"* ]]; then
-    log ${WHITE} "You can use the following arguments: --help, -h: Show this help message \n--quiet, -q: Don't show the logo \n--version, -v: Show the version"
+    log ${WHITE} "You can use the following arguments:\n\t--help,\t-h\tShow this help message.\t\n--quiet,\t-q\nDon't show the logo.\n\t--version, \t-v\tShow the version and exit."
     exit 0
 fi
 
 # Respond to --version and -v (if set, show the version and exit)
+AUTHOR=$(git log -1 --format="%an")
 REPOSITORY=$(git config --get remote.origin.url)
+LAST_UPDATED=$(git log -1 --format="%cd")
 VERSION=$(git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git rev-parse --short HEAD) # tag > branch > commit
 if [[ "$@" == *"--version"* ]] && [[ "$@" == *"-v"* ]]; then
-    log ${WHITE} "version: ${VERSION}\nrepository: ${REPOSITORY}"
+    log ${WHITE} "\tVersion: ${VERSION}\n\tRepository: ${REPOSITORY}\n\tLast updated: ${LAST_UPDATED}‚\n\tAuthor: ${AUTHOR}"
     exit 0
 fi
 
@@ -84,41 +86,41 @@ if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
     echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___${BLUE}|_|${RESET}  \_____|_|${PURPLE}\___/${RESET} ${CYAN}\___|${ORANGE}_|\_\\\\${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
 fi
-log ${WHITE} "Initializing Pixelclock..."
-log ${GREY} "version: ${VERSION} | startup: $(date "+%Y-%m-%d %H:%M:%S") | pid: $$${RESET}"
+log ${WHITE} "Initializing..."
+log ${GREY} "Version: ${VERSION} | Startup: $(date "+%Y-%m-%d %H:%M:%S") | PID: $$${RESET}"
 
-log ${WHITE} "Checking if pixelclock is running..."
+log ${WHITE} "Check service status..."
 if yarn is-running; then
-    log ${GREEN} "Pixelclock is already running."
+    log ${GREEN} "Service is running."
 else
-    log ${YELLOW} "Pixelclock is not running. Starting..."
+    log ${YELLOW} "Service is not running.\nStarting..."
     yarn start
 fi
 
 
-log ${WHITE} "Checking if on main branch..."
+log ${WHITE} "Checking for main branch..."
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" != "main" ]; then
-    log ${RED} "Only the main branch can be updated by this script. Exiting..."
+    log ${RED} "Only the main branch can be updated. Exiting..."
     exit 0
 fi
 
 
 while true; do
-    log ${WHITE} "Checking if up to date with origin/main..."
+    log ${WHITE} "Checking for updates..."
     git fetch
     HEADHASH=$(git rev-parse HEAD)
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
-        log ${YELLOW} "Current branch is not up to date with origin/main. Updating..."
+        log ${YELLOW} "Update found.\nUpdating..."
 
-        log ${WHITE} "Resetting to origin/main..."
+        log ${WHITE} "Pulling latest changes..."
         git reset --hard origin/main
 
         log ${WHITE} "Installing dependencies..."
         yarn
 
-        log ${WHITE} "Building pixelclock..."
+        log ${WHITE} "Building service..."
         yarn build
 
         log ${WHITE} "Creating service..."
@@ -127,14 +129,14 @@ while true; do
         log ${WHITE} "Saving pm2 config..."
         yarn save
 
-        log ${WHITE} "Restarting pixelclock..."
+        log ${WHITE} "Restarting service..."
         yarn restart
         exec ./init.sh
         exit 0
     else
-        log ${GREEN} "Current branch is up to date with origin/main."
+        log ${GREEN} "No updates found."
     fi
 
-    log ${WHITE} "Next update check in 1 minute(s)."
+    log ${WHITE} "Waiting 60 seconds..."
     sleep 60
 done
