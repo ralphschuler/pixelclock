@@ -217,6 +217,11 @@ const randomFloodFill = () => {
 
 let offset = 0;
 setInterval(() => {
+  offset % 15 === 0 && console.table({
+    height,
+    width,
+    
+  });
   fillScreen(rgbToInt(0, 0, 0), 1)
   if (offset % 15 === 0) {
     randomFloodFill();
