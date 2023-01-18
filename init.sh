@@ -108,6 +108,9 @@ while true; do
         log ${WHITE} "Building pixelclock..."
         npm run build
 
+        log ${WHITE} "Generating startup script..."
+        npm run startup
+
         log ${WHITE} "Restarting pixelclock..."
         npm run restart
         exec ./init.sh

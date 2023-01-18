@@ -15,6 +15,7 @@
     "restart": "pm2 restart pixelclock",
     "delete": "pm2 delete pixelclock",
     "is-running": "pm2 pid pixelclock",
+    "startup": "pm2 startup systemd -u $USER --hp $HOME",
     "build": "tsc",
     "dev": "ts-node src/index.ts"
   },
