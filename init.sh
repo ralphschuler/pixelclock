@@ -68,9 +68,9 @@ if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
     echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/ | | |____| |${PURPLE} (_) |${RESET} (__|   < ${RESET}" | tee /dev/fd/3
     echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___|_|  \_____|_|${PURPLE}\___/${RESET} \___|_|\_\\\\${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
-
-    log ${GREY} "version: ${VERSION} | startup: $(date "+%Y-%m-%d %H:%M:%S") | pid: $$${RESET}"
 fi
+log ${WHITE} "Initializing Pixelclock..."
+log ${GREY} "version: ${VERSION} | startup: $(date "+%Y-%m-%d %H:%M:%S") | pid: $$${RESET}"
 
 log ${WHITE} "Checking if pixelclock is running..."
 if yarn is-running; then
