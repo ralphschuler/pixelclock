@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # Formatting
 BLACK='\033[0;30m'
 WHITE='\033[0;37m'
@@ -74,11 +72,11 @@ if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
 fi
 
 log ${WHITE} "Checking if pixelclock is running..."
-if npm run is-running; then
+if yarn is-running; then
     log ${GREEN} "Pixelclock is already running."
 else
     log ${YELLOW} "Pixelclock is not running. Starting..."
-    npm run start
+    yarn start
 fi
 
 
@@ -102,19 +100,19 @@ while true; do
         git reset --hard origin/main
 
         log ${WHITE} "Installing dependencies..."
-        npm install
+        yarn
 
         log ${WHITE} "Building pixelclock..."
-        npm run build
+        yarn build
 
         log ${WHITE} "Creating service..."
-        npm run startup
+        yarn startup
 
         log ${WHITE} "Saving pm2 config..."
-        nom run save
+        yarn save
 
         log ${WHITE} "Restarting pixelclock..."
-        npm run restart
+        yarn restart
         exec ./init.sh
         exit 0
     else
