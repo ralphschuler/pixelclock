@@ -1,7 +1,7 @@
 import ws281x from "rpi-ws281x-native";
 import { Matrix } from "./Matrix";
 
-const FRAMES_PER_SECOND = 25;
+const FRAMES_PER_SECOND = 60;
 
 function getPixelIdByXY(x: number, y: number) {
   let id = 0
@@ -64,7 +64,7 @@ const matrix = new Matrix({
   getPixelId: getPixelIdByXY,
 });
 
-function fillScreen(color: number, blendAmount: number = 100) {
+function fillScreen(color: number, blendAmount: number = 10) {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
       const currentColor = matrix.getPixel(x, y);
@@ -201,8 +201,7 @@ process.on('uncaughtException', exitSafely)
 console.log("Starting...");
 console.log("Press Ctrl+C to exit.");
 
-
-const randomFloodFill = () => {
+function randomFloodFill() {
   const color = colorWheel(Math.floor(Math.random() * 256));
   const colors = [
     ...Array(10)
@@ -212,19 +211,16 @@ const randomFloodFill = () => {
       .fill(null)
       .map((_, i) => getDarkerVariant(color, i * 5))
   ];
-  floodFill(colors, 5);
-};
+  floodFill(colors, 1);
+}
 
 let offset = 0;
 setInterval(() => {
-  offset % 15 === 0 && console.table({
-    height,
-    width,
-    
-  });
-  fillScreen(rgbToInt(0, 0, 0), 1)
-  if (offset % 15 === 0) {
+  if (offset % 7 === 0) {
     randomFloodFill();
+    offset++;
+  } else if (offset % 5 === 0) {
+    fillScreen(rgbToInt(0, 0, 0), 1)
     offset++;
   }
   for (let i = 3; i < 1; i++) {
@@ -241,3 +237,4 @@ setInterval(() => {
 }, 1000 / FRAMES_PER_SECOND);
 
 process?.send && process.send('ready')
+
