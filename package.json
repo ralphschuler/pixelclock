@@ -14,7 +14,7 @@
     "stop": "pm2 stop pixelclock",
     "restart": "pm2 restart pixelclock",
     "delete": "pm2 delete pixelclock",
-    "is-running": "[ $(pm2 status pixelclock | grep online | wc -l) -eq 1 ] && exit 1 || exit 0",
+    "is-running": "exit $(pm2 pid pixelclock) | xargs -I {} ps -p {} | grep -q {} && echo 1 || echo 0",
     "startup": "pm2 startup systemd -u $USER --hp $HOME",
     "save": "pm2 save",
     "build": "tsc",
