@@ -14,7 +14,7 @@
     "stop": "pm2 stop pixelclock",
     "restart": "pm2 restart pixelclock",
     "delete": "pm2 delete pixelclock",
-    "is-running": "pm2 pid pixelclock",
+    "is-running": "pm2 pid pixelclock && echo 'running' || echo 'not running'",
     "build": "tsc",
     "dev": "ts-node src/index.ts"
   },

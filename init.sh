@@ -15,6 +15,8 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 ORANGE='\033[0;33m'
 
+BMAGENTA='\033[1;35m'
+
 BG_WHITE='\033[47m'
 BG_GREY='\033[100m'
 
@@ -61,6 +63,7 @@ VERSION=$(git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q 
 log ${WHITE} "Pixelclock version ${VERSION}."
 
 log ${WHITE} "Checking if pixelclock is running..."
+log ${BMAGENTA} "npm run is-running == '$(npm run is-running)'" # DEBUG
 if npm run is-running; then
     log ${GREEN} "Pixelclock is already running."
 else
