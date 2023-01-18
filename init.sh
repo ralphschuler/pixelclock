@@ -62,11 +62,14 @@ fi
 
 # Respond to --quiet and -q (if set, don't show the logo and continue)
 if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
-    echo -e "${BLACK}${BG_PURPLE}  _ \\${RESET} ${BLACK}${BG_ORANGE}_)${RESET}${BLACK}${BG_GREEN}${RESET}      ${BLACK}${BG_BLUE}${RESET}     ${BLACK}${BG_YELLOW}${RESET}     ${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN}  ___|${RESET}${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE}${RESET}      ${BLACK}${BG_YELLOW}${RESET}     ${BLACK}${BG_BLUE} |${RESET}" 1>&3
-    echo -e "${BLACK}${BG_PURPLE} |   |${RESET}${BLACK}${BG_ORANGE} |${RESET}${BLACK}${BG_GREEN}\\ \\  /${RESET}${BLACK}${BG_BLUE}  __|${RESET}${BLACK}${BG_YELLOW}  _ \\${RESET}${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN} |${RESET}    ${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE}  _ \\${RESET} ${BLACK}${BG_YELLOW}  __|${BLACK}${BG_BLUE} |  /${RESET}" 1>&3
-    echo -e "${BLACK}${BG_PURPLE} ___/${RESET} ${BLACK}${BG_ORANGE} |${RESET} ${BLACK}${BG_GREEN}\`  <${RESET} ${BLACK}${BG_BLUE} (${RESET}   ${BLACK}${BG_YELLOW}  __/${RESET}${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN} |${RESET}    ${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE} (   |${BLACK}${BG_YELLOW} (${RESET}   ${BLACK}${BG_BLUE}   <${RESET}" 1>&3
-    echo -e "${BLACK}${BG_PURPLE}_|${RESET}    ${BLACK}${BG_ORANGE}_|${RESET} ${BLACK}${BG_GREEN}_/\\_\\${RESET}${BLACK}${BG_BLUE}\\___|${RESET}${BLACK}${BG_YELLOW}\\___|${RESET}${BLACK}${BG_RED}_|${RESET}${BLACK}${BG_CYAN}\\____|${RESET}${BLACK}${BG_GREEN}_|${RESET}${BLACK}${BG_PURPLE}\\___/${RESET} ${BLACK}${BG_YELLOW}\\___|${RESET}${BLACK}${BG_BLUE}_|\\_\\\\${RESET}" 1>&3
-
+    echo -e "${WHITE}===================================================${RESET}"
+    echo -e "${GREY} _____ _              _    _____ _            _    ${RESET}"
+    echo -e "${GREY}|  __ (_)            | |  / ____| |          | |   ${RESET}"
+    echo -e "${GREY}| |__) |__  _____ ___| | | |    | | ___   ___| | __${RESET}"
+    echo -e "${GREY}|  ___/ \ \/ / __/ _ \ | | |    | |/ _ \ / __| |/ /${RESET}"
+    echo -e "${GREY}| |   | |>  < (_|  __/ | | |____| | (_) | (__|   < ${RESET}"
+    echo -e "${GREY}|_|   |_/_/\_\___\___|_|  \_____|_|\___/ \___|_|\_\\${RESET}"
+    echo -e "${WHITE}===================================================${RESET}"
     log ${WHITE} "version: ${VERSION} | startup: $(date \"+%Y-%m-%d %H:%M:%S\") | pid: $$"
 fi
 
