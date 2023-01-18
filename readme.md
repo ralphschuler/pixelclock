@@ -55,8 +55,16 @@ cd pixelclock
 - [ ] Thunderstorm
 - [ ] Lightning
 
+## Animations
+- [ ] Snake
+- [ ] Tetris
+- [ ] Pacman
+- [ ] Pong
+
+
 ## Scenes
 - [ ] Start up
+- [ ] Update
 - [ ] Clock
 - [ ] Weather
 - [ ] Audio visualizer
