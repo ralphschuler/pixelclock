@@ -32,17 +32,18 @@ function intToRgb(color: number) {
 function floodFill(colors: number[], floodSpeed: number = 1) {
   const colorCount = colors.length;
 
-  let y = 0;
-  const interval = setInterval(() => {
+  const interval = (y = 0) => {
     for (let x = 0; x < width; x++) {
       matrix.setPixel(x, y, colors[Math.floor(Math.random() * colorCount)]);
     }
     matrix.render();
     y++;
-    if (y >= height) {
-      clearInterval(interval);
+    if (y < height) {
+      setTimeout(() => interval(y), 1000 / FRAMES_PER_SECOND / floodSpeed);
     }
-  }, 1000 / floodSpeed);
+  };
+
+  interval();
 }
 
 function blendColors(from: number, to: number, blendAmount: number): number {
@@ -65,7 +66,7 @@ const matrix = new Matrix({
   getPixelId: getPixelIdByXY,
 });
 
-function fillScreen(color: number, blendAmount: number = 10) {
+function fillScreen(color: number, blendAmount: number = 2) {
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
       const currentColor = matrix.getPixel(x, y);
@@ -172,14 +173,14 @@ function hslToInt(h: number, s: number, l: number) {
 function getDarkerVariant(color: number, amount: number) {
   const rgb = intToRgb(color);
   const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
-  hsl.l -= amount / 100;
+  hsl.h -= amount / 100;
   return hslToInt(hsl.h, hsl.s, hsl.l);
 }
 
 function getLighterVariant(color: number, amount: number) {
   const rgb = intToRgb(color);
   const hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
-  hsl.l += amount / 100;
+  hsl.h += amount / 100;
   return hslToInt(hsl.h, hsl.s, hsl.l);
 }
 
@@ -219,18 +220,13 @@ function main() {
 
   let offset = 0;
   setInterval(() => {
-    if (offset % 3 === 0) {
-      console.log("Flood fill");
+    fillScreen(rgbToInt(0, 0, 0), 5);
+    
+    if (offset % 100 === 0) {
       randomFloodFill();
-      offset++;
-    } else if (offset >= 10000) {
-      console.log("Clear screen");
-      fillScreen(rgbToInt(0, 0, 0), 1)
-      offset = 0;
     }
 
     const actionsCount = Math.floor(Math.random() * 10);
-    console.log(`Randomized ${actionsCount} pixels`)
     for (let i = actionsCount; i < 1; i++) {
       const x = Math.floor(Math.random() * width);
       const y = Math.floor(Math.random() * height);
