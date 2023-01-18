@@ -3,6 +3,7 @@
 set -e
 
 # Formatting
+BLACK='\033[0;30m'
 WHITE='\033[0;37m'
 GREY='\033[0;90m'
 
@@ -48,10 +49,10 @@ fi
 
 if [[ $- == *i* ]]
 then
-    echo -e "${BG_PURPLE}  _ \\${RESET} ${BG_ORANGE}_)${RESET}${BG_GREEN}${RESET}      ${BG_BLUE}${RESET}     ${BG_YELLOW}${RESET}     ${BG_RED} |${RESET}${BG_CYAN}  ___|${RESET}${BG_GREEN} |${RESET}${BG_PURPLE}${RESET}      ${BG_YELLOW}${RESET}     ${BG_BLUE} |${RESET}" 1>&3
-    echo -e "${BG_PURPLE} |   |${RESET}${BG_ORANGE} |${RESET}${BG_GREEN}\\ \\  /${RESET}${BG_BLUE}  __|${RESET}${BG_YELLOW}  _ \\${RESET}${BG_RED} |${RESET}${BG_CYAN} |${RESET}    ${BG_GREEN} |${RESET}${BG_PURPLE}  _ \\${RESET} ${BG_YELLOW}  __|${BG_BLUE} |  /${RESET}" 1>&3
-    echo -e "${BG_PURPLE} ___/${RESET} ${BG_ORANGE} |${RESET} ${BG_GREEN}\`  <${RESET} ${BG_BLUE} (${RESET}   ${BG_YELLOW}  __/${RESET}${BG_RED} |${RESET}${BG_CYAN} |${RESET}    ${BG_GREEN} |${RESET}${BG_PURPLE} (   |${BG_YELLOW} (${RESET}   ${BG_BLUE}   <${RESET}" 1>&3
-    echo -e "${BG_PURPLE}_|${RESET}    ${BG_ORANGE}_|${RESET} ${BG_GREEN}_/\\_\\${RESET}${BG_BLUE}\\___|${RESET}${BG_YELLOW}\\___|${RESET}${BG_RED}_|${RESET}${BG_CYAN}\\____|${RESET}${BG_GREEN}_|${RESET}${BG_PURPLE}\\___/${RESET} ${BG_YELLOW}\\___|${RESET}${BG_BLUE}_|\\_\\\\${RESET}" 1>&3
+    echo -e "${BLACK}${BG_PURPLE}  _ \\${RESET} ${BLACK}${BG_ORANGE}_)${RESET}${BLACK}${BG_GREEN}${RESET}      ${BLACK}${BG_BLUE}${RESET}     ${BLACK}${BG_YELLOW}${RESET}     ${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN}  ___|${RESET}${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE}${RESET}      ${BLACK}${BG_YELLOW}${RESET}     ${BLACK}${BG_BLUE} |${RESET}" 1>&3
+    echo -e "${BLACK}${BG_PURPLE} |   |${RESET}${BLACK}${BG_ORANGE} |${RESET}${BLACK}${BG_GREEN}\\ \\  /${RESET}${BLACK}${BG_BLUE}  __|${RESET}${BLACK}${BG_YELLOW}  _ \\${RESET}${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN} |${RESET}    ${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE}  _ \\${RESET} ${BLACK}${BG_YELLOW}  __|${BLACK}${BG_BLUE} |  /${RESET}" 1>&3
+    echo -e "${BLACK}${BG_PURPLE} ___/${RESET} ${BLACK}${BG_ORANGE} |${RESET} ${BLACK}${BG_GREEN}\`  <${RESET} ${BLACK}${BG_BLUE} (${RESET}   ${BLACK}${BG_YELLOW}  __/${RESET}${BLACK}${BG_RED} |${RESET}${BLACK}${BG_CYAN} |${RESET}    ${BLACK}${BG_GREEN} |${RESET}${BLACK}${BG_PURPLE} (   |${BLACK}${BG_YELLOW} (${RESET}   ${BLACK}${BG_BLUE}   <${RESET}" 1>&3
+    echo -e "${BLACK}${BG_PURPLE}_|${RESET}    ${BLACK}${BG_ORANGE}_|${RESET} ${BLACK}${BG_GREEN}_/\\_\\${RESET}${BLACK}${BG_BLUE}\\___|${RESET}${BLACK}${BG_YELLOW}\\___|${RESET}${BLACK}${BG_RED}_|${RESET}${BLACK}${BG_CYAN}\\____|${RESET}${BLACK}${BG_GREEN}_|${RESET}${BLACK}${BG_PURPLE}\\___/${RESET} ${BLACK}${BG_YELLOW}\\___|${RESET}${BLACK}${BG_BLUE}_|\\_\\\\${RESET}" 1>&3
 
     log ${WHITE} "Pixelclock init script."
 fi
