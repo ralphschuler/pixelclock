@@ -118,7 +118,7 @@ while true; do
         git reset --hard origin/main
 
         log ${WHITE} "Installing dependencies..."
-        yarn
+        yarn install --ci
 
         log ${WHITE} "Building service..."
         yarn build
@@ -131,7 +131,7 @@ while true; do
 
         log ${WHITE} "Restarting service..."
         yarn restart
-        exec ./init.sh
+        exec "$0" "$@"
         exit 0
     else
         log ${GREEN} "No updates found."
