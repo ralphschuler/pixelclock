@@ -47,11 +47,11 @@ function floodFill(colors: number[], floodSpeed: number = 1) {
 function blendColors(from: number, to: number, blendAmount: number): number {
   const fromColor = intToRgb(from);
   const toColor = intToRgb(to);
-  
+
   const r = Math.floor(fromColor.r + (toColor.r - fromColor.r) * (blendAmount / 100));
   const g = Math.floor(fromColor.g + (toColor.g - fromColor.g) * (blendAmount / 100));
   const b = Math.floor(fromColor.b + (toColor.b - fromColor.b) * (blendAmount / 100));
-  
+
   return rgbToInt(r, g, b);
 }
 
@@ -188,7 +188,7 @@ function exitSafely() {
 
   ws281x.reset();
   ws281x.finalize();
-  process.nextTick(function() { process.exit(0); });
+  process.nextTick(function () { process.exit(0); });
 }
 
 process.on('SIGINT', exitSafely)
@@ -222,18 +222,17 @@ setInterval(() => {
     randomFloodFill();
     offset++;
   }
-    for (let i = 3; i < 1; i++) {
-      const x = Math.floor(Math.random() * width);
-      const y = Math.floor(Math.random() * height);
-      const currentColor = matrix.getPixel(x, y);
-      const wheelColor = colorWheel(Math.floor(Math.random() * 256))
-      const newColor = blendColors(currentColor, wheelColor, 5);
-      matrix.setPixel(x, y, newColor);
-      offset++;
-    }
+  for (let i = 3; i < 1; i++) {
+    const x = Math.floor(Math.random() * width);
+    const y = Math.floor(Math.random() * height);
+    const currentColor = matrix.getPixel(x, y);
+    const wheelColor = colorWheel(Math.floor(Math.random() * 256))
+    const newColor = blendColors(currentColor, wheelColor, 5);
+    matrix.setPixel(x, y, newColor);
+    offset++;
   }
 
   matrix.render();
 }, 1000 / FRAMES_PER_SECOND);
 
-process?.send &&  process.send('ready')
+process?.send && process.send('ready')
