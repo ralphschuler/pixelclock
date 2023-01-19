@@ -64,7 +64,8 @@ export class Matrix<TDriver extends IDriver<TDriverOptions>, TDriverOptions exte
     console.debug('Matrix clear', color);
     for (let x = 0; x < this.width; x++) {
       for (let y = 0; y < this.height; y++) {
-        this.setPixel(x, y, color.blend(blendAmount));
+        const currentColor = this.getPixel(x, y);
+        this.setPixel(x, y, currentColor.blend(color, blendAmount));
       }
     }
     this.render();
