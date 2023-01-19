@@ -91,12 +91,11 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   private spawnPixel(): void {
     console.debug('MatrixEffect spawnPixel')
     const x = Math.floor(Math.random() * this.matrix.Width)
-    const y = Math.floor(Math.random() * this.matrix.Height)
     const color = this.colors[Math.floor(Math.random() * this.colors.length)]
 
     this.pixels.push({
       x,
-      y,
+      y: 0,
       color
     })
   }

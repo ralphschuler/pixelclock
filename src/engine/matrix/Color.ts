@@ -1,5 +1,14 @@
 export class Color extends Number implements Number {
 
+  public static readonly Black: Color = new Color(0x000000)
+  public static readonly White: Color = new Color(0xffffff)
+  public static readonly Red: Color = new Color(0xff0000)
+  public static readonly Green: Color = new Color(0x00ff00)
+  public static readonly Blue: Color = new Color(0x0000ff)
+  public static readonly Yellow: Color = new Color(0xffff00)
+  public static readonly Cyan: Color = new Color(0x00ffff)
+  public static readonly Magenta: Color = new Color(0xff00ff)
+
   constructor(color: number) {
     console.debug('Color constructor', color)
     super(color)
@@ -38,18 +47,12 @@ export class Color extends Number implements Number {
 
   public lighten(this: Color, amount: number): Color {
     console.debug('Color lighten', this, amount)
-    let [h, s, l] = this.toHsl()
-    l = Math.min(1, l + amount)
-
-    return Color.fromHsl(h, s, l)
+    return this.blend(Color.White, amount)
   }
 
   public darken(this: Color, amount: number): Color {
     console.debug('Color darken', this, amount)
-    let [h, s, l] = this.toHsl()
-    l = Math.max(0, l - amount)
-
-    return Color.fromHsl(h, s, l)
+    return this.blend(Color.Black, amount)
   }
 
   public toRgb(this: Color): [number, number, number] {
