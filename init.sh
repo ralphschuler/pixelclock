@@ -58,7 +58,8 @@ function trapint {
 
 function start_service {
     log ${WHITE} "Check service status..."
-    if [ "${$(pm2 pid pixelclock):=0}" != 0 ]; then
+    SERVICE_PID=$(pm2 pid pixelclock)
+    if [ "${SERVICE_PID:=-1}" != -1 ]; then
         log ${GREEN} "Service is running."
     else
         log ${YELLOW} "Service is not running.\n\tStarting..."
