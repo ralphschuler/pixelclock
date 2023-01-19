@@ -15,7 +15,7 @@ export class Base {
   private children: Array<Base>;
   private renderRequests: Array<Base>;
 
-  constructor(parent: Base | Pixel<SchemaTypes> | Layer | Scene, x: number, y: number) {
+  constructor(parent: undefined | Base | Pixel<SchemaTypes> | Layer | Scene, x: number, y: number) {
     this.parent = parent;
     this.children = [];
     this.renderRequests = [];

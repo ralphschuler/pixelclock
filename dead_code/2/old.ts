@@ -1,5 +1,5 @@
 import ws281x from "rpi-ws281x-native";
-import { Matrix } from "./matrix/Matrix";
+import { Matrix } from "../../src/matrix/Matrix";
 
 const FRAMES_PER_SECOND = 15;
 

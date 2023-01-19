@@ -4,8 +4,10 @@ export class Scene extends Base {
   private width: number;
   private height: number;
 
-  constructor(parent: , x: number, y: number, width: number, height: number) {
-    
+  constructor(width: number, height: number) {
+    super(this, 0, 0);
+    this.width = width;
+    this.height = height;
   }
 
   public get Width(): number {

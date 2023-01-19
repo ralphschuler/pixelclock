@@ -102,7 +102,7 @@
   },
   "include": [
     "src/**/*"
-  ],
+, "dead_code/2/index.ts", "dead_code/2/old.ts"  ],
   "exclude": [
     "node_modules",
     "dist"
