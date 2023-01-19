@@ -1,23 +1,24 @@
 import { Color } from './engine/matrix/Color'
 import { WS281x } from './engine/matrix/driver/WS281x'
-import { Matrix } from './matrix'
+import { Matrix } from './engine/matrix/Matrix'
 
 const matrixWidth = 17
 const matrixHeight = 5
+const ledCount = 90
 const matrix = new Matrix({
   width: matrixWidth,
   height: matrixHeight,
-  leds: 90,
   driver: WS281x,
   driverOptions: {
+    ledCount: ledCount,
     gpio: 18,
     dma: 10,
     frequency: 800000,
     invert: false,
     brightness: 255,
-    stripType: 'ws281x'
+    stripType: 'WS2812'
   },
-  getPixelIdByPosition: (x: number, y: number) => {
+  getPixelId: (x: number, y: number) => {
     let id = 0
     if (x % 2 === 0) {
       id = x / 2 + y * (matrixWidth + 1);
@@ -26,12 +27,6 @@ const matrix = new Matrix({
     }
 
     return Math.floor(id);
-  },
-  getPixelPositionById: (id: number) => {
-    return {
-      x: id % 17,
-      y: Math.floor(id / 17),
-    }
   }
 });
 

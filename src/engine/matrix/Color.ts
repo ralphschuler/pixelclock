@@ -176,7 +176,7 @@ export class Color extends Number implements Number {
   }
 
   public static fromHsv(h: number, s: number, v: number): Color {
-    let r: number, g: number, b: number
+    let r: number = 0, g: number = 0, b: number = 0
 
     let i = Math.floor(h * 6)
     let f = h * 6 - i

@@ -127,6 +127,8 @@ log ${WHITE} "Checking installation..."
 if [ ! -d "./node_modules" ]; then
     log ${YELLOW} "Installation not found.\nInstalling..."
     install_service
+else
+    log ${GREEN} "Installation found."
 fi
 
 start_service
