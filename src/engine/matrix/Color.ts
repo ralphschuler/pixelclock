@@ -6,7 +6,6 @@ export class Color extends Number implements Number {
   }
 
   public valueOf(): number {
-    console.debug('Color valueOf')
     return super.valueOf()
   }
 
