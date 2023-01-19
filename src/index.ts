@@ -1,9 +1,11 @@
 import { Color, Driver, Matrix } from './engine/matrix'
+import { WS281x, IWS281xOptions, StripType } from './engine/matrix/driver';
 
 const matrixWidth = 17
 const matrixHeight = 5
 const ledCount = 90
-const matrix = new Matrix({
+const options = {
+  ledCount: ledCount,
   width: matrixWidth,
   height: matrixHeight,
   driver: Driver.WS281x,
@@ -14,9 +16,10 @@ const matrix = new Matrix({
     frequency: 800000,
     invert: false,
     brightness: 255,
-    stripType: 'WS2812'
+    stripType: "WS2812" as StripType,
   },
   getPixelId: (x: number, y: number) => {
+    console.debug('getPixelId', x, y)
     let id = 0
     if (x % 2 === 0) {
       id = x / 2 + y * (matrixWidth + 1);
@@ -26,7 +29,8 @@ const matrix = new Matrix({
 
     return Math.floor(id);
   }
-});
+}
+const matrix = new Matrix<WS281x<IWS281xOptions>, IWS281xOptions>(options);
 
 
 const loop = () => {
@@ -39,7 +43,6 @@ const loop = () => {
       matrix.render()
     }
   }
-  setTimeout(loop, 1000)
 }
 
-loop()
+const main = setInterval(loop, 1000)

@@ -1,8 +1,11 @@
+import exp from 'constants';
 import ledDriver, { stripType } from 'rpi-ws281x-native';
 import { IDriver, IDriverOptions } from './IDriver';
 
+export type StripType = keyof typeof stripType
+
 export interface IWS281xOptions extends IDriverOptions {
-  stripType: keyof typeof stripType;
+  stripType: StripType;
   invert: boolean;
   dma: number;
   brightness: number;
@@ -10,17 +13,17 @@ export interface IWS281xOptions extends IDriverOptions {
   frequency: number;
 }
 
-export class WS281x extends IDriver {
+export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriverOptions> {
 
   private channel: any;
-  private stripType: keyof typeof stripType;
+  private stripType: StripType;
   private inverted: boolean;
   private dma: number;
   private brightness: number;
   private gpio: number;
   private frequency: number;
 
-  constructor(options: IWS281xOptions) {
+  constructor(options: TDriverOptions) {
     console.debug('WS281x constructor');
     super(options);
     this.stripType = options.stripType;
@@ -51,7 +54,7 @@ export class WS281x extends IDriver {
           gpio: this.gpio,
           invert: this.inverted,
           count: this.ledCount,
-          stripType: stripType[this.stripType],
+          stripType: stripType[this.stripType as keyof typeof stripType],
           brightness: this.brightness
         }
       ]
@@ -60,8 +63,8 @@ export class WS281x extends IDriver {
 
   flush() {
     console.debug('WS281x flush');
-    this.channel.buffer = this.pixelData;
-    this.pixelData = Buffer.alloc(this.ledCount);
+    this.channel.array = this.pixelData;
+    this.pixelData = new Uint32Array(this.ledCount);
   }
 
   render() {

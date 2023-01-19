@@ -3,15 +3,15 @@ import { Color } from "../Color"
 export interface IDriverOptions {
   ledCount: number
 }
-export abstract class IDriver {
+export abstract class IDriver<TDriverOptions extends IDriverOptions> {
   public readonly ledCount: number
 
-  protected pixelData: Buffer
+  protected pixelData: Uint32Array
 
-  public constructor(options: IDriverOptions) {
+  public constructor(options: TDriverOptions) {
     console.debug("IDriver constructor")
     this.ledCount = options.ledCount
-    this.pixelData = Buffer.alloc(this.ledCount)
+    this.pixelData = new Uint32Array(this.ledCount)
   }
 
   public abstract init(): void
@@ -19,22 +19,22 @@ export abstract class IDriver {
   public abstract render(): void
   public abstract reset(): void
 
-  public set PixelData(data: Buffer) {
+  public set PixelData(data: Uint32Array) {
     console.debug("IDriver set PixelData", data)
     this.pixelData = data
   }
-  public get PixelData(): Buffer {
+  public get PixelData(): Uint32Array {
     console.debug("IDriver get PixelData")
     return this.pixelData
   }
 
   public setPixel(index: number, color: Color) {
     console.debug("IDriver setPixel", index, color)
-    this.pixelData.writeUInt32LE(color.valueOf(), index)
+    this.pixelData[index] = color.valueOf()
   }
 
   public getPixel(index: number): Color {
     console.debug("IDriver getPixel", index)
-    return new Color(this.pixelData.readUInt32LE(index))
+    return new Color(this.pixelData[index])
   }
 }

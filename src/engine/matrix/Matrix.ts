@@ -1,7 +1,7 @@
 import { Color } from "./Color";
 import { IDriver, IDriverOptions } from "./driver";
 
-export interface MatrixOptions<TDriver extends IDriver, TDriverOptions extends IDriverOptions> {
+export interface MatrixOptions<TDriver extends IDriver<TDriverOptions>, TDriverOptions extends IDriverOptions> {
   width: number;
   height: number;
   driver: new (options: TDriverOptions) => TDriver;
@@ -9,7 +9,7 @@ export interface MatrixOptions<TDriver extends IDriver, TDriverOptions extends I
   getPixelId?: (x: number, y: number) => number;
 }
 
-export class Matrix<TDriver extends IDriver, TDriverOptions extends IDriverOptions> {
+export class Matrix<TDriver extends IDriver<TDriverOptions>, TDriverOptions extends IDriverOptions> {
 
   private readonly width: number;
   private readonly height: number;
