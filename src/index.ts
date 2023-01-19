@@ -45,5 +45,5 @@ const loop = () => {
   matricsEffect.render()
 }
 
-setInterval(loop, 1000)
+setInterval(loop, 5000)
 
