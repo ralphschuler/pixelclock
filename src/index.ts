@@ -1,6 +1,4 @@
-import { Color } from './engine/matrix/Color'
-import { WS281x } from './engine/matrix/driver/WS281x'
-import { Matrix } from './engine/matrix/Matrix'
+import { Color, Driver, Matrix } from './engine/matrix'
 
 const matrixWidth = 17
 const matrixHeight = 5
@@ -8,7 +6,7 @@ const ledCount = 90
 const matrix = new Matrix({
   width: matrixWidth,
   height: matrixHeight,
-  driver: WS281x,
+  driver: Driver.WS281x,
   driverOptions: {
     ledCount: ledCount,
     gpio: 18,

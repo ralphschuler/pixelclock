@@ -3,7 +3,7 @@ import { Color } from "../Color"
 export interface IDriverOptions {
   ledCount: number
 }
-export abstract class Driver {
+export abstract class IDriver {
   public readonly ledCount: number
 
   protected pixelData: Buffer

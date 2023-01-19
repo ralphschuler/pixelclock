@@ -1,5 +1,5 @@
 import ledDriver, { stripType } from 'rpi-ws281x-native';
-import { Driver, IDriverOptions } from './Driver';
+import { IDriver, IDriverOptions } from './IDriver';
 
 export interface IWS281xOptions extends IDriverOptions {
   stripType: keyof typeof stripType;
@@ -10,7 +10,7 @@ export interface IWS281xOptions extends IDriverOptions {
   frequency: number;
 }
 
-export class WS281x extends Driver {
+export class WS281x extends IDriver {
 
   private channel: any;
   private stripType: keyof typeof stripType;
