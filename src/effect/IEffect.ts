@@ -11,8 +11,6 @@ export abstract class IEffect<TEffectOptions extends IEffectOptions> {
   protected constructor(options: TEffectOptions) {
     console.debug('Effect constructor')
     this.matrix = options.matrix
-
-    this.init && this.init()
   }
 
   public abstract init(): void

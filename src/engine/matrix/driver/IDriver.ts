@@ -12,8 +12,6 @@ export abstract class IDriver<TDriverOptions extends IDriverOptions> {
     console.debug("IDriver constructor")
     this.ledCount = options.ledCount
     this.pixelData = new Uint32Array(this.ledCount)
-
-    this.init && this.init()
   }
 
   public abstract init(): void

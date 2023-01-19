@@ -25,6 +25,7 @@ export class Matrix<TDriver extends IDriver<TDriverOptions>, TDriverOptions exte
     this.width = options.width;
     this.height = options.height;
     this.driver = new options.driver(options.driverOptions);
+    this.driver.init();
     this.getPixelId = options.getPixelId || this.getPixelId;
   }
 

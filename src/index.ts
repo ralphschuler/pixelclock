@@ -33,16 +33,17 @@ const options = {
 }
 const matrix = new Matrix<WS281x<IWS281xOptions>, IWS281xOptions>(options);
 
-const newMatrixEffect = new MatrixEffect({
+const matricsEffect = new MatrixEffect({
   matrix: matrix,
   speed: 100,
   direction: "up"
 })
+matricsEffect.init()
 
 const loop = () => {
   console.debug('loop')
-  newMatrixEffect.update()
-  newMatrixEffect.render()
+  matricsEffect.update()
+  matricsEffect.render()
 }
 
 setInterval(loop, 1000)
