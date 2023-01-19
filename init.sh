@@ -58,7 +58,7 @@ function trapint {
 
 function start_service {
     log ${WHITE} "Check service status..."
-    if yarn is-running; then
+    if [ "${$(pm2 pid pixelclock):=0}" != 0 ]; then
         log ${GREEN} "Service is running."
     else
         log ${YELLOW} "Service is not running.\nStarting..."
