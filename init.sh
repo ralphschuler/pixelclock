@@ -168,3 +168,5 @@ function main {
 
     yarn logs
 }
+
+main()
