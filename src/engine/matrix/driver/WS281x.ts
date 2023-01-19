@@ -21,6 +21,7 @@ export class WS281x extends IDriver {
   private frequency: number;
 
   constructor(options: IWS281xOptions) {
+    console.debug('WS281x constructor');
     super(options);
     this.stripType = options.stripType;
     this.inverted = options.invert;
@@ -28,18 +29,20 @@ export class WS281x extends IDriver {
     this.brightness = options.brightness;
     this.gpio = options.gpio;
     this.frequency = options.frequency;
-    
   }
 
   public set Brightness(brightness: number) {
+    console.debug('WS281x set Brightness', brightness);
     this.brightness = brightness;
   }
 
   public get Brightness(): number {
+    console.debug('WS281x get Brightness');
     return this.brightness;
   }
 
   init() {
+    console.debug('WS281x init');
     this.channel = ledDriver.init({
       dma: this.dma,
       freq: this.frequency,
@@ -56,15 +59,18 @@ export class WS281x extends IDriver {
   }
 
   flush() {
+    console.debug('WS281x flush');
     this.channel.buffer = this.pixelData;
     this.pixelData = Buffer.alloc(this.ledCount);
   }
 
   render() {
+    console.debug('WS281x render');
     ledDriver.render();
   }
 
   reset() {
+    console.debug('WS281x reset');
     ledDriver.reset();
   }
 }

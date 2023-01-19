@@ -9,6 +9,7 @@ export abstract class IDriver {
   protected pixelData: Buffer
 
   public constructor(options: IDriverOptions) {
+    console.debug("IDriver constructor")
     this.ledCount = options.ledCount
     this.pixelData = Buffer.alloc(this.ledCount)
   }
@@ -19,17 +20,21 @@ export abstract class IDriver {
   public abstract reset(): void
 
   public set PixelData(data: Buffer) {
+    console.debug("IDriver set PixelData", data)
     this.pixelData = data
   }
   public get PixelData(): Buffer {
+    console.debug("IDriver get PixelData")
     return this.pixelData
   }
 
   public setPixel(index: number, color: Color) {
+    console.debug("IDriver setPixel", index, color)
     this.pixelData.writeUInt32LE(color.valueOf(), index)
   }
 
   public getPixel(index: number): Color {
+    console.debug("IDriver getPixel", index)
     return new Color(this.pixelData.readUInt32LE(index))
   }
 }

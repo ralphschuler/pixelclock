@@ -30,6 +30,7 @@ const matrix = new Matrix({
 
 
 setInterval(() => {
+  console.debug('Main loop')
   matrix.clear(Color.fromRandom())
   matrix.render()
   for (let x = 0; x < matrixWidth; x++) {
