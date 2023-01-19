@@ -40,13 +40,17 @@ if [ -f "./logs/latest.log" ]; then
     mv ./logs/latest.log ./logs/${FILEDATE}_${FILENUMBER}.log
 fi
 
-
 exec 3>&1 1>>./logs/latest.log 2>&1
 function log {
     echo -e "${GREY} =======================${RESET}" | tee /dev/fd/3
     echo -e "${WHITE}$(date "+%Y-%m-%d %H:%M:%S")${RESET}" | tee /dev/fd/3
     echo -e "${BMAGENTA}>${RESET}$1$2${RESET}" | tee /dev/fd/3
     echo -e "" | tee /dev/fd/3
+}
+
+function error_exit {
+    log ${RED} "Error:\n\t${1}\n\tExiting..."
+    exit 1
 }
 
 # Traps
@@ -63,35 +67,34 @@ function start_service {
         log ${GREEN} "Service is running."
     else
         log ${YELLOW} "Service is not running.\n\tStarting..."
-        yarn start
+        yarn start || error_exit "Failed to start service."
     fi
 }
 
 function install_service {
     log ${WHITE} "Pulling latest changes..."
-    git reset --hard origin/main
+    git reset --hard origin/main || error_exit "Failed to pull latest changes."
 
     log ${WHITE} "Installing dependencies..."
-    yarn install --ci
+    yarn install --ci || error_exit "Failed to install dependencies."
 
     log ${WHITE} "Building service..."
-    yarn build
+    yarn build || error_exit "Failed to build service."
 
     log ${WHITE} "Creating service..."
-    yarn startup
+    yarn startup || error_exit "Failed to create service."
 
     log ${WHITE} "Saving pm2 config..."
-    yarn save
+    yarn save || error_exit "Failed to save pm2 config."
 
     log ${WHITE} "Restarting service..."
-    yarn restart
-    exec "$0" "$@"
+    yarn restart || error_exit "Failed to restart service."
+    exec "$0" "$@" || error_exit "Failed to restart script."
 }
 
 # Check if root
 if (( $EUID != 0 )); then
-    log ${RED} "This script must be run as root.\n\tExiting..."
-    exit 1
+    error_exit "Please run as root."
 fi
 
 # Respond to --help and -h (if set, show the help message and exit)
@@ -127,28 +130,27 @@ log ${GREY} "Version: ${VERSION} | Startup: $(date "+%Y-%m-%d %H:%M:%S") | PID: 
 log ${WHITE} "Checking installation..."
 if [ ! -d "./node_modules" ]; then
     log ${YELLOW} "Installation not found.\n\tInstalling..."
-    install_service
+    install_service || error_exit "Failed to install service."
 else
     log ${GREEN} "Installation found."
 fi
 
-start_service
+start_service || error_exit "Failed to start service."
 
 log ${WHITE} "Checking for main branch..."
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" != "main" ]; then
-    log ${RED} "Only the main branch can be updated.\n\tExiting..."
-    exit 0
+    error_exit "Only the main branch can be updated.\n\tExiting..."
 fi
 
 while true; do
     log ${WHITE} "Checking for updates..."
-    git fetch
+    git fetch origin main || error_exit "Failed to fetch updates."
     HEADHASH=$(git rev-parse HEAD)
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
         log ${YELLOW} "Update found.\n\tUpdating..."
-        install_service
+        install_service || error_exit "Failed to update service."
     else
         log ${GREEN} "No updates found."
     fi
