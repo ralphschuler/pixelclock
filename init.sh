@@ -165,4 +165,6 @@ function main {
     install_service
     start_service
     check_for_updates
+
+    yarn logs
 }
