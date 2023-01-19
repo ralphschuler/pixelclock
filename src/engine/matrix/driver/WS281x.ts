@@ -56,7 +56,7 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
   public flush() {
     console.debug('WS281x flush');
     this.pixelData.forEach((color, index) => {
-      this.channel[index] = color;
+      this.channel.array[index] = color;
     });
     this.pixelData = [];
   }
