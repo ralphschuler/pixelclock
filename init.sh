@@ -109,6 +109,8 @@ REPOSITORY=$(git config --get remote.origin.url)
 LAST_UPDATED=$(git log -1 --format="%cd")
 VERSION=$(git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git rev-parse --short HEAD) # tag > branch > commit
 if [[ "$@" == *"--version"* ]] && [[ "$@" == *"-v"* ]]; then
+    # check if version is main
+    [[ ${VERSION:} == "main" ]] && VERSION="${GREEN}${VERSION}${RESET}" || VERSION="${RED}${VERSION}${RESET}"
     log ${WHITE} "Version: ${VERSION}\nRepository: ${REPOSITORY}\nLast updated: ${LAST_UPDATED}‚\nAuthor: ${AUTHOR}"
     exit 0
 fi
