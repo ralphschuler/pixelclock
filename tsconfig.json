@@ -100,9 +100,7 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
-  "include": [
-    "src/**/*"
-, "dead_code/2/index.ts", "dead_code/2/old.ts"  ],
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "dist"
