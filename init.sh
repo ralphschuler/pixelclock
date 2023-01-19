@@ -94,7 +94,7 @@ function install_service {
 
     log ${WHITE} "Restarting service..."
     yarn restart && success "Successfully restarted service" || error_exit "Failed to restart service."
-    exec $1 $@
+    exec $1 $@; exit 0;
 }
 
 # Check if root
