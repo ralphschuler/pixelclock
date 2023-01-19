@@ -1,3 +1,4 @@
+import { IMatrixEffectOptions, MatrixEffect } from './effect';
 import { Color, Driver, Matrix } from './engine/matrix'
 import { WS281x, IWS281xOptions, StripType } from './engine/matrix/driver';
 
@@ -32,17 +33,16 @@ const options = {
 }
 const matrix = new Matrix<WS281x<IWS281xOptions>, IWS281xOptions>(options);
 
+const newMatrixEffect = new MatrixEffect<IMatrixEffectOptions>({
+  matrix: matrix,
+  speed: 100,
+  direction: "up"
+})
 
 const loop = () => {
-  console.debug('Main loop')
-  matrix.clear(Color.fromRandom())
-  matrix.render()
-  for (let x = 0; x < matrixWidth; x++) {
-    for (let y = 0; y < matrixHeight; y++) {
-      matrix.setPixel(x, y, Color.fromRandom())
-      matrix.render()
-    }
-  }
+  console.debug('loop')
+  newMatrixEffect.update()
+  newMatrixEffect.render()
 }
 
 setInterval(loop, 1000)

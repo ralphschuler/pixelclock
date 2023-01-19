@@ -10,64 +10,64 @@ export class Color extends Number implements Number {
     return super.valueOf()
   }
 
-  public add(target: this, color: Color): Color {
-    console.debug('Color add', target, color)
-    const r = Math.min(255, (color.valueOf() >> 16) + (target.valueOf() >> 16))
-    const g = Math.min(255, ((color.valueOf() >> 8) & 0xff) + ((target.valueOf() >> 8) & 0xff))
-    const b = Math.min(255, (color.valueOf() & 0xff) + (target.valueOf() & 0xff))
+  public add(this: Color, color: Color): Color {
+    console.debug('Color add', this, color)
+    const r = Math.min(255, (color.valueOf() >> 16) + (this.valueOf() >> 16))
+    const g = Math.min(255, ((color.valueOf() >> 8) & 0xff) + ((this.valueOf() >> 8) & 0xff))
+    const b = Math.min(255, (color.valueOf() & 0xff) + (this.valueOf() & 0xff))
 
     return new Color((r << 16) + (g << 8) + b)
   }
 
-  public subtract(target: this, color: Color): Color {
-    console.debug('Color subtract', target, color)
-    const r = Math.max(0, (color.valueOf() >> 16) - (target.valueOf() >> 16))
-    const g = Math.max(0, ((color.valueOf() >> 8) & 0xff) - ((target.valueOf() >> 8) & 0xff))
-    const b = Math.max(0, (color.valueOf() & 0xff) - (target.valueOf() & 0xff))
+  public subtract(this: Color, color: Color): Color {
+    console.debug('Color subtract', this, color)
+    const r = Math.max(0, (color.valueOf() >> 16) - (this.valueOf() >> 16))
+    const g = Math.max(0, ((color.valueOf() >> 8) & 0xff) - ((this.valueOf() >> 8) & 0xff))
+    const b = Math.max(0, (color.valueOf() & 0xff) - (this.valueOf() & 0xff))
 
     return new Color((r << 16) + (g << 8) + b)
   }
 
-  public blend(target: this, color: Color, amount: number): Color {
-    console.debug('Color blend', target, color, amount)
-    const r = Math.round((color.valueOf() >> 16) * amount + (target.valueOf() >> 16) * (1 - amount))
-    const g = Math.round(((color.valueOf() >> 8) & 0xff) * amount + ((target.valueOf() >> 8) & 0xff) * (1 - amount))
-    const b = Math.round((color.valueOf() & 0xff) * amount + (target.valueOf() & 0xff) * (1 - amount))
+  public blend(this: Color, color: Color, amount: number): Color {
+    console.debug('Color blend', this, color, amount)
+    const r = Math.round((color.valueOf() >> 16) * amount + (this.valueOf() >> 16) * (1 - amount))
+    const g = Math.round(((color.valueOf() >> 8) & 0xff) * amount + ((this.valueOf() >> 8) & 0xff) * (1 - amount))
+    const b = Math.round((color.valueOf() & 0xff) * amount + (this.valueOf() & 0xff) * (1 - amount))
 
     return new Color((r << 16) + (g << 8) + b)
   }
 
-  public lighten(color: this, amount: number): Color {
-    console.debug('Color lighten', color, amount)
-    let [h, s, l] = this.toHsl(color)
+  public lighten(this: Color, amount: number): Color {
+    console.debug('Color lighten', this, amount)
+    let [h, s, l] = this.toHsl()
     l = Math.min(1, l + amount)
 
     return Color.fromHsl(h, s, l)
   }
 
-  public darken(color: this, amount: number): Color {
-    console.debug('Color darken', color, amount)
-    let [h, s, l] = this.toHsl(color)
+  public darken(this: Color, amount: number): Color {
+    console.debug('Color darken', this, amount)
+    let [h, s, l] = this.toHsl()
     l = Math.max(0, l - amount)
 
     return Color.fromHsl(h, s, l)
   }
 
-  public toRgb(color: this): [number, number, number] {
-    console.debug('Color toRgb', color)
-    return [(color.valueOf() >> 16) & 0xff, (color.valueOf() >> 8) & 0xff, color.valueOf() & 0xff]
+  public toRgb(this: Color): [number, number, number] {
+    console.debug('Color toRgb', this)
+    return [(this.valueOf() >> 16) & 0xff, (this.valueOf() >> 8) & 0xff, this.valueOf() & 0xff]
   }
 
-  public toHex(color: this): string {
-    console.debug('Color toHex', color)
-    return color.toString(16)
+  public toHex(this: Color): string {
+    console.debug('Color toHex', this)
+    return this.toString(16)
   }
 
-  public toHsl(color: this): [number, number, number] {
-    console.debug('Color toHsl', color)
-    const r = ((color.valueOf() >> 16) & 0xff) / 255
-    const g = ((color.valueOf() >> 8) & 0xff) / 255
-    const b = (color.valueOf() & 0xff) / 255
+  public toHsl(this: Color): [number, number, number] {
+    console.debug('Color toHsl', this)
+    const r = ((this.valueOf() >> 16) & 0xff) / 255
+    const g = ((this.valueOf() >> 8) & 0xff) / 255
+    const b = (this.valueOf() & 0xff) / 255
 
     const max = Math.max(r, g, b)
     const min = Math.min(r, g, b)
@@ -95,11 +95,11 @@ export class Color extends Number implements Number {
     return [h, s, l]
   }
 
-  public toHsv(color: this): [number, number, number] {
-    console.debug('Color toHsv', color)
-    const r = ((color.valueOf() >> 16) & 0xff) / 255
-    const g = ((color.valueOf() >> 8) & 0xff) / 255
-    const b = (color.valueOf() & 0xff) / 255
+  public toHsv(this: Color): [number, number, number] {
+    console.debug('Color toHsv', this)
+    const r = ((this.valueOf() >> 16) & 0xff) / 255
+    const g = ((this.valueOf() >> 8) & 0xff) / 255
+    const b = (this.valueOf() & 0xff) / 255
 
     const max = Math.max(r, g, b)
     const min = Math.min(r, g, b)
@@ -128,11 +128,11 @@ export class Color extends Number implements Number {
     return [h, s, v]
   }
 
-  public toCmyk(color: this): [number, number, number, number] {
-    console.debug('Color toCmyk', color)
-    const r = ((color.valueOf() >> 16) & 0xff) / 255
-    const g = ((color.valueOf() >> 8) & 0xff) / 255
-    const b = (color.valueOf() & 0xff) / 255
+  public toCmyk(this: Color): [number, number, number, number] {
+    console.debug('Color toCmyk', this)
+    const r = ((this.valueOf() >> 16) & 0xff) / 255
+    const g = ((this.valueOf() >> 8) & 0xff) / 255
+    const b = (this.valueOf() & 0xff) / 255
 
     const k = 1 - Math.max(r, g, b)
     const c = (1 - r - k) / (1 - k)
@@ -142,11 +142,11 @@ export class Color extends Number implements Number {
     return [c, m, y, k]
   }
 
-  public toCmy(color: this): [number, number, number] {
-    console.debug('Color toCmy', color)
-    const r = ((color.valueOf() >> 16) & 0xff) / 255
-    const g = ((color.valueOf() >> 8) & 0xff) / 255
-    const b = (color.valueOf() & 0xff) / 255
+  public toCmy(this: Color): [number, number, number] {
+    console.debug('Color toCmy', this)
+    const r = ((this.valueOf() >> 16) & 0xff) / 255
+    const g = ((this.valueOf() >> 8) & 0xff) / 255
+    const b = (this.valueOf() & 0xff) / 255
 
     const c = 1 - r
     const m = 1 - g

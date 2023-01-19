@@ -44,7 +44,7 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
     return this.brightness;
   }
 
-  init() {
+  public init() {
     console.debug('WS281x init');
     this.channel = ledDriver.init({
       dma: this.dma,
@@ -61,18 +61,18 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
     });
   }
 
-  flush() {
+  public flush() {
     console.debug('WS281x flush');
     this.channel.array = this.pixelData;
     this.pixelData = new Uint32Array(this.ledCount);
   }
 
-  render() {
+  public render() {
     console.debug('WS281x render');
     ledDriver.render();
   }
 
-  reset() {
+  public reset() {
     console.debug('WS281x reset');
     ledDriver.reset();
   }

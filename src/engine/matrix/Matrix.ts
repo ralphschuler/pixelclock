@@ -1,7 +1,7 @@
 import { Color } from "./Color";
 import { IDriver, IDriverOptions } from "./driver";
 
-export interface MatrixOptions<TDriver extends IDriver<TDriverOptions>, TDriverOptions extends IDriverOptions> {
+export interface IMatrixOptions<TDriver extends IDriver<TDriverOptions>, TDriverOptions extends IDriverOptions> {
   width: number;
   height: number;
   driver: new (options: TDriverOptions) => TDriver;
@@ -20,7 +20,7 @@ export class Matrix<TDriver extends IDriver<TDriverOptions>, TDriverOptions exte
     return y * this.width + x;
   }
 
-  constructor(options: MatrixOptions<TDriver, TDriverOptions>) {
+  constructor(options: IMatrixOptions<TDriver, TDriverOptions>) {
     console.debug('Matrix constructor');
     this.width = options.width;
     this.height = options.height;
