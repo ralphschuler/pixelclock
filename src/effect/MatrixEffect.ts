@@ -22,7 +22,7 @@ export interface IMatrixEffectOptions extends IEffectOptions {
 }
 
 export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
-  private colors: Color[]
+  private colors: Color[] = DEFAULT_COLORS
   private speed: number
   private direction: "up" | "down" | "left" | "right"
   private amount: number
@@ -36,7 +36,7 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   constructor(options: IMatrixEffectOptions) {
     console.debug('MatrixEffect constructor')
     super(options)
-    this.colors = options.colors || DEFAULT_COLORS
+    this.colors = options.colors || this.colors
     this.speed = options.speed
     this.direction = options.direction
     this.amount = options.amount || 5

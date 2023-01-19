@@ -20,7 +20,7 @@ export class FireEffect extends IEffect<IFireEffectOptions> {
   private speed: number;
   private intensity: number;
   private direction: "up" | "down" | "left" | "right";
-  private colors: Color[];
+  private colors: Color[] = DEFAULT_COLORS;
 
   private pixels: {
     x: number;
@@ -34,7 +34,7 @@ export class FireEffect extends IEffect<IFireEffectOptions> {
     this.speed = options.speed;
     this.intensity = options.intensity;
     this.direction = options.direction;
-    this.colors = options.colors || DEFAULT_COLORS;
+    this.colors = options.colors || this.colors;
   }
 
   public init(): void {
