@@ -38,6 +38,7 @@ const matrix = new Matrix({
 
 setInterval(() => {
   matrix.clear(Color.fromRandom())
+  matrix.render()
   for (let x = 0; x < matrixWidth; x++) {
     for (let y = 0; y < matrixHeight; y++) {
       matrix.setPixel(x, y, Color.fromRandom())
