@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Formatting
 BLACK='\033[0;30m'
 WHITE='\033[0;37m'
