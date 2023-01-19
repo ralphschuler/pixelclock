@@ -20,7 +20,6 @@ const options = {
     stripType: "WS2812" as StripType,
   },
   getPixelId: (x: number, y: number) => {
-    console.debug('getPixelId', x, y)
     let id = 0
     if (x % 2 === 0) {
       id = x / 2 + y * (matrixWidth + 1);

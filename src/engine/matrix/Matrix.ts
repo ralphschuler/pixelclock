@@ -50,6 +50,7 @@ export class Matrix<TDriver extends IDriver<TDriverOptions>, TDriverOptions exte
 
   public render(): void {
     console.debug('Matrix render');
+    this.driver.flush();
     this.driver.render();
   }
 
