@@ -35,7 +35,7 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
 
   public set Brightness(brightness: number) {
     console.debug('WS281x set Brightness', brightness);
-    this.brightness = brightness;
+    this.brightness = this.channel.brightness = brightness;
   }
 
   public get Brightness(): number {
