@@ -16,7 +16,7 @@
     "stop": "pm2 stop pixelclock",
     "restart": "pm2 restart pixelclock",
     "delete": "pm2 delete pixelclock",
-    "pd": "pm2 pid pixelclock",
+    "pid": "pm2 pid pixelclock",
     "startup": "pm2 startup systemd -u $USER --hp $HOME",
     "save": "pm2 save",
     "build": "tsc",
