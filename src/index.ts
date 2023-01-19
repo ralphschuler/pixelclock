@@ -41,7 +41,7 @@ const matricsEffect = new MatrixEffect({
 matricsEffect.init()
 
 const loop = () => {
-  console.debug('loop')
+  console.debug('Main Loop')
   matricsEffect.update()
   matricsEffect.render()
 }
