@@ -34,7 +34,7 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   }[] = []
 
   constructor(options: IMatrixEffectOptions) {
-    console.debug('Matrix constructor')
+    console.debug('MatrixEffect constructor')
     super(options)
     this.colors = options.colors || DEFAULT_COLORS
     this.speed = options.speed
@@ -43,14 +43,14 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   }
   
   public init(): void {
-    console.debug('Matrix init')
+    console.debug('MatrixEffect init')
     for (let i = 0; i < 3; i++) {
       this.spawnPixel()
     }
   }
 
   public update(): void {
-    console.debug('Matrix update')
+    console.debug('MatrixEffect update')
     this.pixels.forEach((pixel, index) => {
       switch (this.direction) {
         case "up":
@@ -75,7 +75,7 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   }
 
   public render(): void {
-    console.debug('Matrix render')
+    console.debug('MatrixEffect render')
     this.matrix.clear(Color.fromRgb(0, 0, 0))
     this.pixels.forEach(pixel => {
       this.matrix.setPixel(pixel.x, pixel.y, pixel.color)
@@ -84,12 +84,12 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   }
 
   public reset(): void {
-    console.debug('Matrix reset')
+    console.debug('MatrixEffect reset')
     this.pixels = []
   }
 
   private spawnPixel(): void {
-    console.debug('Matrix spawnPixel')
+    console.debug('MatrixEffect spawnPixel')
     const x = Math.floor(Math.random() * this.matrix.Width)
     const y = Math.floor(Math.random() * this.matrix.Height)
     const color = this.colors[Math.floor(Math.random() * this.colors.length)]
