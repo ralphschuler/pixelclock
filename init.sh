@@ -25,6 +25,8 @@ BG_CYAN='\033[46m'
 BG_ORANGE='\033[43m'
 RESET='\033[0m'
 
+SERVICE_PID=$(<"./service.pid")
+
 # Logging
 if [ ! -d "./logs" ]; then
     mkdir ./logs
@@ -66,12 +68,20 @@ function trapint {
 
 function start_service {
     log ${WHITE} "Check service status..."
-    SERVICE_PID=$(yarn pid)
-    if [ "${SERVICE_PID:=-1}" != -1 ]; then
+    if [ "$(service_status)" != -1 ]; then
         log ${GREEN} "Service is running."
     else
         log ${YELLOW} "Service is not running.\nStarting..."
         yarn start && success "Successfully started service." || error_exit "Failed to start service."
+    fi
+}
+
+function service_status {
+    log ${WHITE} "Check service status..."
+    if [ "${SERVICE_PID:=-1}" != -1 && ps -p $SERVICE_PID ]; then
+        return 1
+    else
+        return 0
     fi
 }
 
