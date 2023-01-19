@@ -3,27 +3,29 @@ import { IDriver, IDriverOptions } from "../engine/matrix/driver";
 import { IEffect, IEffectOptions } from "./IEffect";
 
 const DEFAULT_COLORS = [
-  Color.fromRgb(255, 0, 0).darken(6),
-  Color.fromRgb(255, 0, 0).darken(3),
-  Color.fromRgb(255, 0, 0).darken(1),
-  Color.fromRgb(255, 0, 0).darken(0.5),
-  Color.fromRgb(255, 0, 0),
-  Color.fromRgb(255, 0, 0).lighten(0.5),
-  Color.fromRgb(255, 0, 0).lighten(1),
-  Color.fromRgb(255, 0, 0).lighten(3),
-  Color.fromRgb(255, 0, 0).lighten(6)
+  Color.fromRgb(0, 200, 0).darken(6),
+  Color.fromRgb(0, 200, 0).darken(3),
+  Color.fromRgb(0, 200, 0).darken(1),
+  Color.fromRgb(0, 200, 0).darken(0.5),
+  Color.fromRgb(0, 200, 0),
+  Color.fromRgb(0, 200, 0).lighten(0.5),
+  Color.fromRgb(0, 200, 0).lighten(1),
+  Color.fromRgb(0, 200, 0).lighten(3),
+  Color.fromRgb(0, 200, 0).lighten(6)
 ]
 
 export interface IMatrixEffectOptions extends IEffectOptions {
   colors?: Color[],
   speed: number,
   direction: "up" | "down" | "left" | "right"
+  amount?: number
 }
 
-export class MatrixEffect<TMatrixEffectOptions extends IMatrixEffectOptions> extends IEffect<TMatrixEffectOptions> {
+export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   private colors: Color[]
   private speed: number
   private direction: "up" | "down" | "left" | "right"
+  private amount: number
 
   private pixels: {
     x: number,
@@ -31,12 +33,13 @@ export class MatrixEffect<TMatrixEffectOptions extends IMatrixEffectOptions> ext
     color: Color
   }[] = []
 
-  constructor(options: TMatrixEffectOptions) {
+  constructor(options: IMatrixEffectOptions) {
     console.debug('Matrix constructor')
     super(options)
     this.colors = options.colors || DEFAULT_COLORS
     this.speed = options.speed
     this.direction = options.direction
+    this.amount = options.amount || 5
   }
   
   public init(): void {
@@ -69,10 +72,6 @@ export class MatrixEffect<TMatrixEffectOptions extends IMatrixEffectOptions> ext
         this.spawnPixel()
       }
     })
-
-    if (Math.random() < this.speed) {
-      this.spawnPixel()
-    }
   }
 
   public render(): void {

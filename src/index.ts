@@ -33,7 +33,7 @@ const options = {
 }
 const matrix = new Matrix<WS281x<IWS281xOptions>, IWS281xOptions>(options);
 
-const newMatrixEffect = new MatrixEffect<IMatrixEffectOptions>({
+const newMatrixEffect = new MatrixEffect({
   matrix: matrix,
   speed: 100,
   direction: "up"
