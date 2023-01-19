@@ -1,4 +1,3 @@
-import exp from 'constants';
 import ledDriver, { stripType } from 'rpi-ws281x-native';
 import { IDriver, IDriverOptions } from './IDriver';
 
@@ -46,19 +45,12 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
 
   public init() {
     console.debug('WS281x init');
-    this.channel = ledDriver.init({
-      dma: this.dma,
-      freq: this.frequency,
-      channels: [
-        {
-          gpio: this.gpio,
-          invert: this.inverted,
-          count: this.ledCount,
-          stripType: stripType[this.stripType as keyof typeof stripType],
-          brightness: this.brightness
-        }
-      ]
-    })[0];
+    this.channel = ledDriver(this.ledCount,{
+      gpio: this.gpio,
+      invert: this.inverted,
+      stripType: stripType[this.stripType as keyof typeof stripType],
+      brightness: this.brightness
+    });
   }
 
   public flush() {
