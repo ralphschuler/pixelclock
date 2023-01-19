@@ -3,15 +3,15 @@ import { IDriver, IDriverOptions } from "../engine/matrix/driver";
 import { IEffect, IEffectOptions } from "./IEffect";
 
 const DEFAULT_COLORS = [
-  Color.fromRgb(0, 200, 0).darken(6),
-  Color.fromRgb(0, 200, 0).darken(3),
-  Color.fromRgb(0, 200, 0).darken(1),
-  Color.fromRgb(0, 200, 0).darken(0.5),
+  Color.fromRgb(0, 200, 0).darken(0.4),
+  Color.fromRgb(0, 200, 0).darken(0.3),
+  Color.fromRgb(0, 200, 0).darken(0.2),
+  Color.fromRgb(0, 200, 0).darken(0.1),
   Color.fromRgb(0, 200, 0),
-  Color.fromRgb(0, 200, 0).lighten(0.5),
-  Color.fromRgb(0, 200, 0).lighten(1),
-  Color.fromRgb(0, 200, 0).lighten(3),
-  Color.fromRgb(0, 200, 0).lighten(6)
+  Color.fromRgb(0, 200, 0).lighten(0.1),
+  Color.fromRgb(0, 200, 0).lighten(0.2),
+  Color.fromRgb(0, 200, 0).lighten(0.3),
+  Color.fromRgb(0, 200, 0).lighten(0.6)
 ]
 
 export interface IMatrixEffectOptions extends IEffectOptions {
@@ -44,7 +44,7 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   
   public init(): void {
     console.debug('MatrixEffect init')
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < this.amount; i++) {
       this.spawnPixel()
     }
   }
@@ -76,7 +76,7 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
 
   public render(): void {
     console.debug('MatrixEffect render')
-    this.matrix.clear(Color.fromRgb(0, 0, 0))
+    this.matrix.clear(Color.fromRgb(0, 0, 0), 5)
     this.pixels.forEach(pixel => {
       this.matrix.setPixel(pixel.x, pixel.y, pixel.color)
     })

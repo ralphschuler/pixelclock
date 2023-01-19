@@ -26,7 +26,7 @@ export class Matrix<TDriver extends IDriver<TDriverOptions>, TDriverOptions exte
     this.height = options.height;
     this.driver = new options.driver(options.driverOptions);
     this.getPixelId = options.getPixelId || this.getPixelId;
-    
+
     this.driver.init();
   }
 
@@ -60,9 +60,13 @@ export class Matrix<TDriver extends IDriver<TDriverOptions>, TDriverOptions exte
     this.driver.reset();
   }
 
-  public clear(color: Color): void {
+  public clear(color: Color, blendAmount: number = 100): void {
     console.debug('Matrix clear', color);
-    this.driver.PixelData.fill(color.valueOf());
+    for (let x = 0; x < this.width; x++) {
+      for (let y = 0; y < this.height; y++) {
+        this.setPixel(x, y, color.blend(blendAmount));
+      }
+    }
     this.render();
   } 
 }
