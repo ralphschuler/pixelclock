@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -o pipefail -e
 
 # Formatting
 BLACK='\033[0;30m'
