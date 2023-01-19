@@ -45,4 +45,5 @@ const loop = () => {
   }
 }
 
-const main = setInterval(loop, 1000)
+setInterval(loop, 1000)
+

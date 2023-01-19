@@ -45,7 +45,7 @@ cd pixelclock
 ## Effects
 - [ ] Matrix
 - [ ] Falling Decay
-- [ ] Faiding Decay
+- [ ] Fading Decay
 - [ ] Rainbow
 - [ ] Fairy Lights
 - [ ] Fire
@@ -54,13 +54,13 @@ cd pixelclock
 - [ ] Snow
 - [ ] Thunderstorm
 - [ ] Lightning
+- [ ] Plasma
+- [ ] Knight Rider
 
 ## Animations
 - [ ] Snake
 - [ ] Tetris
-- [ ] Pacman
 - [ ] Pong
-
 
 ## Scenes
 - [ ] Start up
