@@ -19,10 +19,10 @@ export abstract class IDriver {
   public abstract reset(): void
 
   public set PixelData(data: Buffer) {
-    throw new Error("Not implemented")
+    this.pixelData = data
   }
   public get PixelData(): Buffer {
-    throw new Error("Not implemented")
+    return this.pixelData
   }
 
   public setPixel(index: number, color: Color) {
