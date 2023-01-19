@@ -56,6 +56,37 @@ function trapint {
     exit 0
 }
 
+function start_service {
+    log ${WHITE} "Check service status..."
+    if yarn is-running; then
+        log ${GREEN} "Service is running."
+    else
+        log ${YELLOW} "Service is not running.\nStarting..."
+        yarn start
+    fi
+}
+
+function install_service {
+    log ${WHITE} "Pulling latest changes..."
+    git reset --hard origin/main
+
+    log ${WHITE} "Installing dependencies..."
+    yarn install --ci
+
+    log ${WHITE} "Building service..."
+    yarn build
+
+    log ${WHITE} "Creating service..."
+    yarn startup
+
+    log ${WHITE} "Saving pm2 config..."
+    yarn save
+
+    log ${WHITE} "Restarting service..."
+    yarn restart
+    exec "$0" "$@"
+}
+
 # Check if root
 if (( $EUID != 0 )); then
     log ${RED} "This script must be run as root.\nExiting..."
@@ -92,14 +123,13 @@ fi
 log ${WHITE} "Initializing..."
 log ${GREY} "Version: ${VERSION} | Startup: $(date "+%Y-%m-%d %H:%M:%S") | PID: $$${RESET}"
 
-log ${WHITE} "Check service status..."
-if yarn is-running; then
-    log ${GREEN} "Service is running."
-else
-    log ${YELLOW} "Service is not running.\nStarting..."
-    yarn start
+log ${WHITE} "Checking installation..."
+if [ ! -d "./node_modules" ]; then
+    log ${YELLOW} "Installation not found.\nInstalling..."
+    install_service
 fi
 
+start_service
 
 log ${WHITE} "Checking for main branch..."
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
@@ -108,7 +138,6 @@ if [ "$BRANCH" != "main" ]; then
     exit 0
 fi
 
-
 while true; do
     log ${WHITE} "Checking for updates..."
     git fetch
@@ -116,25 +145,7 @@ while true; do
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
         log ${YELLOW} "Update found.\nUpdating..."
-
-        log ${WHITE} "Pulling latest changes..."
-        git reset --hard origin/main
-
-        log ${WHITE} "Installing dependencies..."
-        yarn install --ci
-
-        log ${WHITE} "Building service..."
-        yarn build
-
-        log ${WHITE} "Creating service..."
-        yarn startup
-
-        log ${WHITE} "Saving pm2 config..."
-        yarn save
-
-        log ${WHITE} "Restarting service..."
-        yarn restart
-        exec "$0" "$@"
+        install_service
     else
         log ${GREEN} "No updates found."
     fi
