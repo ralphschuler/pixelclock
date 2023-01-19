@@ -29,7 +29,7 @@ const matrix = new Matrix({
 });
 
 
-setInterval(() => {
+const loop = () => {
   console.debug('Main loop')
   matrix.clear(Color.fromRandom())
   matrix.render()
@@ -39,4 +39,7 @@ setInterval(() => {
       matrix.render()
     }
   }
-}, 1000)
+  setTimeout(loop, 1000)
+}
+
+loop()
