@@ -58,7 +58,7 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
           brightness: this.brightness
         }
       ]
-    });
+    })[0];
   }
 
   public flush() {
