@@ -49,14 +49,14 @@ function log {
 }
 
 function error_exit {
-    log ${RED} "Error:\n\t${1}\n\tExiting..."
+    log ${RED} "Error: ${1}\nExiting..."
     exit 1
 }
 
 # Traps
 trap trapint SIGINT SIGTERM
 function trapint {
-    log ${RED} "Caught SIGINT or SIGTERM.\n\tExiting..."
+    log ${RED} "Caught SIGINT or SIGTERM.\nExiting..."
     exit 0
 }
 
@@ -66,7 +66,7 @@ function start_service {
     if [ "${SERVICE_PID:=-1}" != -1 ]; then
         log ${GREEN} "Service is running."
     else
-        log ${YELLOW} "Service is not running.\n\tStarting..."
+        log ${YELLOW} "Service is not running.\nStarting..."
         yarn start || error_exit "Failed to start service."
     fi
 }
@@ -99,7 +99,7 @@ fi
 
 # Respond to --help and -h (if set, show the help message and exit)
 if [[ "$@" == *"--help"* ]] && [[ "$@" == *"-h"* ]]; then
-    log ${WHITE} "You can use the following arguments:\n\t--help,\t-h\tShow this help message.\t\n--quiet,\t-q\nDon't show the logo.\n\t--version, \t-v\tShow the version and exit."
+    log ${WHITE} "You can use the following arguments:\n--help,\t-h\tShow this help message.\n--quiet,\t-q\tDon't show the logo.\n--version,\t-v\tShow the version and exit."
     exit 0
 fi
 
@@ -109,7 +109,7 @@ REPOSITORY=$(git config --get remote.origin.url)
 LAST_UPDATED=$(git log -1 --format="%cd")
 VERSION=$(git describe --tags --exact-match 2> /dev/null || git symbolic-ref -q --short HEAD || git rev-parse --short HEAD) # tag > branch > commit
 if [[ "$@" == *"--version"* ]] && [[ "$@" == *"-v"* ]]; then
-    log ${WHITE} "\tVersion: ${VERSION}\n\tRepository: ${REPOSITORY}\n\tLast updated: ${LAST_UPDATED}‚\n\tAuthor: ${AUTHOR}"
+    log ${WHITE} "Version: ${VERSION}\nRepository: ${REPOSITORY}\nLast updated: ${LAST_UPDATED}‚\nAuthor: ${AUTHOR}"
     exit 0
 fi
 
@@ -129,7 +129,7 @@ log ${GREY} "Version: ${VERSION} | Startup: $(date "+%Y-%m-%d %H:%M:%S") | PID: 
 
 log ${WHITE} "Checking installation..."
 if [ ! -d "./node_modules" ]; then
-    log ${YELLOW} "Installation not found.\n\tInstalling..."
+    log ${YELLOW} "Installation not found.\nInstalling..."
     install_service || error_exit "Failed to install service."
 else
     log ${GREEN} "Installation found."
@@ -140,7 +140,7 @@ start_service || error_exit "Failed to start service."
 log ${WHITE} "Checking for main branch..."
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" != "main" ]; then
-    error_exit "Only the main branch can be updated.\n\tExiting..."
+    error_exit "Only the main branch can be updated.\nExiting..."
 fi
 
 while true; do
@@ -149,7 +149,7 @@ while true; do
     HEADHASH=$(git rev-parse HEAD)
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
-        log ${YELLOW} "Update found.\n\tUpdating..."
+        log ${YELLOW} "Update found.\nUpdating..."
         install_service || error_exit "Failed to update service."
     else
         log ${GREEN} "No updates found."
