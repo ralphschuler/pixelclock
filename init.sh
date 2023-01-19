@@ -65,6 +65,7 @@ function trapint {
 }
 
 function start_service {
+    log ${WHITE} "Checking installation..."
     log ${WHITE} "Check service status..."
     SERVICE_PID=$(yarn pid)
     if [ "${SERVICE_PID:=-1}" != -1 ]; then
@@ -119,48 +120,49 @@ if [[ "$@" == *"--version"* ]] && [[ "$@" == *"-v"* ]]; then
     exit 0
 fi
 
-# Respond to --quiet and -q (if set, don't show the logo and continue)
-if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
-    echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
-    echo -e "${GREY} _____ ${RED}_${RESET}         ${BLUE} _${RESET}${GREY}    _____${RESET} ${WHITE}_           ${RESET}${RED} _    ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|  __ ${RED}(_)${RESET}        ${BLUE}| |${RESET}${GREY}  / ____${RESET}${WHITE}| |          ${RESET}${RED}| |   ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___${BLUE}| |${RESET}${GREY} | |    ${RESET}${WHITE}| | ${RESET}${PURPLE}___${RESET}  ${CYAN} ___${RED}| | __${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \\\\${BLUE} |${RESET}${GREY} | |    ${RESET}${WHITE}| |${RESET}${PURPLE}/ _ \\\\${RESET} ${CYAN}/ __${RED}| |/ /${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/${BLUE} | ${RESET}${GREY}| |____${RESET}${WHITE}| |${RESET}${PURPLE} (_) ${RESET}${CYAN}| (__${RED}|   < ${RESET}" | tee /dev/fd/3
-    echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___${BLUE}|_|${RESET}${GREY}  \_____${RESET}${WHITE}|_|${RESET}${PURPLE}\___/${RESET} ${CYAN}\___${RED}|_|\_\\\\${RESET}" | tee /dev/fd/3
-    echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
-fi
-log ${WHITE} "Initializing..."
-log ${GREY} "Version: ${VERSION} | Startup: $(date "+%Y-%m-%d %H:%M:%S") | PID: $$${RESET}"
-
-log ${WHITE} "Checking installation..."
-if [ ! -d "./node_modules" ]; then
-    log ${YELLOW} "Installation not found.\nInstalling..."
-    install_service
-else
-    log ${GREEN} "Installation found."
-fi
-
-start_service
-
-log ${WHITE} "Checking for main branch..."
-BRANCH=$(git rev-parse --abbrev-ref HEAD)
-if [ "$BRANCH" != "main" ]; then
-    error_exit "Only the main branch can be updated.\nExiting..."
-fi
-
-while true; do
-    log ${WHITE} "Checking for updates..."
-    git fetch origin main || error_exit "Failed to fetch updates."
-    HEADHASH=$(git rev-parse HEAD)
-    UPSTREAMHASH=$(git rev-parse main@{upstream})
-    if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
-        log ${YELLOW} "Update found.\nUpdating..."
-        install_service
-    else
-        log ${GREEN} "No updates found."
+function show_banner {
+    # Respond to --quiet and -q (if set, don't show the logo and continue)
+    if [[ "$@" != *"--quiet"* ]] && [[ "$@" != *"-q"* ]]; then
+        echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
+        echo -e "${GREY} _____ ${RED}_${RESET}         ${BLUE} _${RESET}${GREY}    _____${RESET} ${WHITE}_           ${RESET}${RED} _    ${RESET}" | tee /dev/fd/3
+        echo -e "${GREY}|  __ ${RED}(_)${RESET}        ${BLUE}| |${RESET}${GREY}  / ____${RESET}${WHITE}| |          ${RESET}${RED}| |   ${RESET}" | tee /dev/fd/3
+        echo -e "${GREY}| |__) |${CYAN}__  __${RESET}___${BLUE}| |${RESET}${GREY} | |    ${RESET}${WHITE}| | ${RESET}${PURPLE}___${RESET}  ${CYAN} ___${RED}| | __${RESET}" | tee /dev/fd/3
+        echo -e "${GREY}|  ___/ ${CYAN}\ \/ /${RESET} _ \\\\${BLUE} |${RESET}${GREY} | |    ${RESET}${WHITE}| |${RESET}${PURPLE}/ _ \\\\${RESET} ${CYAN}/ __${RED}| |/ /${RESET}" | tee /dev/fd/3
+        echo -e "${GREY}| |   | ${CYAN}|>  < ${RESET} __/${BLUE} | ${RESET}${GREY}| |____${RESET}${WHITE}| |${RESET}${PURPLE} (_) ${RESET}${CYAN}| (__${RED}|   < ${RESET}" | tee /dev/fd/3
+        echo -e "${GREY}|_|   |_${CYAN}/_/\_\\\\${RESET}___${BLUE}|_|${RESET}${GREY}  \_____${RESET}${WHITE}|_|${RESET}${PURPLE}\___/${RESET} ${CYAN}\___${RED}|_|\_\\\\${RESET}" | tee /dev/fd/3
+        echo -e "${WHITE}===================================================${RESET}" | tee /dev/fd/3
     fi
+}
 
-    log ${WHITE} "Waiting 60 seconds..."
-    sleep 60
-done
+function check_for_updates {
+    log ${WHITE} "Checking for main branch..."
+    BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    if [ "$BRANCH" != "main" ]; then
+        error_exit "Only the main branch can be updated.\nExiting..."
+    fi
+    while true; do
+        log ${WHITE} "Checking for updates..."
+        git fetch origin main || error_exit "Failed to fetch updates."
+        HEADHASH=$(git rev-parse HEAD)
+        UPSTREAMHASH=$(git rev-parse main@{upstream})
+        if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
+            log ${YELLOW} "Update found.\nUpdating..."
+            install_service
+            start_service
+        else
+            log ${GREEN} "No updates found."
+        fi
+
+        log ${WHITE} "Waiting 60 seconds..."
+        sleep 60
+    done
+}
+
+function main {
+    show_banner
+    log ${WHITE} "Initializing..."
+    log ${GREY} "Version: ${VERSION} | Startup: $(date "+%Y-%m-%d %H:%M:%S") | PID: $$${RESET}"
+    install_service
+    start_service
+    check_for_updates
+}
