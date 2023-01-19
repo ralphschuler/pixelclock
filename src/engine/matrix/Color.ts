@@ -8,6 +8,44 @@ export class Color extends Number implements Number {
     return super.valueOf()
   }
 
+  public add(target: this, color: Color): Color {
+    const r = Math.min(255, (color.valueOf() >> 16) + (target.valueOf() >> 16))
+    const g = Math.min(255, ((color.valueOf() >> 8) & 0xff) + ((target.valueOf() >> 8) & 0xff))
+    const b = Math.min(255, (color.valueOf() & 0xff) + (target.valueOf() & 0xff))
+
+    return new Color((r << 16) + (g << 8) + b)
+  }
+
+  public subtract(target: this, color: Color): Color {
+    const r = Math.max(0, (color.valueOf() >> 16) - (target.valueOf() >> 16))
+    const g = Math.max(0, ((color.valueOf() >> 8) & 0xff) - ((target.valueOf() >> 8) & 0xff))
+    const b = Math.max(0, (color.valueOf() & 0xff) - (target.valueOf() & 0xff))
+
+    return new Color((r << 16) + (g << 8) + b)
+  }
+
+  public blend(target: this, color: Color, amount: number): Color {
+    const r = Math.round((color.valueOf() >> 16) * amount + (target.valueOf() >> 16) * (1 - amount))
+    const g = Math.round(((color.valueOf() >> 8) & 0xff) * amount + ((target.valueOf() >> 8) & 0xff) * (1 - amount))
+    const b = Math.round((color.valueOf() & 0xff) * amount + (target.valueOf() & 0xff) * (1 - amount))
+
+    return new Color((r << 16) + (g << 8) + b)
+  }
+
+  public lighten(color: this, amount: number): Color {
+    let [h, s, l] = this.toHsl(color)
+    l = Math.min(1, l + amount)
+
+    return Color.fromHsl(h, s, l)
+  }
+
+  public darken(color: this, amount: number): Color {
+    let [h, s, l] = this.toHsl(color)
+    l = Math.max(0, l - amount)
+
+    return Color.fromHsl(h, s, l)
+  }
+
   public toRgb(color: this): [number, number, number] {
     return [(color.valueOf() >> 16) & 0xff, (color.valueOf() >> 8) & 0xff, color.valueOf() & 0xff]
   }
