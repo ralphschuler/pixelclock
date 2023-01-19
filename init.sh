@@ -52,7 +52,7 @@ function log {
 # Traps
 trap trapint SIGINT SIGTERM
 function trapint {
-    log ${RED} "Caught SIGINT or SIGTERM.\nExiting..."
+    log ${RED} "Caught SIGINT or SIGTERM.\n\tExiting..."
     exit 0
 }
 
@@ -61,7 +61,7 @@ function start_service {
     if [ "${$(pm2 pid pixelclock):=0}" != 0 ]; then
         log ${GREEN} "Service is running."
     else
-        log ${YELLOW} "Service is not running.\nStarting..."
+        log ${YELLOW} "Service is not running.\n\tStarting..."
         yarn start
     fi
 }
@@ -89,7 +89,7 @@ function install_service {
 
 # Check if root
 if (( $EUID != 0 )); then
-    log ${RED} "This script must be run as root.\nExiting..."
+    log ${RED} "This script must be run as root.\n\tExiting..."
     exit 1
 fi
 
@@ -125,7 +125,7 @@ log ${GREY} "Version: ${VERSION} | Startup: $(date "+%Y-%m-%d %H:%M:%S") | PID: 
 
 log ${WHITE} "Checking installation..."
 if [ ! -d "./node_modules" ]; then
-    log ${YELLOW} "Installation not found.\nInstalling..."
+    log ${YELLOW} "Installation not found.\n\tInstalling..."
     install_service
 else
     log ${GREEN} "Installation found."
@@ -136,7 +136,7 @@ start_service
 log ${WHITE} "Checking for main branch..."
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
 if [ "$BRANCH" != "main" ]; then
-    log ${RED} "Only the main branch can be updated. Exiting..."
+    log ${RED} "Only the main branch can be updated.\n\tExiting..."
     exit 0
 fi
 
@@ -146,7 +146,7 @@ while true; do
     HEADHASH=$(git rev-parse HEAD)
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
-        log ${YELLOW} "Update found.\nUpdating..."
+        log ${YELLOW} "Update found.\n\tUpdating..."
         install_service
     else
         log ${GREEN} "No updates found."
