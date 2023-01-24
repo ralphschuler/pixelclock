@@ -26,7 +26,6 @@ const options = {
     } else {
       id = matrixWidth + 1 - x + x / 2 + y * (matrixWidth + 1);
     }
-
     return Math.floor(id);
   }
 }
