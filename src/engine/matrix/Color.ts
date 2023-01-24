@@ -18,58 +18,89 @@ export class Color extends Number implements Number {
     return super.valueOf()
   }
 
-  public add(this: Color, color: Color): Color {
-    console.debug('Color add', this, color)
-    const r = Math.min(255, (color.valueOf() >> 16) + (this.valueOf() >> 16))
-    const g = Math.min(255, ((color.valueOf() >> 8) & 0xff) + ((this.valueOf() >> 8) & 0xff))
-    const b = Math.min(255, (color.valueOf() & 0xff) + (this.valueOf() & 0xff))
+  public static add(firstColor: Color, secondColor: Color): Color {
+    const r = Math.min(255, (firstColor.valueOf() >> 16) + (secondColor.valueOf() >> 16))
+    const g = Math.min(255, ((firstColor.valueOf() >> 8) & 0xff) + ((secondColor.valueOf() >> 8) & 0xff))
+    const b = Math.min(255, (firstColor.valueOf() & 0xff) + (secondColor.valueOf() & 0xff))
 
     return new Color((r << 16) + (g << 8) + b)
   }
 
-  public subtract(this: Color, color: Color): Color {
-    console.debug('Color subtract', this, color)
-    const r = Math.max(0, (color.valueOf() >> 16) - (this.valueOf() >> 16))
-    const g = Math.max(0, ((color.valueOf() >> 8) & 0xff) - ((this.valueOf() >> 8) & 0xff))
-    const b = Math.max(0, (color.valueOf() & 0xff) - (this.valueOf() & 0xff))
+  public subtract(color: Color): Color {
+    return Color.subtract(this, color)
+  }
+
+  public static subtract(color: Color, color2: Color): Color {
+    const r = Math.max(0, (color.valueOf() >> 16) - (color2.valueOf() >> 16))
+    const g = Math.max(0, ((color.valueOf() >> 8) & 0xff) - ((color2.valueOf() >> 8) & 0xff))
+    const b = Math.max(0, (color.valueOf() & 0xff) - (color2.valueOf() & 0xff))
 
     return new Color((r << 16) + (g << 8) + b)
   }
 
-  public blend(this: Color, color: Color, amount: number): Color {
-    console.debug('Color blend', this, color, amount)
-    const r = Math.min(255, (color.valueOf() >> 16) * amount + (this.valueOf() >> 16) * (1 - amount))
-    const g = Math.min(255, ((color.valueOf() >> 8) & 0xff) * amount + ((this.valueOf() >> 8) & 0xff) * (1 - amount))
-    const b = Math.min(255, (color.valueOf() & 0xff) * amount + (this.valueOf() & 0xff) * (1 - amount))
+  public multiply(color: Color): Color {
+    return Color.multiply(this, color)
+  }
+  public static multiply(firstColor: Color, secondColor: Color): Color {
+    const r = Math.min(255, (firstColor.valueOf() >> 16) * (secondColor.valueOf() >> 16))
+    const g = Math.min(255, ((firstColor.valueOf() >> 8) & 0xff) * ((secondColor.valueOf() >> 8) & 0xff))
+    const b = Math.min(255, (firstColor.valueOf() & 0xff) * (secondColor.valueOf() & 0xff))
 
     return new Color((r << 16) + (g << 8) + b)
   }
 
-  public lighten(this: Color, amount: number): Color {
-    console.debug('Color lighten', this, amount)
-    return this.blend(Color.White, amount)
+  public blend(secondColor: Color, amount: number): Color {
+    return Color.blend(this, secondColor, amount)
   }
 
-  public darken(this: Color, amount: number): Color {
-    console.debug('Color darken', this, amount)
-    return this.blend(Color.Black, amount)
+  public static blend(firstColor: Color, secondColor: Color, amount: number): Color {
+    const r = Math.min(255, (firstColor.valueOf() >> 16) * amount + (secondColor.valueOf() >> 16) * (1 - amount))
+    const g = Math.min(255, ((firstColor.valueOf() >> 8) & 0xff) * amount + ((secondColor.valueOf() >> 8) & 0xff) * (1 - amount))
+    const b = Math.min(255, (firstColor.valueOf() & 0xff) * amount + (secondColor.valueOf() & 0xff) * (1 - amount))
+
+    return new Color((r << 16) + (g << 8) + b)
   }
 
-  public toRgb(this: Color): [number, number, number] {
-    console.debug('Color toRgb', this)
-    return [(this.valueOf() >> 16) & 0xff, (this.valueOf() >> 8) & 0xff, this.valueOf() & 0xff]
+  public lighten(amount: number): Color {
+    return Color.lighten(this, amount)
   }
 
-  public toHex(this: Color): string {
-    console.debug('Color toHex', this)
-    return this.toString(16)
+  public static lighten(color: Color, amount: number): Color {
+    return Color.blend(color, Color.White, amount)
   }
 
-  public toHsl(this: Color): [number, number, number] {
-    console.debug('Color toHsl', this)
-    const r = ((this.valueOf() >> 16) & 0xff) / 255
-    const g = ((this.valueOf() >> 8) & 0xff) / 255
-    const b = (this.valueOf() & 0xff) / 255
+  public darken(amount: number): Color {
+    return Color.darken(this, amount)
+  }
+
+  public static darken(color: Color, amount: number): Color {
+    return Color.blend(color, Color.Black, amount)
+  }
+
+  public toRgb(): [number, number, number] {
+    return Color.toRgb(this)
+  }
+
+  public static toRgb(color: Color): [number, number, number] {
+    return [(color.valueOf() >> 16) & 0xff, (color.valueOf() >> 8) & 0xff, color.valueOf() & 0xff]
+  }
+
+  public toHex(): string {
+    return Color.toHex(this)
+  }
+
+  public static toHex(color: Color): string {
+    return color.toString(16)
+  }
+
+  public toHsl(): [number, number, number] {
+    return Color.toHsl(this)
+  }
+
+  public static toHsl(color: Color): [number, number, number] {
+    const r = ((color.valueOf() >> 16) & 0xff) / 255
+    const g = ((color.valueOf() >> 8) & 0xff) / 255
+    const b = (color.valueOf() & 0xff) / 255
 
     const max = Math.max(r, g, b)
     const min = Math.min(r, g, b)
@@ -97,11 +128,14 @@ export class Color extends Number implements Number {
     return [h, s, l]
   }
 
-  public toHsv(this: Color): [number, number, number] {
-    console.debug('Color toHsv', this)
-    const r = ((this.valueOf() >> 16) & 0xff) / 255
-    const g = ((this.valueOf() >> 8) & 0xff) / 255
-    const b = (this.valueOf() & 0xff) / 255
+  public toHsv(): [number, number, number] {
+    return Color.toHsv(this)
+  }
+
+  public static toHsv(color: Color): [number, number, number] {
+    const r = ((color.valueOf() >> 16) & 0xff) / 255
+    const g = ((color.valueOf() >> 8) & 0xff) / 255
+    const b = (color.valueOf() & 0xff) / 255
 
     const max = Math.max(r, g, b)
     const min = Math.min(r, g, b)
@@ -130,11 +164,13 @@ export class Color extends Number implements Number {
     return [h, s, v]
   }
 
-  public toCmyk(this: Color): [number, number, number, number] {
-    console.debug('Color toCmyk', this)
-    const r = ((this.valueOf() >> 16) & 0xff) / 255
-    const g = ((this.valueOf() >> 8) & 0xff) / 255
-    const b = (this.valueOf() & 0xff) / 255
+  public toCmyk(): [number, number, number, number] {
+    return Color.toCmyk(this)
+  }
+  public static toCmyk(color: Color): [number, number, number, number] {
+    const r = ((color.valueOf() >> 16) & 0xff) / 255
+    const g = ((color.valueOf() >> 8) & 0xff) / 255
+    const b = (color.valueOf() & 0xff) / 255
 
     const k = 1 - Math.max(r, g, b)
     const c = (1 - r - k) / (1 - k)
@@ -144,11 +180,14 @@ export class Color extends Number implements Number {
     return [c, m, y, k]
   }
 
-  public toCmy(this: Color): [number, number, number] {
-    console.debug('Color toCmy', this)
-    const r = ((this.valueOf() >> 16) & 0xff) / 255
-    const g = ((this.valueOf() >> 8) & 0xff) / 255
-    const b = (this.valueOf() & 0xff) / 255
+  public toCmy(): [number, number, number] {
+    return Color.toCmy(this)
+  }
+
+  public static toCmy(color: Color): [number, number, number] {
+    const r = ((color.valueOf() >> 16) & 0xff) / 255
+    const g = ((color.valueOf() >> 8) & 0xff) / 255
+    const b = (color.valueOf() & 0xff) / 255
 
     const c = 1 - r
     const m = 1 - g
@@ -158,17 +197,14 @@ export class Color extends Number implements Number {
   }
 
   public static fromRgb(r: number, g: number, b: number): Color {
-    console.debug('Color fromRgb', r, g, b)
     return new Color((r << 16) | (g << 8) | b)
   }
 
   public static fromHex(hex: string): Color {
-    console.debug('Color fromHex', hex)
     return new Color(parseInt(hex, 16))
   }
 
   public static fromHsl(h: number, s: number, l: number): Color {
-    console.debug('Color fromHsl', h, s, l)
     let r: number, g: number, b: number
 
     if (s == 0) {
@@ -194,7 +230,6 @@ export class Color extends Number implements Number {
   }
 
   public static fromHsv(h: number, s: number, v: number): Color {
-    console.debug('Color fromHsv', h, s, v)
     let r: number = 0, g: number = 0, b: number = 0
 
     let i = Math.floor(h * 6)
@@ -228,7 +263,6 @@ export class Color extends Number implements Number {
   }
 
   public static fromCmyk(c: number, m: number, y: number, k: number): Color {
-    console.debug('Color fromCmyk', c, m, y, k)
     const r = 1 - Math.min(1, c * (1 - k) + k)
     const g = 1 - Math.min(1, m * (1 - k) + k)
     const b = 1 - Math.min(1, y * (1 - k) + k)
@@ -237,12 +271,10 @@ export class Color extends Number implements Number {
   }
 
   public static fromCmy(c: number, m: number, y: number): Color {
-    console.debug('Color fromCmy', c, m, y)
     return Color.fromCmyk(c, m, y, 0)
   }
 
   public static fromRandom(): Color {
-    console.debug('Color fromRandom')
     return Color.fromHex(Math.floor(Math.random() * 16777215).toString(16))
   }
 }
