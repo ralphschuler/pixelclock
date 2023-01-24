@@ -46,7 +46,7 @@ const loop = () => {
   matricsEffect.update()
   matricsEffect.render()
 
-  setTimeout(loop, 1000)
+  setTimeout(loop, 300)
 }
 
 loop()
