@@ -31,7 +31,11 @@ const options = {
 }
 const matrix = new Matrix<WS281x<IWS281xOptions>, IWS281xOptions>(options);
 
+const colorAmount = 5
 const matricsEffect = new MatrixEffect({
+  colors: [...new Array(colorAmount)].map((index) =>
+    Color.fromHsl(Math.floor((index * (260 / colorAmount))), 100, 50)
+  ),
   matrix: matrix,
   speed: 100
 })
