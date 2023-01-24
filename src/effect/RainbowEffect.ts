@@ -26,7 +26,7 @@ export class RainbowEffect extends IEffect<IRainbowEffect> {
   public update(): void {}
 
   public render(): void {
-    this.matrix.clear(Color.fromRgb(0, 0, 0), 0.1)
+    this.matrix.clear(Color.Black, 0.5)
     const time = Date.now() / 1000
     const amount = Math.random() * 15
     for (let i = 0; i < amount; i++) {
