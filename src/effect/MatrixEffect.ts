@@ -17,7 +17,7 @@ const DEFAULT_COLORS = [
 export interface IMatrixEffectOptions extends IEffectOptions {
   colors?: Color[],
   speed: number,
-  direction: "up" | "down" | "left" | "right"
+  direction?: "up" | "down" | "left" | "right"
   amount?: number
 }
 
@@ -38,7 +38,7 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
     super(options)
     this.colors = options.colors || this.colors
     this.speed = options.speed
-    this.direction = options.direction
+    this.direction = options.direction || "down"
     this.amount = options.amount || 5
   }
   
@@ -90,13 +90,27 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
 
   private spawnPixel(): void {
     console.debug('MatrixEffect spawnPixel')
-    const x = Math.floor(Math.random() * this.matrix.Width)
-    const color = this.colors[Math.floor(Math.random() * this.colors.length)]
+    let x = 0
+    let y = 0
+    switch (this.direction) {
+      case "up":
+        x = Math.floor(Math.random() * this.matrix.Width)
+        break
+      case "down":
+        x = Math.floor(Math.random() * this.matrix.Width)
+        break
+      case "left":
+        y = Math.floor(Math.random() * this.matrix.Height)
+        break
+      case "right":
+        y = Math.floor(Math.random() * this.matrix.Height)
+        break
+    }
 
     this.pixels.push({
-      x,
-      y: 0,
-      color
+      x: x,
+      y: y,
+      color: this.colors[Math.floor(Math.random() * this.colors.length)]
     })
   }
 }

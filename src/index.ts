@@ -33,8 +33,7 @@ const matrix = new Matrix<WS281x<IWS281xOptions>, IWS281xOptions>(options);
 
 const matricsEffect = new MatrixEffect({
   matrix: matrix,
-  speed: 100,
-  direction: "up"
+  speed: 100
 })
 matricsEffect.init()
 
@@ -44,5 +43,5 @@ const loop = () => {
   matricsEffect.render()
 }
 
-setInterval(loop, 10)
+setInterval(loop, 1000)
 
