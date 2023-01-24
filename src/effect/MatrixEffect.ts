@@ -37,13 +37,12 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   public init(): void {
     console.debug('MatrixEffect init')
     for (let i = 0; i < this.amount; i++) {
-      this.spawnPixel()
+      this.checkPixelAmount(5, 15)
     }
   }
 
   public update(): void {
-
-    Date.now() % 100 === 0 && this.checkPixelAmount(5, 25)
+    Date.now() % 15000 === 0 && this.checkPixelAmount(5, 25)
 
     console.debug('MatrixEffect update')
     this.pixels.forEach((pixel, index) => {
@@ -112,7 +111,9 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   //a function which checks if the amount of pixels is in a given range and spawns new ones if not
   private checkPixelAmount(min: number, max: number) {
     if (this.pixels.length < min) {
-      for (let i = 0; i < min - this.pixels.length; i++) {
+      const maxSpawn = Math.min(min - this.pixels.length, max - this.pixels.length)
+      const spawn = Math.floor(Math.random() * maxSpawn) + 1
+      for (let i = 0; i < spawn; i++) {
         this.spawnPixel()
       }
     } else if (this.pixels.length > max) {
