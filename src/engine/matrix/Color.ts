@@ -10,7 +10,6 @@ export class Color extends Number implements Number {
   public static readonly Magenta: Color = new Color(0xff00ff)
 
   constructor(color: number) {
-    console.debug('Color constructor', color)
     super(color)
   }
 
