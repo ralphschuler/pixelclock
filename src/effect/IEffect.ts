@@ -9,7 +9,6 @@ export abstract class IEffect<TEffectOptions extends IEffectOptions> {
   protected matrix: Matrix<IDriver<IDriverOptions>, IDriverOptions>;
 
   protected constructor(options: TEffectOptions) {
-    console.debug('Effect constructor')
     this.matrix = options.matrix
   }
 

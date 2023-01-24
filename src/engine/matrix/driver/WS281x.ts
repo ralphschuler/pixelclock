@@ -34,17 +34,14 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
   }
 
   public set Brightness(brightness: number) {
-    console.debug('WS281x set Brightness', brightness);
     this.brightness = this.channel.brightness = brightness;
   }
 
   public get Brightness(): number {
-    console.debug('WS281x get Brightness');
     return this.brightness;
   }
 
   public init() {
-    console.debug('WS281x init');
     this.channel = ledDriver(this.ledCount,{
       gpio: this.gpio,
       invert: this.inverted,
@@ -54,7 +51,6 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
   }
 
   public flush() {
-    console.debug('WS281x flush');
     this.pixelData.forEach((color, index) => {
       this.channel.array[index] = color;
     });
@@ -62,12 +58,10 @@ export class WS281x<TDriverOptions extends IWS281xOptions> extends IDriver<TDriv
   }
 
   public render() {
-    console.debug('WS281x render');
     ledDriver.render();
   }
 
   public reset() {
-    console.debug('WS281x reset');
     ledDriver.reset();
   }
 }

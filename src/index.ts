@@ -40,8 +40,14 @@ const rainbowEffect = new RainbowEffect({
 })
 rainbowEffect.init()
 
+let lastTime = Date.now()
 const loop = () => {
-  console.debug('Main Loop')
+  const now = Date.now()
+  const delta = now - lastTime
+  lastTime = now
+
+  console.log(`FPS: ${1000 / delta}`)
+
   rainbowEffect.update()
   rainbowEffect.render()
 

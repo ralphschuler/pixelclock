@@ -15,23 +15,17 @@ export class RainbowEffect extends IEffect<IRainbowEffect> {
   private colors: Color[] = DEFAULT_COLORS
 
 
-  
+
   constructor(options: IRainbowEffect) {
-    console.debug('RainbowEffect constructor')
     super(options)
     this.colors = options.colors || this.colors
   }
   
-  public init(): void {
-    console.debug('RainbowEffect init')
-  }
+  public init(): void {}
 
-  public update(): void {
-    console.debug('RainbowEffect update')
-  }
+  public update(): void {}
 
   public render(): void {
-    console.debug('RainbowEffect render')
     this.matrix.clear(Color.fromRgb(0, 0, 0), 0.1)
     const time = Date.now() / 1000
     const amount = Math.random() * 15
@@ -48,7 +42,5 @@ export class RainbowEffect extends IEffect<IRainbowEffect> {
     this.matrix.render()
   }
 
-  public reset(): void {
-    console.debug('RainbowEffect reset')
-  }
+  public reset(): void {}
 }
