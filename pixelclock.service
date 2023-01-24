@@ -2,7 +2,7 @@
 Description=Pixelclock
 
 [Service]
-ExecStart=/usr/bin/node /root/pixelclock/dist/index.js
+ExecStart=/root/pixelclock/init.sh start
 Restart=always
 User=nobody
 # Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
