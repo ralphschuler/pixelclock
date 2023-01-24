@@ -43,11 +43,11 @@ function check_if_running {
   if [ -f "/var/run/pixelclock.pid" ]; then
     PID=$(cat /var/run/pixelclock.pid)
     if ps -p $PID > /dev/null; then
-      return 0
+      return 1
     fi
   fi
 
-  return 1
+  return 0
 }
 
 function check_if_root {
@@ -65,11 +65,11 @@ function check_for_updates {
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
       log "${YELLOW}There are updates available.${RESET}"
-      return 0
+      return 1
     fi
   fi
 
-  return 1
+  return 0
 }
 
 function rotate_logs {
@@ -90,7 +90,7 @@ function trapint {
 
 function log {
   echo -e "$@" | tee /dev/fd/3
-  echo -e "$@"
+  echo -e "$@" 1>&3
 }
 
 #setup functions
