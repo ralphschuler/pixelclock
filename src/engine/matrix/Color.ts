@@ -53,9 +53,9 @@ export class Color extends Number implements Number {
   }
 
   public static blend(firstColor: Color, secondColor: Color, amount: number): Color {
-    const r = Math.min(255, (firstColor.valueOf() >> 16) * amount + (secondColor.valueOf() >> 16) * (1 - amount))
-    const g = Math.min(255, ((firstColor.valueOf() >> 8) & 0xff) * amount + ((secondColor.valueOf() >> 8) & 0xff) * (1 - amount))
-    const b = Math.min(255, (firstColor.valueOf() & 0xff) * amount + (secondColor.valueOf() & 0xff) * (1 - amount))
+    const r = Math.min(255, (firstColor.valueOf() >> 16) * (1 - amount) + (secondColor.valueOf() >> 16) * amount)
+    const g = Math.min(255, ((firstColor.valueOf() >> 8) & 0xff) * (1 - amount) + ((secondColor.valueOf() >> 8) & 0xff) * amount)
+    const b = Math.min(255, (firstColor.valueOf() & 0xff) * (1 - amount) + (secondColor.valueOf() & 0xff) * amount)
 
     return new Color((r << 16) + (g << 8) + b)
   }
