@@ -3,15 +3,7 @@ import { IDriver, IDriverOptions } from "../engine/matrix/driver";
 import { IEffect, IEffectOptions } from "./IEffect";
 
 const DEFAULT_COLORS = [
-  Color.fromRgb(0, 200, 0).darken(0.04),
-  Color.fromRgb(0, 200, 0).darken(0.03),
-  Color.fromRgb(0, 200, 0).darken(0.02),
-  Color.fromRgb(0, 200, 0).darken(0.01),
-  Color.fromRgb(0, 200, 0),
-  Color.fromRgb(0, 200, 0).lighten(0.01),
-  Color.fromRgb(0, 200, 0).lighten(0.02),
-  Color.fromRgb(0, 200, 0).lighten(0.03),
-  Color.fromRgb(0, 200, 0).lighten(0.06)
+  Color.fromRgb(0, 255, 0),
 ]
 
 export interface IMatrixEffectOptions extends IEffectOptions {
