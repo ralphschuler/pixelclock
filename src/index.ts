@@ -45,7 +45,9 @@ const loop = () => {
   console.debug('Main Loop')
   matricsEffect.update()
   matricsEffect.render()
+
+  setTimeout(loop, 1000)
 }
 
-setInterval(loop, 1000)
+loop()
 
