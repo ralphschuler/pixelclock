@@ -1,0 +1,14 @@
+[Unit]
+Description=Pixelclock
+
+[Service]
+ExecStart=/usr/bin/node /root/pixelclock/dist/index.js
+Restart=always
+User=nobody
+# Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
+Group=nogroup
+Environment=PATH=/usr/bin:/usr/local/bin
+WorkingDirectory=/root/pixelclock
+
+[Install]
+WantedBy=multi-user.target

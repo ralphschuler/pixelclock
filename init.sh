@@ -148,7 +148,6 @@ function status {
 }
 
 function install {
-
   if check_if_running; then
     log "${GREEN}Installing PixelClock...${RESET}"
     cp ./pixelclock.service /etc/systemd/system/pixelclock.service
