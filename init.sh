@@ -239,7 +239,7 @@ function main {
 
   check_if_root
 
-  if [[ "$@" == *"--no-updates"* ]] && [[ "$@" == *"-n"* ]]; then
+  if [[ "$@" != *"--no-updates"* ]] && [[ "$@" == *"-n"* ]]; then
     check_for_updates || update
   fi
 
