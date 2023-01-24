@@ -34,7 +34,7 @@ const matrix = new Matrix<WS281x<IWS281xOptions>, IWS281xOptions>(options);
 const colorAmount = 5
 const matricsEffect = new MatrixEffect({
   colors: [...new Array(colorAmount)].map((_, index) =>
-    Color.fromHsl(Math.floor((index * (260 / colorAmount))), 100, 50)
+    colorWheel((index * 256 / colorAmount) % 256)
   ),
   matrix: matrix,
   speed: 100
@@ -51,3 +51,14 @@ const loop = () => {
 
 loop()
 
+function colorWheel(pos: number) {
+  if (pos < 85) {
+    return Color.fromRgb(pos * 3, 255 - pos * 3, 0);
+  } else if (pos < 170) {
+    pos -= 85;
+    return Color.fromRgb(255 - pos * 3, 0, pos * 3);
+  } else {
+    pos -= 170;
+    return Color.fromRgb(0, pos * 3, 255 - pos * 3);
+  }
+}
