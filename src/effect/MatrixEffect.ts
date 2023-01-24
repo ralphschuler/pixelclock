@@ -42,7 +42,7 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
   }
 
   public update(): void {
-    Date.now() % 15000 === 0 && this.checkPixelAmount(5, 25)
+    Math.random() < 0.15 && this.checkPixelAmount(5, 30)
 
     console.debug('MatrixEffect update')
     this.pixels.forEach((pixel, index) => {
@@ -63,7 +63,10 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
 
       if (pixel.x < 0 || pixel.x >= this.matrix.Width || pixel.y < 0 || pixel.y >= this.matrix.Height) {
         this.pixels.splice(index, 1)
-        Math.random() < 0.15 && this.spawnPixel()
+
+        if (Math.random() < 0.75) {
+          this.spawnPixel()
+        }
       }
     })
   }
