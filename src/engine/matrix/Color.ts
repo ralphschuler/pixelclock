@@ -38,9 +38,9 @@ export class Color extends Number implements Number {
 
   public blend(this: Color, color: Color, amount: number): Color {
     console.debug('Color blend', this, color, amount)
-    const r = Math.round((color.valueOf() >> 16) * amount + (this.valueOf() >> 16) * (1 - amount))
-    const g = Math.round(((color.valueOf() >> 8) & 0xff) * amount + ((this.valueOf() >> 8) & 0xff) * (1 - amount))
-    const b = Math.round((color.valueOf() & 0xff) * amount + (this.valueOf() & 0xff) * (1 - amount))
+    const r = Math.min(255, (color.valueOf() >> 16) * amount + (this.valueOf() >> 16) * (1 - amount))
+    const g = Math.min(255, ((color.valueOf() >> 8) & 0xff) * amount + ((this.valueOf() >> 8) & 0xff) * (1 - amount))
+    const b = Math.min(255, (color.valueOf() & 0xff) * amount + (this.valueOf() & 0xff) * (1 - amount))
 
     return new Color((r << 16) + (g << 8) + b)
   }
