@@ -89,7 +89,7 @@ function trapint {
 }
 
 function log {
-  echo -e "$@" | tee /dev/fd/3
+  echo -e "$@" >> ./logs/latest.log
   echo -e "$@" 1>&3
 }
 
