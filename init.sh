@@ -65,11 +65,11 @@ function check_for_updates {
     UPSTREAMHASH=$(git rev-parse main@{upstream})
     if [ "$HEADHASH" != "$UPSTREAMHASH" ]; then
       log "${YELLOW}There are updates available.${RESET}"
-      return 1
+      return 0
     fi
   fi
 
-  return 0
+  return 1
 }
 
 function rotate_logs {
@@ -107,6 +107,11 @@ function setup_trapint {
 
 # Service functions
 function start {
+  if [ ! -d "dist/" ]; then
+    log "${RED}dist/ folder not found. Building...${RESET}"
+    build
+  fi
+
   if check_if_running; then
     log "${GREEN}Starting PixelClock...${RESET}"
     node ./src/index.js &
@@ -143,6 +148,7 @@ function status {
 }
 
 function install {
+
   if check_if_running; then
     log "${GREEN}Installing PixelClock...${RESET}"
     cp ./pixelclock.service /etc/systemd/system/pixelclock.service
@@ -197,12 +203,18 @@ function version {
   exit 0
 }
 
+function build {
+  log "${GREEN}Building PixelClock...${RESET}"
+  npm run install || log "${RED}Failed to install dependencies.${RESET}"; exit 1
+  npm run build || log "${RED}Failed to build PixelClock.${RESET}"; exit 1
+  log "${GREEN}PixelClock built.${RESET}"
+}
+
 function update {
   log "${GREEN}Updating PixelClock...${RESET}"
   stop
   git reset --hard origin/main || log "${RED}Failed to reset to origin/main.${RESET}"; exit 1
-  yarn install || log "${RED}Failed to install dependencies.${RESET}"; exit 1
-  yarn build || log "${RED}Failed to build PixelClock.${RESET}"; exit 1
+  build
   start
   log "${GREEN}PixelClock updated.${RESET}"
 }
