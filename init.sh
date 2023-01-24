@@ -205,7 +205,7 @@ function version {
 
 function build {
   log "${GREEN}Building PixelClock...${RESET}"
-  npm run install || log "${RED}Failed to install dependencies.${RESET}"; exit 1
+  npm install || log "${RED}Failed to install dependencies.${RESET}"; exit 1
   npm run build || log "${RED}Failed to build PixelClock.${RESET}"; exit 1
   log "${GREEN}PixelClock built.${RESET}"
 }
