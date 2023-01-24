@@ -114,7 +114,7 @@ function start {
 
   if check_if_running; then
     log "${GREEN}Starting PixelClock...${RESET}"
-    node ./src/index.js &
+    node ./dist/index.js &
     PID=$!
     echo $PID > /var/run/pixelclock.pid
     log "${GREEN}PixelClock started with PID ${PID}.${RESET}"
