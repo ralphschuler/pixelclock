@@ -64,7 +64,7 @@ export class MatrixEffect extends IEffect<IMatrixEffectOptions> {
 
       if (pixel.x < 0 || pixel.x >= this.matrix.Width || pixel.y < 0 || pixel.y >= this.matrix.Height) {
         this.pixels.splice(index, 1)
-        this.spawnPixel()
+        Math.random() < 0.15 && this.spawnPixel()
       }
     })
   }
