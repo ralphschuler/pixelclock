@@ -1,4 +1,4 @@
-import { IMatrixEffectOptions, MatrixEffect } from './effect';
+import { RainbowEffect } from './effect/RainbowEffect';
 import { Color, Driver, Matrix } from './engine/matrix'
 import { WS281x, IWS281xOptions, StripType } from './engine/matrix/driver';
 
@@ -32,19 +32,18 @@ const options = {
 const matrix = new Matrix<WS281x<IWS281xOptions>, IWS281xOptions>(options);
 
 const colorAmount = 5
-const matricsEffect = new MatrixEffect({
+const rainbowEffect = new RainbowEffect({
   colors: [...new Array(colorAmount)].map((_, index) =>
     colorWheel((index * 256 / colorAmount) % 256)
   ),
-  matrix: matrix,
-  speed: 100
+  matrix: matrix
 })
-matricsEffect.init()
+rainbowEffect.init()
 
 const loop = () => {
   console.debug('Main Loop')
-  matricsEffect.update()
-  matricsEffect.render()
+  rainbowEffect.update()
+  rainbowEffect.render()
 
   setTimeout(loop, 300)
 }
