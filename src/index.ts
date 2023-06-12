@@ -51,7 +51,7 @@ const loop = () => {
   rainbowEffect.update()
   rainbowEffect.render()
 
-  setTimeout(loop, 200)
+  setTimeout(loop, 10)
 }
 
 loop()
